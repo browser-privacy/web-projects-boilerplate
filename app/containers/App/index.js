@@ -21,6 +21,7 @@ import MainFooter from 'components/MainFooter/Loadable';
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import SupportPage from 'containers/SupportPage/Loadable';
+import LegalTerms from 'components/LegalTerms/Loadable';
 
 import LoginPage from 'containers/LoginPage/Loadable';
 import RegisterPage from 'containers/RegisterPage/Loadable';
@@ -38,7 +39,6 @@ export default function App() {
         <Route exact path="/auth/login" component={LoginPage} />
         <Route exact path="/auth/register" component={RegisterPage} />
         <Route exact path="/support" component={SupportPage} />
-        <Route exact path="/legal/terms" component={LegalTerms} />
 
         <PrivateRoute
           exact
