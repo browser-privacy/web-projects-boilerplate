@@ -11,6 +11,10 @@ injectGlobal`
     margin-bottom: 60px;
   }
 
+  .app-container {
+    padding-top: 40px;
+  }
+
   /* NAVBAR */
   .navbar-nav .dropdown-menu {
     position: absolute !important;
