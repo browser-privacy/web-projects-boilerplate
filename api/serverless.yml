@@ -1,0 +1,44 @@
+service: web-app
+
+package:
+  individually: true
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  stage: prod
+  runtime: nodejs6.10
+  region: us-east-1
+  environment: ${file(env.yml):${self:provider.stage}}
+
+functions:
+  healthCheck:
+    handler: src/functions/healthCheck.main
+    events:
+      - http:
+          path: health-check
+          method: get
+          cors: true
+  login:
+    handler: src/functions/auth.login
+    events:
+      - http:
+          path: auth/login
+          method: post
+          cors: true
+  refreshToken:
+    handler: src/functions/auth.refreshToken
+    events:
+      - http:
+          path: auth/refreshToken
+          method: post
+          cors: true
+  createUser:
+    handler: src/functions/user.create
+    events:
+      - http:
+          path: users/create
+          method: post
+          cors: true

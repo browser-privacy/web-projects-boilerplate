@@ -1,0 +1,20 @@
+{
+  "name": "serverless",
+  "version": "1.0.0",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "start": "./node_modules/.bin/sls offline start -r us-east-1 --noTimeout --stage dev"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "serverless-offline": "^3.25.9"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.0",
+    "bluebird": "^3.5.1",
+    "mongoose": "^5.2.9",
+    "mongoose-unique-validator": "^2.0.1"
+  }
+}
