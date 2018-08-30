@@ -24,7 +24,7 @@ export class MainFooter extends React.PureComponent {
                   Legal terms
                 </Link>{' '}
                 |{' '}
-                <a href="https://status.domain.com" className="footer-link">
+                <a href="https://status.domain.io" className="footer-link">
                   Status
                 </a>{' '}
                 |{' '}
