@@ -12,6 +12,7 @@
     "serverless-offline": "^3.25.9"
   },
   "dependencies": {
+    "async": "^2.6.1",
     "axios": "^0.18.0",
     "bcrypt": "^3.0.0",
     "bluebird": "^3.5.1",

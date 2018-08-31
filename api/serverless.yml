@@ -13,6 +13,9 @@ provider:
   region: us-east-1
   environment: ${file(env.yml):${self:provider.stage}}
 
+custom:
+  environment: ${file(env.yml):${self:custom.stage}, file(env.yml):prod}
+
 functions:
   healthCheck:
     handler: src/functions/healthCheck.main
