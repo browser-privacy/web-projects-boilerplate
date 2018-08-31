@@ -25,7 +25,9 @@ install:
   - ps: Install-Product node $env:nodejs_version
   - set PATH=%APPDATA%\yarn;%PATH%
   - yarn
-  - cd api;yarn;cd..
+  - ps: cd api
+  - yarn
+  - ps: cd ..
 
 # Disable automatic builds
 build: off
