@@ -1,3 +1,8 @@
+/* eslint no-underscore-dangle: 0 */
+
+const yaml = require('js-yaml');
+const fs = require('fs');
+const config = yaml.safeLoad(fs.readFileSync('../../env.yml', 'utf8'));
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
