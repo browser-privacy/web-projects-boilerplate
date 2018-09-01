@@ -5,6 +5,8 @@ package:
 
 plugins:
   - serverless-offline
+  - serverless-reqvalidator-plugin
+  - serverless-aws-documentation
 
 provider:
   name: aws
