@@ -11,12 +11,52 @@ plugins:
 provider:
   name: aws
   stage: prod
-  runtime: nodejs6.10
+  runtime: nodejs8.10
   region: us-east-1
   environment: ${file(env.yml):${self:provider.stage}}
 
 custom:
-  environment: ${file(env.yml):${self:custom.stage}, file(env.yml):prod}
+  documentation:
+    api:
+      info:
+        title: Web projects boilerplate
+    models:
+      - name: RefreshAccessTokenRequest
+        contentType: 'application/json'
+        schema:
+          required:
+            - refreshToken
+          properties:
+            refreshToken:
+              type: string
+      - name: CreateUserRequest
+        contentType: 'application/json'
+        schema:
+          required:
+            - email
+            - username
+            - password
+            - recaptcha
+          properties:
+            email:
+              type: string
+            username:
+              type: string
+            password:
+              type: string
+            recaptcha:
+              type: string
+      - name: LoginUserRequest
+        contentType: 'application/json'
+        schema:
+          required:
+            - userIdentifier
+            - password
+          properties:
+            userIdentifier:
+              type: string
+            password:
+              type: string
 
 functions:
   healthCheck:
@@ -24,26 +64,49 @@ functions:
     events:
       - http:
           path: health-check
-          method: get
+          method: post
           cors: true
   login:
     handler: src/functions/auth.login
     events:
       - http:
+          documentation:
+            requestModels:
+              'application/json': LoginUserRequest
           path: auth/login
           method: post
           cors: true
-  refreshToken:
-    handler: src/functions/auth.refreshToken
+          reqValidatorName: onlyBody
+  refreshAccessToken:
+    handler: src/functions/auth.refreshAccessToken
     events:
       - http:
-          path: auth/refreshToken
+          documentation:
+            requestModels:
+              'application/json': RefreshAccessTokenRequest
+          path: auth/refresh_access_token
           method: post
           cors: true
+          reqValidatorName: onlyBody
   createUser:
     handler: src/functions/user.create
     events:
       - http:
+          documentation:
+            requestModels:
+              'application/json': CreateUserRequest
           path: users/create
           method: post
           cors: true
+          reqValidatorName: onlyBody
+
+resources:
+  Resources:
+    onlyBody:
+      Type: 'AWS::ApiGateway::RequestValidator'
+      Properties:
+        Name: 'only-body'
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        ValidateRequestBody: true
+        ValidateRequestParameters: false
