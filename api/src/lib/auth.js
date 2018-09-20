@@ -4,7 +4,7 @@ const yaml = require('js-yaml');
 const fs = require('fs');
 const config = yaml.safeLoad(fs.readFileSync('../../env.yml', 'utf8'));
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 const RefreshToken = require('../models/refreshToken');
 
