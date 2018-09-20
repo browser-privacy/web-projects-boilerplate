@@ -11,26 +11,16 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Link } from 'react-router-dom';
-import {
-  Container,
-  Form,
-  Alert,
-  Button,
-  Row,
-  Col,
-  Modal,
-  ModalHeader,
-  ModalBody,
-} from 'reactstrap';
-import { Field, reduxForm, SubmissionError } from 'redux-form/immutable';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { renderField, fieldValidations } from 'utils/reduxforms';
+import { Container, Button, Row, Col } from 'reactstrap';
+import { ReactstrapInput } from 'reactstrap-formik';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import ReCAPTCHA from 'react-google-recaptcha';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
 import JWTDecode from 'jwt-decode';
-import api from '../../services/api';
+import ReCAPTCHA from 'react-google-recaptcha';
 import makeSelectRegisterPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -40,126 +30,50 @@ import {
   setRefreshToken,
   setUserUsername,
 } from '../Auth/actions';
+import { makeSelectIsLogged } from '../Auth/selectors';
+
+const SignupSchema = Yup.object().shape({
+  email: Yup.string()
+    .email('Invalid email')
+    .required('Required'),
+  username: Yup.string().required('Required'),
+  password: Yup.string()
+    .min(3, 'Password must be at least 3 characters')
+    .required('Required'),
+});
+
+const recaptchaRef = React.createRef();
 
 /* eslint-disable react/prefer-stateless-function */
 export class RegisterPage extends React.PureComponent {
-  constructor(props) {
-    super(props);
+  componentDidMount() {
+    const { history, isLogged } = this.props;
 
-    this.state = {
-      recaptcha: '',
-      modal: false,
-      modalCb: null,
-    };
-
-    this.submitForm = this.submitForm.bind(this);
-    this.initCaptcha = this.initCaptcha.bind(this);
-    this.toggle = this.toggle.bind(this);
+    if (isLogged) history.push('/dashboard/index');
   }
 
-  submitForm(values) {
-    return new Promise((resolve, reject) => {
-      this.initCaptcha().then(() => {
-        const { email, username, password } = values;
-        const { recaptcha } = this.state;
+  submitSignUp(values, actions) {
+    const { email, username, password } = values;
 
-        if (!recaptcha)
-          return reject(
-            new SubmissionError({
-              _error: 'Google reCAPTCHA is required',
-            }),
-          );
+    actions.setSubmitting(false);
+    actions.setFieldError('email', 'woah');
 
-        return api
-          .register(email, username, password, recaptcha)
-          .then(res => {
-            const { history, login } = this.props;
-            const loginTokens = res.data;
+    console.log('ready');
+    // recaptchaRef.current.getValue()
 
-            login(loginTokens);
-            history.push('/dashboard/index');
-          })
-          .catch(err => {
-            const errData = err.data.message;
-
-            if (errData.message === 'recaptcha_error')
-              return reject(
-                new SubmissionError({
-                  _error: 'Google reCAPTCHA error. Please try again.',
-                }),
-              );
-
-            if (err.status === 400) {
-              if (errData.name === 'validationError') {
-                const submissionError = {
-                  _error: 'Registration failed',
-                };
-
-                Object.keys(errData.errors).forEach(key => {
-                  let validationErrMessage = null;
-
-                  if (errData.errors[key].kind === 'mongoose-unique-validator')
-                    validationErrMessage = 'Already exists';
-
-                  submissionError[key] = validationErrMessage;
-                });
-
-                return reject(new SubmissionError(submissionError));
-              }
-            }
-
-            return reject(
-              new SubmissionError({
-                _error: 'Server error. Please try again.',
-              }),
-            );
-          });
-      });
-    });
-  }
-
-  toggle() {
-    const { modal } = this.state;
-
-    this.setState({
-      modal: !modal,
-    });
-  }
-
-  initCaptcha() {
-    const globalthis = this;
-
-    return new Promise((resolve, reject) => {
-      function onReCaptchaChange(res) {
-        if (!res) return reject();
-
-        globalthis.setState({
-          recaptcha: res,
-        });
-
-        globalthis.toggle();
-
-        return resolve();
-      }
-
-      globalthis.setState({
-        modalCb: onReCaptchaChange,
-      });
-
-      this.toggle();
-    });
+    /**
+     * 1. Submit data to Register API
+     * 2. Handle response
+     * 3. If errors then throw out validation errors else log in user
+     */
   }
 
   render() {
-    const { modal, modalCb } = this.state;
-    const { error, handleSubmit, submitting } = this.props;
-
     return (
       <div>
         <Helmet>
           <title>Sign up</title>
           <meta name="description" content="Description of RegisterPage" />
-          <script src="https://www.google.com/recaptcha/api.js" async defer />
         </Helmet>
         <Container className="auth-container">
           <div className="form-page">
@@ -181,81 +95,76 @@ export class RegisterPage extends React.PureComponent {
               </Col>
             </Row>
 
-            <Alert
-              color="danger"
-              role="alert"
-              className={error && !submitting ? 'text-center' : 'd-none'}
+            <Formik
+              initialValues={{
+                email: '',
+                username: '',
+                password: '',
+              }}
+              validationSchema={SignupSchema}
+              onSubmit={() => recaptchaRef.current.execute()}
             >
-              <strong>{error}</strong>
-            </Alert>
-
-            <Form onSubmit={handleSubmit(this.submitForm)}>
-              <Field
-                name="email"
-                type="email"
-                component={renderField}
-                placeholder="Email"
-                validate={[fieldValidations.required, fieldValidations.email]}
-              />
-              <Field
-                name="password"
-                type="password"
-                component={renderField}
-                placeholder="Create Password"
-                validate={fieldValidations.required}
-              />
-              <Field
-                name="username"
-                type="text"
-                component={renderField}
-                placeholder="Username"
-                validate={[
-                  fieldValidations.required,
-                  fieldValidations.alphaNumeric,
-                  fieldValidations.noWhiteSpaces,
-                ]}
-              />
-              <div>
-                <Button
-                  type="submit"
-                  disabled={submitting}
-                  block
-                  size="lg"
-                  color="primary"
-                >
-                  <FontAwesomeIcon
-                    pulse
-                    icon={faSpinner}
-                    className={submitting ? 'mr-2' : 'd-none'}
+              {({ handleBlur, handleChange, isSubmitting }) => (
+                <Form>
+                  <Field
+                    component={ReactstrapInput}
+                    name="email"
+                    type="email"
+                    placeholder="john@acme.com"
+                    label="E-mail address"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
                   />
-                  Sign up to start
-                </Button>
-              </div>
-            </Form>
+                  <Field
+                    component={ReactstrapInput}
+                    name="username"
+                    type="text"
+                    placeholder="johndoe"
+                    label="Username"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  <Field
+                    component={ReactstrapInput}
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    label="Password"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                  <div>
+                    <Button
+                      type="submit"
+                      block
+                      size="lg"
+                      color="primary"
+                      disabled={isSubmitting}
+                    >
+                      <FontAwesomeIcon
+                        pulse
+                        icon={faSpinner}
+                        className={isSubmitting ? 'mr-2' : 'd-none'}
+                      />
+                      Sign up to start
+                    </Button>
+                  </div>
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    size="invisible"
+                    sitekey="6LeJVnEUAAAAAAetIUT8Rb7yQJx8LquVS2EFQNvF"
+                    theme="dark"
+                    badge="inline"
+                    onChange={this.submitSignUp}
+                  />
+                </Form>
+              )}
+            </Formik>
+
             <p className="mt-5 mb-3 text-center">
               <Link to="/auth/login">Already have an account? Log in</Link>
             </p>
           </div>
-          <Modal isOpen={modal} className="modal-md">
-            <ModalHeader className="register-page-recaptcha-modal-header">
-              Please verify that you are not a robot
-            </ModalHeader>
-            <ModalBody>
-              <Container>
-                <Row>
-                  <Col className="register-page-recaptcha-col text-center">
-                    <ReCAPTCHA
-                      ref={c => {
-                        this.recaptcha = c;
-                      }}
-                      sitekey="6LcNmmYUAAAAAI8l4lp27EyYT375HbiesJ0e7zMu"
-                      onChange={modalCb}
-                    />
-                  </Col>
-                </Row>
-              </Container>
-            </ModalBody>
-          </Modal>
         </Container>
       </div>
     );
@@ -263,20 +172,18 @@ export class RegisterPage extends React.PureComponent {
 }
 
 RegisterPage.propTypes = {
-  error: PropTypes.string,
-  handleSubmit: PropTypes.func,
-  submitting: PropTypes.bool,
-  login: PropTypes.func,
+  isLogged: PropTypes.bool,
   history: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   registerpage: makeSelectRegisterPage(),
+  isLogged: makeSelectIsLogged(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    login: tokens => {
+    logUser: tokens => {
       dispatch(setAccessToken(tokens.access_token));
       dispatch(setRefreshToken(tokens.refresh_token));
       dispatch(setUserUsername(JWTDecode(tokens.access_token).username));
@@ -297,7 +204,4 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-  reduxForm({
-    form: 'registration',
-  }),
 )(RegisterPage);

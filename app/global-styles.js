@@ -125,4 +125,8 @@ injectGlobal`
     padding-top: 40px;
     padding-bottom: 40px;
   }
+
+  .grecaptcha-badge {
+    display: none;
+  }
 `;
