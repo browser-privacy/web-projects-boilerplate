@@ -11,7 +11,7 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Link } from 'react-router-dom';
-import { Container, Button, Row, Col } from 'reactstrap';
+import { Container, Button, Row, Col, Alert } from 'reactstrap';
 import { ReactstrapInput } from 'reactstrap-formik';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -51,6 +51,7 @@ export class RegisterPage extends React.PureComponent {
     this.captcha = null;
 
     this.state = {
+      serverMsgErr: null,
       recaptchaResponse: null,
     };
   }
@@ -61,23 +62,41 @@ export class RegisterPage extends React.PureComponent {
     if (isLogged) history.push('/dashboard/index');
   }
 
-  submitSignUp(values, formActions) {
+  submitSignUp(values, formikActions) {
     const { email, username, password } = values;
     const { history } = this.props;
     const { recaptchaResponse } = this.state;
     const { logInUser } = this.props;
 
-    api.register(email, username, password, recaptchaResponse).then(res => {
-      console.log(res);
-      const tokens = res.data;
+    api
+      .register(email, username, password, recaptchaResponse)
+      .then(res => {
+        const tokens = res.data;
 
-      logInUser(tokens);
-      formActions.setSubmitting(false);
-      history.push('/dashboard/index');
-    });
+        if (!tokens.access_token && !tokens.refresh_token) {
+          formikActions.setSubmitting(false);
+          this.setState({ recaptchaResponse: null });
+          this.captcha.reset();
+          this.setState({
+            serverMsgErr: 'An error ocurred, please try again.',
+          });
+        }
+
+        logInUser(tokens);
+        return history.push('/dashboard/index');
+      })
+      .catch(err => {
+        if (err.status === 400)
+          return this.setState({
+            serverMsgErr: `E-mail address or username already exists. Please try again.`,
+          });
+
+        return this.setState({ serverMsgErr: `Server error: ${err.message}` });
+      });
   }
 
   render() {
+    const { serverMsgErr } = this.state;
     return (
       <div>
         <Helmet>
@@ -101,6 +120,13 @@ export class RegisterPage extends React.PureComponent {
               <Col className="text-center">
                 {' '}
                 <h1 className="h3 mb-3 font-weight-normal">Registration</h1>
+                <Alert
+                  color="danger"
+                  role="alert"
+                  className={serverMsgErr ? '' : 'd-none'}
+                >
+                  <strong>{serverMsgErr}</strong>
+                </Alert>
               </Col>
             </Row>
 

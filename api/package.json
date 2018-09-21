@@ -4,7 +4,7 @@
   "description": "",
   "main": "",
   "scripts": {
-    "start": "./node_modules/.bin/sls offline start -r us-east-1 --noTimeout --stage dev"
+    "start": "./node_modules/.bin/sls offline start -r us-east-1 --noTimeout --stage dev --useSeparateProcesses"
   },
   "author": "",
   "license": "MIT",

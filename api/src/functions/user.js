@@ -56,6 +56,13 @@ module.exports.create = (event, context, callback) => {
       },
     ],
     (err, res) => {
+      if (err.name === 'ValidationError')
+        return callback(null, {
+          statusCode: 400,
+          headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify(err.errors),
+        });
+
       if (err)
         return callback(null, {
           statusCode: err.statusCode || 500,
