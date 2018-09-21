@@ -48,7 +48,7 @@ const apiAuth = {
    */
   register(email, username, password, recaptcha) {
     return axios
-      .post(`${API_ENDPOINT}/users`, {
+      .post(`${API_ENDPOINT}/users/create`, {
         email,
         username,
         password,

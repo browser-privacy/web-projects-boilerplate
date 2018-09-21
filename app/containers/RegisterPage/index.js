@@ -31,6 +31,7 @@ import {
   setUserUsername,
 } from '../Auth/actions';
 import { makeSelectIsLogged } from '../Auth/selectors';
+import api from '../../services/api';
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
@@ -60,20 +61,17 @@ export class RegisterPage extends React.PureComponent {
     if (isLogged) history.push('/dashboard/index');
   }
 
-  submitSignUp(values, actions) {
+  submitSignUp(values, formActions) {
     const { email, username, password } = values;
+    const { history } = this.props;
     const { recaptchaResponse } = this.state;
 
-    setTimeout(() => {
-      actions.setSubmitting(false);
-      actions.setFieldError('email', 'woah');
-    }, 5000);
+    api.register(email, username, password, recaptchaResponse).then(res => {
+      console.log(res.data);
 
-    /**
-     * 1. Submit data to Register API
-     * 2. Handle response
-     * 3. If errors then throw out validation errors else log in user
-     */
+      // actions.setSubmitting(false);
+      // history.push('/dashboard/index');
+    });
   }
 
   render() {
