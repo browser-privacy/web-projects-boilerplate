@@ -150,7 +150,7 @@ export class RegisterPage extends React.PureComponent {
                 return this.submitSignUp(values, actions);
               }}
             >
-              {({ submitForm, handleBlur, handleChange, isSubmitting }) => (
+              {({ submitForm, isSubmitting }) => (
                 <Form>
                   <Field
                     component={ReactstrapInput}
@@ -158,8 +158,6 @@ export class RegisterPage extends React.PureComponent {
                     type="email"
                     placeholder="john@acme.com"
                     label="E-mail address"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
                   />
                   <Field
                     component={ReactstrapInput}
@@ -167,8 +165,6 @@ export class RegisterPage extends React.PureComponent {
                     type="text"
                     placeholder="johndoe"
                     label="Username"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
                   />
                   <Field
                     component={ReactstrapInput}
@@ -176,8 +172,6 @@ export class RegisterPage extends React.PureComponent {
                     type="password"
                     placeholder="Password"
                     label="Password"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
                   />
                   <div>
                     <Button

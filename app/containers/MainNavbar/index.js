@@ -33,7 +33,6 @@ import {
 import { NavLink as RRNavLink } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { createStructuredSelector } from 'reselect';
-import startCase from 'lodash/startCase';
 
 import { makeSelectIsLogged, makeSelectUsername } from '../Auth/selectors';
 import { logOut } from '../Auth/actions';

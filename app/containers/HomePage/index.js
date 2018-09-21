@@ -58,15 +58,6 @@ class HomePage extends React.PureComponent {
             </Row>
             <Row className="center-xs">
               <Col xs="12">
-                <Link key="register-button" to="/auth/register">
-                  <Button
-                    size="lg"
-                    color="primary"
-                    className="homepage-intro-cta"
-                  >
-                    <strong>GET STARTED</strong>
-                  </Button>
-                </Link>
                 <Button
                   key="demo-button"
                   size="lg"
@@ -79,6 +70,15 @@ class HomePage extends React.PureComponent {
                   />
                   WATCH DEMO
                 </Button>
+                <Link key="register-button" to="/auth/register">
+                  <Button
+                    size="lg"
+                    color="primary"
+                    className="homepage-intro-cta"
+                  >
+                    <strong>GET STARTED</strong>
+                  </Button>
+                </Link>
               </Col>
             </Row>
           </Container>

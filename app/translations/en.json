@@ -1,8 +1,7 @@
 {
   "app.containers.HomePage.header": "Header text",
-  "app.containers.HomePage.subHeader":
-    "Sub header text",
+  "app.containers.HomePage.subHeader": "Sub header text",
   "app.components.NotFoundPage.header": "404 PAGE NOT FOUND",
   "app.components.NotFoundPage.backToHomeButton": "Back to homepage",
-  "app.containers.LoginPage.header": "Please sign in"
+  "app.containers.LoginPage.header": "Authentication"
 }
