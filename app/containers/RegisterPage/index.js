@@ -68,7 +68,8 @@ export class RegisterPage extends React.PureComponent {
     const { logInUser } = this.props;
 
     api.register(email, username, password, recaptchaResponse).then(res => {
-      const tokens = JSON.parse(res.data);
+      console.log(res);
+      const tokens = res.data;
 
       logInUser(tokens);
       formActions.setSubmitting(false);

@@ -76,9 +76,7 @@ export class MainNavbar extends React.PureComponent {
                 alt="user avatar"
                 className="navbar-user-img"
               />
-              <span className="navbar-user-username">
-                {startCase(username)}
-              </span>
+              <span className="navbar-user-username">{username}</span>
             </DropdownToggle>
             <DropdownMenu right>
               {this.dropdownMenuLinks()}
