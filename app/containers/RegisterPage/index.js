@@ -20,7 +20,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import JWTDecode from 'jwt-decode';
-import ReCAPTCHA from 'react-google-recaptcha';
+import Reaptcha from 'reaptcha';
 import makeSelectRegisterPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -42,10 +42,18 @@ const SignupSchema = Yup.object().shape({
     .required('Required'),
 });
 
-const recaptchaRef = React.createRef();
-
 /* eslint-disable react/prefer-stateless-function */
 export class RegisterPage extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.captcha = null;
+
+    this.state = {
+      recaptchaResponse: null,
+    };
+  }
+
   componentDidMount() {
     const { history, isLogged } = this.props;
 
@@ -54,12 +62,12 @@ export class RegisterPage extends React.PureComponent {
 
   submitSignUp(values, actions) {
     const { email, username, password } = values;
+    const { recaptchaResponse } = this.state;
 
-    actions.setSubmitting(false);
-    actions.setFieldError('email', 'woah');
-
-    console.log('ready');
-    // recaptchaRef.current.getValue()
+    setTimeout(() => {
+      actions.setSubmitting(false);
+      actions.setFieldError('email', 'woah');
+    }, 5000);
 
     /**
      * 1. Submit data to Register API
@@ -102,9 +110,18 @@ export class RegisterPage extends React.PureComponent {
                 password: '',
               }}
               validationSchema={SignupSchema}
-              onSubmit={() => recaptchaRef.current.execute()}
+              onSubmit={(values, actions) => {
+                const { recaptchaResponse } = this.state;
+
+                if (!recaptchaResponse) {
+                  actions.setSubmitting(false);
+                  return this.captcha.execute();
+                }
+
+                return this.submitSignUp(values, actions);
+              }}
             >
-              {({ handleBlur, handleChange, isSubmitting }) => (
+              {({ submitForm, handleBlur, handleChange, isSubmitting }) => (
                 <Form>
                   <Field
                     component={ReactstrapInput}
@@ -149,13 +166,19 @@ export class RegisterPage extends React.PureComponent {
                       Sign up to start
                     </Button>
                   </div>
-                  <ReCAPTCHA
-                    ref={recaptchaRef}
-                    size="invisible"
+                  <Reaptcha
+                    // eslint-disable-next-line
+                    ref={e => (this.captcha = e)}
                     sitekey="6LeJVnEUAAAAAAetIUT8Rb7yQJx8LquVS2EFQNvF"
+                    onVerify={res => {
+                      this.setState({ recaptchaResponse: res });
+                      submitForm();
+                    }}
+                    onError={() => this.setState({ recaptchaResponse: null })}
+                    onExpire={() => this.setState({ recaptchaResponse: null })}
+                    size="invisible"
                     theme="dark"
                     badge="inline"
-                    onChange={this.submitSignUp}
                   />
                 </Form>
               )}
