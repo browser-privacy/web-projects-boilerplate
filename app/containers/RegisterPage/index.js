@@ -86,6 +86,8 @@ export class RegisterPage extends React.PureComponent {
         return history.push('/dashboard/index');
       })
       .catch(err => {
+        formikActions.setSubmitting(false);
+
         if (err.status === 400)
           return this.setState({
             serverMsgErr: `E-mail address or username already exists. Please try again.`,
