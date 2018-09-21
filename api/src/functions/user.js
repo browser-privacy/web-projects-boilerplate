@@ -3,13 +3,12 @@ const axios = require('axios');
 const querystring = require('querystring');
 const connectToDatabase = require('../helpers/db');
 const User = require('../models/user');
+const auth = require('../lib/auth');
 
 module.exports.create = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
   const receivedSubmitedValues = JSON.parse(event.body);
-  console.log('received values');
-  console.log(receivedSubmitedValues);
 
   let createdUser;
   async.series(
@@ -44,17 +43,17 @@ module.exports.create = (event, context, callback) => {
             .catch(err => cb(err));
         });
       },
-      // cb => {
-      //   Promise.all([
-      //     auth.createAccessToken(createdUser),
-      //     auth.createRefreshToken(createdUser),
-      //   ]).then(tokens => {
-      //     cb(null, {
-      //       access_token: tokens[0],
-      //       refresh_token: tokens[1],
-      //     });
-      //   });
-      // },
+      cb => {
+        Promise.all([
+          auth.createAccessToken(createdUser),
+          auth.createRefreshToken(createdUser),
+        ]).then(tokens => {
+          cb(null, {
+            access_token: tokens[0],
+            refresh_token: tokens[1],
+          });
+        });
+      },
     ],
     (err, res) => {
       if (err)
@@ -66,7 +65,7 @@ module.exports.create = (event, context, callback) => {
 
       return callback(null, {
         statusCode: 200,
-        body: createdUser.username,
+        body: JSON.stringify(res[2]),
       });
     },
   );

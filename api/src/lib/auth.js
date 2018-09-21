@@ -1,8 +1,5 @@
 /* eslint no-underscore-dangle: 0 */
 
-const yaml = require('js-yaml');
-const fs = require('fs');
-const config = yaml.safeLoad(fs.readFileSync('../../env.yml', 'utf8'));
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
@@ -34,14 +31,14 @@ const loginUser = (userIdentifier, password) =>
 const createAccessToken = user =>
   jwt.sign(
     { _id: user._id, username: user.username, tokenCreatedAt: Date.now() },
-    config.jwtSecret,
+    process.env.JWT_SECRET,
     { expiresIn: '1h' },
   );
 
 const createRefreshToken = user => {
   const refreshToken = jwt.sign(
     { type: 'refresh', tokenCreatedAt: Date.now() },
-    config.jwtSecret,
+    process.env.JWT_SECRET,
     {
       expiresIn: '30 days',
     },
@@ -64,7 +61,7 @@ const validateRefreshToken = refreshToken => {
   if (!refreshToken) throw new Error('invalid_token');
 
   return new Promise((res, rej) => {
-    jwt.verify(refreshToken, config.jwtSecret, (jwtErr, decoded) => {
+    jwt.verify(refreshToken, process.env.JWT_SECRET, (jwtErr, decoded) => {
       if (jwtErr || decoded.type !== 'refresh')
         return rej(new Error('authentication_error'));
 

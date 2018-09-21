@@ -69,8 +69,8 @@ export class RegisterPage extends React.PureComponent {
     api.register(email, username, password, recaptchaResponse).then(res => {
       console.log(res.data);
 
-      // actions.setSubmitting(false);
-      // history.push('/dashboard/index');
+      actions.setSubmitting(false);
+      history.push('/dashboard/index');
     });
   }
 
