@@ -65,11 +65,13 @@ export class RegisterPage extends React.PureComponent {
     const { email, username, password } = values;
     const { history } = this.props;
     const { recaptchaResponse } = this.state;
+    const { logInUser } = this.props;
 
     api.register(email, username, password, recaptchaResponse).then(res => {
-      console.log(res.data);
+      const tokens = JSON.parse(res.data);
 
-      actions.setSubmitting(false);
+      logInUser(tokens);
+      formActions.setSubmitting(false);
       history.push('/dashboard/index');
     });
   }
@@ -195,6 +197,7 @@ export class RegisterPage extends React.PureComponent {
 RegisterPage.propTypes = {
   isLogged: PropTypes.bool,
   history: PropTypes.object,
+  logInUser: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -204,7 +207,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    logUser: tokens => {
+    logInUser: tokens => {
       dispatch(setAccessToken(tokens.access_token));
       dispatch(setRefreshToken(tokens.refresh_token));
       dispatch(setUserUsername(JWTDecode(tokens.access_token).username));
