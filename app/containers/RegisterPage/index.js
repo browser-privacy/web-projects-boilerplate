@@ -64,9 +64,8 @@ export class RegisterPage extends React.PureComponent {
 
   submitSignUp(values, formikActions) {
     const { email, username, password } = values;
-    const { history } = this.props;
+    const { history, logInUser } = this.props;
     const { recaptchaResponse } = this.state;
-    const { logInUser } = this.props;
 
     api
       .register(email, username, password, recaptchaResponse)
@@ -74,26 +73,27 @@ export class RegisterPage extends React.PureComponent {
         const tokens = res.data;
 
         if (!tokens.access_token && !tokens.refresh_token) {
-          formikActions.setSubmitting(false);
           this.setState({ recaptchaResponse: null });
           this.captcha.reset();
           this.setState({
             serverMsgErr: 'An error ocurred, please try again.',
           });
+          return formikActions.setSubmitting(false);
         }
 
         logInUser(tokens);
         return history.push('/dashboard/index');
       })
       .catch(err => {
-        formikActions.setSubmitting(false);
-
         if (err.status === 400)
           return this.setState({
             serverMsgErr: `E-mail address or username already exists. Please try again.`,
           });
 
-        return this.setState({ serverMsgErr: `Server error: ${err.message}` });
+        this.setState({ serverMsgErr: `Server error: ${err.message}` });
+
+        this.captcha.reset();
+        return formikActions.setSubmitting(false);
       });
   }
 

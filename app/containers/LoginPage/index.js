@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Container, Row, Col, Button } from 'reactstrap';
+import { Container, Row, Col, Button, Alert } from 'reactstrap';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { Link } from 'react-router-dom';
@@ -32,6 +32,7 @@ import {
   setUserUsername,
 } from '../Auth/actions';
 import messages from './messages';
+import api from '../../services/api';
 
 const LoginSchema = Yup.object().shape({
   userIdentifier: Yup.string().required('Required'),
@@ -40,6 +41,19 @@ const LoginSchema = Yup.object().shape({
 
 /* eslint-disable react/prefer-stateless-function */
 export class LoginPage extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      formMsg: {
+        color: '',
+        text: '',
+      },
+    };
+
+    this.submitLogInRequest = this.submitLogInRequest.bind(this);
+  }
+
   componentDidMount() {
     const { history, isLogged } = this.props;
 
@@ -47,11 +61,56 @@ export class LoginPage extends React.PureComponent {
   }
 
   submitLogInRequest(values, formikActions) {
-    console.log(values);
-    console.log(formikActions);
+    const { userIdentifier, password } = values;
+    const { history, logInUser } = this.props;
+
+    this.setState({
+      formMsg: {
+        color: '',
+        text: '',
+      },
+    });
+
+    api
+      .login(userIdentifier, password)
+      .then(loginTokens => {
+        this.setState({
+          formMsg: {
+            color: 'success',
+            text: 'Redirecting to dashboard...',
+          },
+        });
+
+        logInUser(loginTokens);
+        setTimeout(() => {
+          history.push('/dashboard/index');
+        }, 1500);
+      })
+      .catch(err => {
+        let formMsgText;
+
+        if (err.status === 401) {
+          formMsgText = 'Invalid credentials';
+        } else {
+          formMsgText = `Server error: "${
+            err.message
+          }". We have been notified about this error, our devs will fix it shortly.`;
+        }
+
+        this.setState({
+          formMsg: {
+            color: 'danger',
+            text: formMsgText,
+          },
+        });
+
+        formikActions.setSubmitting(false);
+      });
   }
 
   render() {
+    const { formMsg } = this.state;
+
     return (
       <div>
         <Helmet>
@@ -77,6 +136,13 @@ export class LoginPage extends React.PureComponent {
                 <h1 className="h3 mb-3 font-weight-normal">
                   <FormattedMessage {...messages.header} />
                 </h1>
+                <Alert
+                  color={formMsg.color}
+                  role="alert"
+                  className={formMsg.text ? '' : 'd-none'}
+                >
+                  <strong>{formMsg.text}</strong>
+                </Alert>
               </Col>
             </Row>
 
@@ -144,6 +210,7 @@ export class LoginPage extends React.PureComponent {
 LoginPage.propTypes = {
   isLogged: PropTypes.bool,
   history: PropTypes.object,
+  logInUser: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({

@@ -20,24 +20,11 @@ const apiAuth = {
       })
       .then(response =>
         Promise.resolve({
-          message: 'success',
-          data: {
-            access_token: response.data.access_token,
-            refresh_token: response.data.refresh_token,
-          },
+          access_token: response.data.access_token,
+          refresh_token: response.data.refresh_token,
         }),
       )
-      .catch(error => {
-        if (error.response.status === 401)
-          return Promise.resolve({
-            message: 'invalid_credentials',
-          });
-
-        return Promise.resolve({
-          message: 'error_server',
-          error,
-        });
-      });
+      .catch(err => Promise.reject(err.response));
   },
   /**
    * Registers an user, returning a promise with `true` when done

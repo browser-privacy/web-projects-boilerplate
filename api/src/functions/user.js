@@ -66,7 +66,7 @@ module.exports.create = (event, context, callback) => {
         return callback(null, {
           statusCode: err.statusCode || 500,
           headers: { 'Content-Type': 'text/plain' },
-          body: err.message,
+          body: JSON.stringify(err),
         });
 
       return callback(null, {

@@ -6,11 +6,8 @@ const User = require('../models/user');
 const RefreshToken = require('../models/refreshToken');
 
 const loginUser = (userIdentifier, password) =>
-  new Promise((res1, rej1) => {
-    if (!userIdentifier || !password)
-      return rej1(new Error('authentication_error'));
-
-    return User.findOne({
+  new Promise((res1, rej1) =>
+    User.findOne({
       $or: [{ email: userIdentifier }, { username: userIdentifier }],
     })
       .then(user => {
@@ -25,8 +22,8 @@ const loginUser = (userIdentifier, password) =>
           });
         });
       })
-      .catch(rej1);
-  });
+      .catch(rej1),
+  );
 
 const createAccessToken = user =>
   jwt.sign(
