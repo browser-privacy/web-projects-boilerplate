@@ -84,7 +84,7 @@ export class LoginPage extends React.PureComponent {
         logInUser(loginTokens);
         setTimeout(() => {
           history.push('/dashboard/index');
-        }, 1500);
+        }, 500);
       })
       .catch(err => {
         let formMsgText;
