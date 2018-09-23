@@ -22,7 +22,6 @@ export function authenticationOnAppInit(store) {
     store.dispatch(setLoggedStatus(true));
     store.dispatch(setAccessToken(userAccessToken));
     store.dispatch(setRefreshToken(userRefreshToken));
-
     store.dispatch(setUserUsername(userUsername));
   } catch (e) {
     throw e;
