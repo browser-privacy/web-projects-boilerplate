@@ -26,20 +26,14 @@ const loginUser = (userIdentifier, password) =>
   );
 
 const createAccessToken = user =>
-  jwt.sign(
-    { _id: user._id, username: user.username, tokenCreatedAt: Date.now() },
-    process.env.JWT_SECRET,
-    { expiresIn: '1h' },
-  );
+  jwt.sign({ _id: user._id, username: user.username }, process.env.JWT_SECRET, {
+    expiresIn: 60 * 10,
+  });
 
 const createRefreshToken = user => {
-  const refreshToken = jwt.sign(
-    { type: 'refresh', tokenCreatedAt: Date.now() },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: '30 days',
-    },
-  );
+  const refreshToken = jwt.sign({ type: 'refresh' }, process.env.JWT_SECRET, {
+    expiresIn: '30 days',
+  });
 
   const newRefreshToken = new RefreshToken({
     _user: user._id,
