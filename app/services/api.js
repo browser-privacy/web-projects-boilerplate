@@ -45,33 +45,16 @@ const apiAuth = {
       .catch(err => Promise.reject(err.response));
   },
   /**
-   * Refresh JWT token
-   * @param  {string} refreshToken User JWT token
+   * Refresh JWT access token
+   * @param  {string} refreshToken User JWT refresh token
    */
-  refreshToken(refreshToken) {
+  refreshAccessToken(refreshToken) {
     return axios
-      .post(`${API_ENDPOINT}/auth/refresh-token`, {
+      .post(`${API_ENDPOINT}/auth/refresh_access_token`, {
         refreshToken,
       })
-      .then(response =>
-        Promise.resolve({
-          message: 'success',
-          data: {
-            token: response.data.token,
-          },
-        }),
-      )
-      .catch(error => {
-        if (error.response.status === 401)
-          return Promise.resolve({
-            message: 'invalid_token',
-          });
-
-        return Promise.resolve({
-          message: 'error_server',
-          error,
-        });
-      });
+      .then(response => Promise.resolve(response.data))
+      .catch(err => Promise.reject(err.response));
   },
 };
 

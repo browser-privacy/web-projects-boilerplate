@@ -81,8 +81,8 @@ export class LoginPage extends React.PureComponent {
           },
         });
 
-        logInUser(loginTokens);
         setTimeout(() => {
+          logInUser(loginTokens);
           history.push('/dashboard/index');
         }, 500);
       })

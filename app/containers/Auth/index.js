@@ -4,6 +4,8 @@
  *
  */
 
+import JWTDecode from 'jwt-decode';
+import api from '../../services/api';
 import {
   setLoggedStatus,
   setUserUsername,
@@ -12,18 +14,72 @@ import {
 } from './actions';
 
 export function authenticationOnAppInit(store) {
-  try {
-    const userUsername = localStorage.getItem('username');
-    const userAccessToken = localStorage.getItem('access_token');
-    const userRefreshToken = localStorage.getItem('refresh_token');
+  let accessToken;
+  let refreshToken;
 
-    if (!(userUsername || userAccessToken || userRefreshToken)) return;
-
+  function logInUser() {
+    store.dispatch(setAccessToken(accessToken));
+    store.dispatch(setRefreshToken(refreshToken));
+    store.dispatch(setUserUsername(JWTDecode(accessToken).username));
     store.dispatch(setLoggedStatus(true));
-    store.dispatch(setAccessToken(userAccessToken));
-    store.dispatch(setRefreshToken(userRefreshToken));
-    store.dispatch(setUserUsername(userUsername));
+  }
+  function validateJSONWebToken(token) {
+    try {
+      const isExpired = JWTDecode(token).exp < Date.now() / 1000;
+      if (isExpired) return 'EXPIRED';
+
+      return 'OK';
+    } catch (e) {
+      return 'INVALID_TOKEN';
+    }
+  }
+  function scheduleAccessTokenRenewal() {
+    const getDiffTimeInSeconds = Date.now() - JWTDecode(accessToken).exp;
+    console.log(getDiffTimeInSeconds);
+
+    if (getDiffTimeInSeconds <= 600) {
+      return api.refreshAccessToken(refreshToken).then(newAccessToken => {
+        console.log('access_token renewed');
+        accessToken = newAccessToken;
+
+        logInUser();
+        scheduleAccessTokenRenewal();
+      });
+    }
+
+    return setTimeout(() => {
+      api.refreshAccessToken(refreshToken).then(newAccessToken => {
+        console.log('access_token renewed');
+        accessToken = newAccessToken;
+
+        logInUser();
+        scheduleAccessTokenRenewal();
+      });
+    }, 600000);
+  }
+
+  try {
+    accessToken = localStorage.getItem('access_token');
+    refreshToken = localStorage.getItem('refresh_token');
+
+    if (!accessToken || !refreshToken) return;
+
+    const accessTokenStatus = validateJSONWebToken(accessToken);
+    const refreshTokenStatus = validateJSONWebToken(refreshToken);
+
+    if (accessTokenStatus === 'OK' && refreshTokenStatus === 'OK') {
+      logInUser();
+      scheduleAccessTokenRenewal();
+    } else if (accessTokenStatus === 'EXPIRED' && refreshTokenStatus === 'OK') {
+      api.refreshAccessToken(refreshToken).then(newAccessToken => {
+        accessToken = newAccessToken;
+
+        logInUser();
+        scheduleAccessTokenRenewal();
+      });
+    }
   } catch (e) {
+    console.log('JWT authentication error');
     throw e;
   }
 }
