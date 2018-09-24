@@ -13,7 +13,7 @@ import {
   setRefreshToken,
 } from './actions';
 
-export function authenticationOnAppInit(store) {
+export function initAuthenticationMechanism(store) {
   let accessToken;
   let refreshToken;
 
@@ -34,28 +34,26 @@ export function authenticationOnAppInit(store) {
     }
   }
   function scheduleAccessTokenRenewal() {
-    const getDiffTimeInSeconds = Date.now() - JWTDecode(accessToken).exp;
-    console.log(getDiffTimeInSeconds);
+    const getDiffTimeInSeconds =
+      JWTDecode(accessToken).exp - +new Date() / 1000;
 
     if (getDiffTimeInSeconds <= 600) {
       return api.refreshAccessToken(refreshToken).then(newAccessToken => {
-        console.log('access_token renewed');
         accessToken = newAccessToken;
+        store.dispatch(setAccessToken(accessToken));
 
-        logInUser();
         scheduleAccessTokenRenewal();
       });
     }
 
     return setTimeout(() => {
       api.refreshAccessToken(refreshToken).then(newAccessToken => {
-        console.log('access_token renewed');
         accessToken = newAccessToken;
+        store.dispatch(setAccessToken(accessToken));
 
-        logInUser();
         scheduleAccessTokenRenewal();
       });
-    }, 600000);
+    }, 500000);
   }
 
   try {
@@ -73,13 +71,11 @@ export function authenticationOnAppInit(store) {
     } else if (accessTokenStatus === 'EXPIRED' && refreshTokenStatus === 'OK') {
       api.refreshAccessToken(refreshToken).then(newAccessToken => {
         accessToken = newAccessToken;
-
         logInUser();
         scheduleAccessTokenRenewal();
       });
     }
   } catch (e) {
-    console.log('JWT authentication error');
     throw e;
   }
 }

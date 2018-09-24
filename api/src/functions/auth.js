@@ -5,7 +5,6 @@ module.exports.login = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
   const receivedLoginDetails = JSON.parse(event.body);
-  console.log(receivedLoginDetails);
 
   connectToDatabase().then(() => {
     auth
@@ -45,12 +44,29 @@ module.exports.login = (event, context, callback) => {
 };
 
 module.exports.refreshAccessToken = (event, context, callback) => {
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: 'OK!',
-    }),
-  };
+  context.callbackWaitsForEmptyEventLoop = false;
 
-  callback(null, response);
+  const receivedToken = JSON.parse(event.body);
+
+  connectToDatabase().then(() => {
+    auth
+      .validateRefreshToken(receivedToken.refreshToken)
+      .then(() => auth.createAccessToken(receivedToken.refreshToken))
+      .then(newAccessToken =>
+        callback(null, {
+          statusCode: 200,
+          body: newAccessToken,
+        }),
+      )
+      .catch(err => {
+        let statusCode = 500;
+        if (err.message === 'authentication_error') statusCode = 401;
+
+        callback(null, {
+          statusCode,
+          headers: { 'Content-Type': 'text/plain' },
+          body: err.message,
+        });
+      });
+  });
 };

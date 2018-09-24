@@ -27,7 +27,7 @@ const loginUser = (userIdentifier, password) =>
 
 const createAccessToken = user =>
   jwt.sign({ _id: user._id, username: user.username }, process.env.JWT_SECRET, {
-    expiresIn: 60 * 10,
+    expiresIn: 60 * 11,
   });
 
 const createRefreshToken = user => {
@@ -48,10 +48,8 @@ const createRefreshToken = user => {
     });
 };
 
-const validateRefreshToken = refreshToken => {
-  if (!refreshToken) throw new Error('invalid_token');
-
-  return new Promise((res, rej) => {
+const validateRefreshToken = refreshToken =>
+  new Promise((res, rej) => {
     jwt.verify(refreshToken, process.env.JWT_SECRET, (jwtErr, decoded) => {
       if (jwtErr || decoded.type !== 'refresh')
         return rej(new Error('authentication_error'));
@@ -71,7 +69,6 @@ const validateRefreshToken = refreshToken => {
         });
     });
   });
-};
 
 module.exports = {
   loginUser,

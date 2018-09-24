@@ -31,7 +31,7 @@ import '!file-loader?name=[name].[ext]!./images/favicon.ico';
 import 'file-loader?name=[name].[ext]!./.htaccess';
 /* eslint-enable import/no-unresolved, import/extensions */
 
-import { authenticationOnAppInit } from 'containers/Auth';
+import { initAuthenticationMechanism } from 'containers/Auth';
 
 import configureStore from './configureStore';
 
@@ -47,7 +47,7 @@ const history = createHistory();
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 
-authenticationOnAppInit(store);
+initAuthenticationMechanism(store);
 
 const render = messages => {
   ReactDOM.render(
