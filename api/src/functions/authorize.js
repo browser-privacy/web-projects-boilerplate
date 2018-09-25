@@ -20,14 +20,14 @@ const authorizeUser = (user, methodArn) => {
  * @throws Returns 403 if the token does not have sufficient permissions.
  */
 module.exports.handler = (event, context, callback) => {
-  const token = event.authorizationToken;
+  let token = event.authorizationToken;
+  console.log(token);
+  if (token) token = token.replace('Bearer ', '');
+  console.log(token);
 
   try {
     // Verify JWT
-    const decoded = jwt.verify(
-      token.replace('Bearer ', ''),
-      process.env.JWT_SECRET,
-    );
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const { user } = decoded;
 
     // Checks if the user's scopes allow her to call the current endpoint ARN

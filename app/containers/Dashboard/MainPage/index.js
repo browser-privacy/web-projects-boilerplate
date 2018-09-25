@@ -18,6 +18,7 @@ import makeSelectMainPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+import api from '../../../services/api';
 
 /* eslint-disable react/prefer-stateless-function */
 export class MainPage extends React.PureComponent {
@@ -29,6 +30,9 @@ export class MainPage extends React.PureComponent {
           <meta name="description" content="Description of MainPage" />
         </Helmet>
         <FormattedMessage {...messages.header} />
+        <button type="submit" onClick={() => api.test()}>
+          Wow
+        </button>
       </div>
     );
   }
