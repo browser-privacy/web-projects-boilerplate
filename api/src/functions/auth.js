@@ -33,6 +33,7 @@ module.exports.login = (event, context, callback) => {
       .catch(err => {
         let statusCode = 500;
         if (err.message === 'authentication_error') statusCode = 401;
+        if (err.message === 'account_banned') statusCode = 403;
 
         callback(null, {
           statusCode,
@@ -46,12 +47,12 @@ module.exports.login = (event, context, callback) => {
 module.exports.refreshAccessToken = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
-  const receivedToken = JSON.parse(event.body);
+  const receivedData = JSON.parse(event.body);
 
   connectToDatabase().then(() => {
     auth
-      .validateRefreshToken(receivedToken.refreshToken)
-      .then(() => auth.createAccessToken(receivedToken.refreshToken))
+      .validateRefreshToken(receivedData.refreshToken)
+      .then(user => auth.createAccessToken(user))
       .then(newAccessToken =>
         callback(null, {
           statusCode: 200,
@@ -69,4 +70,15 @@ module.exports.refreshAccessToken = (event, context, callback) => {
         });
       });
   });
+};
+
+module.exports.getRandNumber = (event, context, callback) => {
+  const response = {
+    statusCode: 200,
+    body: JSON.stringify({
+      num: Math.random() * 100,
+    }),
+  };
+
+  callback(null, response);
 };

@@ -233,7 +233,7 @@ function mapDispatchToProps(dispatch) {
     logInUser: tokens => {
       dispatch(setAccessToken(tokens.access_token));
       dispatch(setRefreshToken(tokens.refresh_token));
-      dispatch(setUserUsername(JWTDecode(tokens.access_token).username));
+      dispatch(setUserUsername(JWTDecode(tokens.access_token).user.username));
       dispatch(setLoggedStatus(true));
     },
   };

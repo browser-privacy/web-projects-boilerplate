@@ -7,11 +7,16 @@ const RefreshToken = require('../models/refreshToken');
 
 const loginUser = (userIdentifier, password) =>
   new Promise((res1, rej1) =>
-    User.findOne({
-      $or: [{ email: userIdentifier }, { username: userIdentifier }],
-    })
+    User.findOne(
+      {
+        $or: [{ email: userIdentifier }, { username: userIdentifier }],
+      },
+      'username accountStatus roles password',
+    )
       .then(user => {
         if (!user) return rej1(new Error('authentication_error'));
+        if (user.accountStatus !== 'active')
+          return rej1(new Error('account_banned'));
 
         return new Promise((res2, rej2) => {
           bcrypt.compare(password, user.password, (err, success) => {
@@ -26,9 +31,20 @@ const loginUser = (userIdentifier, password) =>
   );
 
 const createAccessToken = user =>
-  jwt.sign({ _id: user._id, username: user.username }, process.env.JWT_SECRET, {
-    expiresIn: 60 * 11,
-  });
+  jwt.sign(
+    {
+      user: {
+        _id: user._id,
+        username: user.username,
+        accountStatus: user.accountStatus,
+        roles: user.roles,
+      },
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: 60 * 10,
+    },
+  );
 
 const createRefreshToken = user => {
   const refreshToken = jwt.sign({ type: 'refresh' }, process.env.JWT_SECRET, {
@@ -58,11 +74,11 @@ const validateRefreshToken = refreshToken =>
         { token: refreshToken, isActive: true },
         { lastUseAt: Date.now() },
       )
+        .populate('_user', 'username accountStatus roles')
         .then(validRefreshToken => {
           if (!validRefreshToken) return rej(new Error('authentication_error'));
 
-          const refreshTokenUser = { _id: validateRefreshToken._id };
-          return res(refreshTokenUser);
+          return res(validRefreshToken._user);
         })
         .catch(err => {
           rej(err);

@@ -5,7 +5,6 @@
  */
 
 import JWTDecode from 'jwt-decode';
-import api from '../../services/api';
 import {
   setLoggedStatus,
   setUserUsername,
@@ -17,10 +16,10 @@ export function initAuthenticationMechanism(store) {
   let accessToken;
   let refreshToken;
 
-  function logInUser() {
+  function authenticateUser() {
     store.dispatch(setAccessToken(accessToken));
     store.dispatch(setRefreshToken(refreshToken));
-    store.dispatch(setUserUsername(JWTDecode(accessToken).username));
+    store.dispatch(setUserUsername(JWTDecode(accessToken).user.username));
     store.dispatch(setLoggedStatus(true));
   }
   function validateJSONWebToken(token) {
@@ -44,7 +43,7 @@ export function initAuthenticationMechanism(store) {
     const refreshTokenStatus = validateJSONWebToken(refreshToken);
 
     if (accessTokenStatus !== 'INVALID_TOKEN' && refreshTokenStatus === 'OK')
-      logInUser();
+      authenticateUser();
   } catch (e) {
     throw e;
   }

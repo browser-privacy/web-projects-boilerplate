@@ -91,10 +91,12 @@ export class LoginPage extends React.PureComponent {
 
         if (err.status === 401) {
           formMsgText = 'Invalid credentials';
+        } else if (err.status === 403) {
+          formMsgText = 'Account desactivated';
         } else {
-          formMsgText = `Server error: "${
-            err.message
-          }". We have been notified about this error, our devs will fix it shortly.`;
+          console.log(err);
+          formMsgText = `Server error: "${err.message ||
+            err.data}". We have been notified about this error, our devs will fix it shortly.`;
         }
 
         this.setState({
@@ -223,7 +225,7 @@ function mapDispatchToProps(dispatch) {
     logInUser: tokens => {
       dispatch(setAccessToken(tokens.access_token));
       dispatch(setRefreshToken(tokens.refresh_token));
-      dispatch(setUserUsername(JWTDecode(tokens.access_token).username));
+      dispatch(setUserUsername(JWTDecode(tokens.access_token).user.username));
       dispatch(setLoggedStatus(true));
     },
   };
