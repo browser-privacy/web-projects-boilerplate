@@ -60,23 +60,7 @@ custom:
 
 functions:
   authorize:
-    handler: src/functions/authorize.handler
-  getRandNumber:
-    handler: src/functions/auth.getRandNumber
-    events:
-      - http:
-          path: get-rand-number
-          method: get
-          cors: true
-          authorizer: authorize
-  getRandNumberFoo:
-    handler: src/functions/auth.getRandNumberFoo
-    events:
-      - http:
-          path: get-rand-number-foo
-          method: get
-          cors: true
-          authorizer: authorize
+    handler: src/handlers/authorize.handler
   healthCheck:
     handler: src/functions/healthCheck.main
     events:
