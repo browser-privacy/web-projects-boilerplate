@@ -5,6 +5,7 @@ import { config } from '../config';
 const { API_ENDPOINT } = config[process.env.NODE_ENV];
 
 axios.defaults.baseURL = API_ENDPOINT;
+axios.defaults.timeout = 7000;
 
 axios.interceptors.request.use(
   reqConfig => {
@@ -24,6 +25,10 @@ function subscribeTokenRefresh(cb) {
 function onTokenRefreshed(errRefreshing, token) {
   tokenSubscribers.map(cb => cb(errRefreshing, token));
 }
+function forceLogout() {
+  localStorage.clear();
+  window.location = '/auth/login';
+}
 
 axios.interceptors.response.use(undefined, err => {
   if (err.response.status !== 401) return Promise.reject(err);
@@ -34,28 +39,34 @@ axios.interceptors.response.use(undefined, err => {
     isFetchingToken = true;
 
     const refreshToken = localStorage.getItem('refresh_token');
-    if (!refreshToken) return Promise.reject(err);
+    if (!refreshToken) return forceLogout();
 
     try {
       const isRefreshTokenExpired =
         JWTDecode(refreshToken).exp < Date.now() / 1000;
 
-      if (isRefreshTokenExpired) return Promise.reject(err);
+      if (isRefreshTokenExpired) return forceLogout();
     } catch (e) {
-      return Promise.reject(err);
+      return forceLogout();
     }
 
     api
       .refreshAccessToken()
       .then(newAccessToken => {
         isFetchingToken = false;
+
         onTokenRefreshed(null, newAccessToken);
-        localStorage.setItem('access_token', newAccessToken);
         tokenSubscribers = [];
+
+        localStorage.setItem('access_token', newAccessToken);
       })
       .catch(() => {
         isFetchingToken = false;
-        onTokenRefreshed(new Error('Unable to fetch new access token'));
+
+        onTokenRefreshed(new Error('Unable to refresh access token'), null);
+        tokenSubscribers = [];
+
+        forceLogout();
       });
   }
 

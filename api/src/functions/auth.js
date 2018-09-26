@@ -61,7 +61,7 @@ module.exports.refreshAccessToken = (event, context, callback) => {
       )
       .catch(err => {
         let statusCode = 500;
-        if (err.message === 'authentication_error') statusCode = 401;
+        if (err.message === 'authentication_error') statusCode = 403;
 
         callback(null, {
           statusCode,
