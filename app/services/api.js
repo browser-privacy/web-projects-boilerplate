@@ -26,7 +26,9 @@ function onTokenRefreshed(errRefreshing, token) {
   tokenSubscribers.map(cb => cb(errRefreshing, token));
 }
 function forceLogout() {
+  isFetchingToken = false;
   localStorage.clear();
+
   window.location = '/auth/login';
 }
 
@@ -61,8 +63,6 @@ axios.interceptors.response.use(undefined, err => {
         localStorage.setItem('access_token', newAccessToken);
       })
       .catch(() => {
-        isFetchingToken = false;
-
         onTokenRefreshed(new Error('Unable to refresh access token'), null);
         tokenSubscribers = [];
 
