@@ -76,7 +76,18 @@ module.exports.getRandNumber = (event, context, callback) => {
   const response = {
     statusCode: 200,
     body: JSON.stringify({
-      num: Math.random() * 100,
+      res: `a ${Math.random() * 100}`,
+    }),
+  };
+
+  callback(null, response);
+};
+
+module.exports.getRandNumberFoo = (event, context, callback) => {
+  const response = {
+    statusCode: 200,
+    body: JSON.stringify({
+      res: `b ${Math.random() * 100}`,
     }),
   };
 

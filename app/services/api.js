@@ -5,6 +5,7 @@ import { config } from '../config';
 const { API_ENDPOINT } = config[process.env.NODE_ENV];
 
 axios.defaults.baseURL = API_ENDPOINT;
+
 axios.interceptors.request.use(
   reqConfig => {
     reqConfig.headers.authorization = localStorage.getItem('access_token');
@@ -13,50 +14,76 @@ axios.interceptors.request.use(
   },
   err => Promise.reject(err),
 );
-axios.interceptors.response.use(
-  response => response,
-  error => {
-    if (error.response.status !== 401) return Promise.reject(error);
-    if (error.response.config.url.includes('/auth/login'))
-      return Promise.reject(error);
+
+let isFetchingToken = false;
+let tokenSubscribers = [];
+
+function subscribeTokenRefresh(cb) {
+  tokenSubscribers.push(cb);
+}
+function onTokenRefreshed(errRefreshing, token) {
+  tokenSubscribers.map(cb => cb(errRefreshing, token));
+}
+
+axios.interceptors.response.use(undefined, err => {
+  if (err.response.status !== 401) return Promise.reject(err);
+  if (err.response.config.url.includes('/auth/login'))
+    return Promise.reject(err);
+
+  if (!isFetchingToken) {
+    isFetchingToken = true;
 
     const refreshToken = localStorage.getItem('refresh_token');
-    if (!refreshToken) return Promise.reject(error);
+    if (!refreshToken) return Promise.reject(err);
 
     try {
       const isRefreshTokenExpired =
         JWTDecode(refreshToken).exp < Date.now() / 1000;
-      if (isRefreshTokenExpired) return Promise.reject(error);
+
+      if (isRefreshTokenExpired) return Promise.reject(err);
     } catch (e) {
-      console.log(e);
-      return Promise.reject(error);
+      return Promise.reject(err);
     }
 
-    console.log(refreshToken);
-    console.log('refreshToken');
-
-    return api
-      .refreshAccessToken(refreshToken)
+    api
+      .refreshAccessToken()
       .then(newAccessToken => {
+        isFetchingToken = false;
+        onTokenRefreshed(null, newAccessToken);
         localStorage.setItem('access_token', newAccessToken);
-        return axios.request(error.config);
+        tokenSubscribers = [];
       })
       .catch(() => {
-        localStorage.clear();
-        window.location = '/auth/login';
-        return Promise.reject(error);
+        isFetchingToken = false;
+        onTokenRefreshed(new Error('Unable to fetch new access token'));
       });
-  },
-);
+  }
+
+  const initTokenSubscriber = new Promise((resolve, reject) => {
+    subscribeTokenRefresh((errRefreshing, newToken) => {
+      if (errRefreshing) return reject(errRefreshing);
+
+      err.config.headers.authorization = newToken;
+      return resolve(axios(err.config));
+    });
+  });
+  return initTokenSubscriber;
+});
 
 /**
- * BACKEND API
+ * Backend API
  */
 const api = {
   test() {
     return axios
       .get(`/get-rand-number`)
-      .then(response => Promise.resolve(response.data))
+      .then(response => Promise.resolve(response))
+      .catch(err => Promise.reject(err));
+  },
+  testFoo() {
+    return axios
+      .get(`/get-rand-number-foo`)
+      .then(response => Promise.resolve(response))
       .catch(err => Promise.reject(err));
   },
   /**
@@ -98,12 +125,11 @@ const api = {
   },
   /**
    * Refresh JWT access token
-   * @param  {string} refreshToken User JWT refresh token
    */
-  refreshAccessToken(refreshToken) {
+  refreshAccessToken() {
     return axios
       .post(`/auth/refresh_access_token`, {
-        refreshToken,
+        refreshToken: localStorage.getItem('refresh_token'),
       })
       .then(response => Promise.resolve(response.data))
       .catch(err => Promise.reject(err));

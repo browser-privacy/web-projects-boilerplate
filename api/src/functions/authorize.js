@@ -5,7 +5,7 @@ const aws = require('../lib/aws');
 // Returns a boolean whether or not a user is allowed to call a particular method
 // call 'arn:aws:execute-api:ap-southeast-1::random-api-id/dev/GET/admin/metrics'
 const authorizeUser = (user, methodArn) => {
-  console.log(`authorizeUser ${JSON.stringify(user)} ${methodArn}`);
+  // console.log(`authorizeUser ${JSON.stringify(user)} ${methodArn}`);
   if (methodArn.includes('/admin') && !_.includes(user.roles, 'ADMIN'))
     return false;
 
@@ -21,9 +21,7 @@ const authorizeUser = (user, methodArn) => {
  */
 module.exports.handler = (event, context, callback) => {
   let token = event.authorizationToken;
-  console.log(token);
   if (token) token = token.replace('Bearer ', '');
-  console.log(token);
 
   try {
     // Verify JWT
@@ -46,7 +44,6 @@ module.exports.handler = (event, context, callback) => {
 
     callback(null, policyDocument);
   } catch (e) {
-    console.log(e.message);
     callback('authentication_error');
   }
 };
