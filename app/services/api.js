@@ -85,18 +85,6 @@ axios.interceptors.response.use(undefined, err => {
  * Backend API
  */
 const api = {
-  test() {
-    return axios
-      .get(`/get-rand-number`)
-      .then(response => Promise.resolve(response))
-      .catch(err => Promise.reject(err));
-  },
-  testFoo() {
-    return axios
-      .get(`/get-rand-number-foo`)
-      .then(response => Promise.resolve(response))
-      .catch(err => Promise.reject(err));
-  },
   /**
    * Logs a user in
    * @param  {string} identifier User identifier (username or email)

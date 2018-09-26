@@ -18,7 +18,6 @@ import makeSelectMainPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import api from '../../../services/api';
 
 /* eslint-disable react/prefer-stateless-function */
 export class MainPage extends React.PureComponent {
@@ -30,33 +29,6 @@ export class MainPage extends React.PureComponent {
           <meta name="description" content="Description of MainPage" />
         </Helmet>
         <FormattedMessage {...messages.header} />
-        <button
-          type="submit"
-          onClick={() => {
-            api
-              .test()
-              .then(res => {
-                console.log('A OK!');
-                console.log(res);
-              })
-              .catch(err => {
-                console.log('A ERROR!');
-                console.log(err);
-              });
-            api
-              .testFoo()
-              .then(res => {
-                console.log('B OK!');
-                console.log(res);
-              })
-              .catch(err => {
-                console.log('B ERROR!');
-                console.log(err);
-              });
-          }}
-        >
-          GO!
-        </button>
       </div>
     );
   }
