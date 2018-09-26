@@ -26,7 +26,7 @@ import reducer from './reducer';
 import saga from './saga';
 import { setLoggedStatus, setUserUsername } from '../Auth/actions';
 import { makeSelectIsLogged } from '../Auth/selectors';
-import api from '../../services/api';
+import { AuthApi } from '../../api';
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
@@ -62,8 +62,7 @@ export class RegisterPage extends React.PureComponent {
     const { history, logInUser } = this.props;
     const { recaptchaResponse } = this.state;
 
-    api
-      .register(email, username, password, recaptchaResponse)
+    AuthApi.register(email, username, password, recaptchaResponse)
       .then(res => {
         const tokens = res.data;
 

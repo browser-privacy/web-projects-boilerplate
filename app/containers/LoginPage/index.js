@@ -27,7 +27,7 @@ import { makeSelectLoginPage } from './selectors';
 import { makeSelectIsLogged } from '../Auth/selectors';
 import { setLoggedStatus, setUserUsername } from '../Auth/actions';
 import messages from './messages';
-import api from '../../services/api';
+import { AuthApi } from '../../api';
 
 const LoginSchema = Yup.object().shape({
   userIdentifier: Yup.string().required('Required'),
@@ -66,8 +66,7 @@ export class LoginPage extends React.PureComponent {
       },
     });
 
-    api
-      .login(userIdentifier, password)
+    AuthApi.login(userIdentifier, password)
       .then(loginTokens => {
         this.setState({
           formMsg: {
