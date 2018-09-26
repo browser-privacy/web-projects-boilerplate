@@ -16,7 +16,7 @@ const loginUser = (userIdentifier, password) =>
       .then(user => {
         if (!user) return rej1(new Error('authentication_error'));
         if (user.accountStatus !== 'active')
-          return rej1(new Error('account_banned'));
+          return rej1(new Error('account_blocked'));
 
         return new Promise((res2, rej2) => {
           bcrypt.compare(password, user.password, (err, success) => {
@@ -75,6 +75,7 @@ const validateRefreshToken = refreshToken =>
         { lastUseAt: Date.now() },
       )
         .populate('_user', 'username accountStatus roles')
+        .select('_user')
         .then(validRefreshToken => {
           if (!validRefreshToken) return rej(new Error('authentication_error'));
 
