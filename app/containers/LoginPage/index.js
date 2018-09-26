@@ -25,12 +25,7 @@ import reducer from './reducer';
 import saga from './saga';
 import { makeSelectLoginPage } from './selectors';
 import { makeSelectIsLogged } from '../Auth/selectors';
-import {
-  setLoggedStatus,
-  setAccessToken,
-  setRefreshToken,
-  setUserUsername,
-} from '../Auth/actions';
+import { setLoggedStatus, setUserUsername } from '../Auth/actions';
 import messages from './messages';
 import api from '../../services/api';
 
@@ -223,8 +218,8 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     logInUser: tokens => {
-      dispatch(setAccessToken(tokens.access_token));
-      dispatch(setRefreshToken(tokens.refresh_token));
+      localStorage.setItem('access_token', tokens.access_token);
+      localStorage.setItem('refresh_token', tokens.refresh_token);
       dispatch(setUserUsername(JWTDecode(tokens.access_token).user.username));
       dispatch(setLoggedStatus(true));
     },

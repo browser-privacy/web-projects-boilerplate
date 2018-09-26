@@ -6,21 +6,6 @@ import { initialState } from './reducer';
  */
 
 const selectLoginPageDomain = state => state.get('loginPage', initialState);
-/**
- * Other specific selectors
- */
-
-const makeSelectSendingRequest = () =>
-  createSelector(selectLoginPageDomain, state => state.get('sendingRequest'));
-
-const makeSelectIdentifier = () =>
-  createSelector(selectLoginPageDomain, state => state.get('identifier'));
-
-const makeSelectPassword = () =>
-  createSelector(selectLoginPageDomain, state => state.get('password'));
-
-const makeSelectFormMessage = () =>
-  createSelector(selectLoginPageDomain, state => state.get('formMessage'));
 
 /**
  * Default selector used by LoginPage
@@ -29,11 +14,4 @@ const makeSelectFormMessage = () =>
 const makeSelectLoginPage = () =>
   createSelector(selectLoginPageDomain, substate => substate.toJS());
 
-export {
-  makeSelectLoginPage,
-  selectLoginPageDomain,
-  makeSelectSendingRequest,
-  makeSelectIdentifier,
-  makeSelectPassword,
-  makeSelectFormMessage,
-};
+export { makeSelectLoginPage, selectLoginPageDomain };
