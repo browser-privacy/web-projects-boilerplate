@@ -19,14 +19,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import JWTDecode from 'jwt-decode';
 import Reaptcha from 'reaptcha';
 import makeSelectRegisterPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { setLoggedStatus, setUserUsername } from '../Auth/actions';
 import { makeSelectIsLogged } from '../Auth/selectors';
-import { AuthApi } from '../../api';
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
@@ -44,7 +41,6 @@ export class RegisterPage extends React.PureComponent {
     super(props);
 
     this.captcha = null;
-
     this.state = {
       serverMsgErr: null,
       recaptchaResponse: null,
@@ -55,40 +51,6 @@ export class RegisterPage extends React.PureComponent {
     const { history, isLogged } = this.props;
 
     if (isLogged) history.push('/dashboard/index');
-  }
-
-  submitSignUp(values, formikActions) {
-    const { email, username, password } = values;
-    const { history, logInUser } = this.props;
-    const { recaptchaResponse } = this.state;
-
-    AuthApi.register(email, username, password, recaptchaResponse)
-      .then(res => {
-        const tokens = res.data;
-
-        if (!tokens.access_token && !tokens.refresh_token) {
-          this.setState({ recaptchaResponse: null });
-          this.captcha.reset();
-          this.setState({
-            serverMsgErr: 'An error ocurred, please try again.',
-          });
-          return formikActions.setSubmitting(false);
-        }
-
-        logInUser(tokens);
-        return history.push('/dashboard/index');
-      })
-      .catch(err => {
-        if (err.status === 400)
-          return this.setState({
-            serverMsgErr: `E-mail address or username already exists. Please try again.`,
-          });
-
-        this.setState({ serverMsgErr: `Server error: ${err.message}` });
-
-        this.captcha.reset();
-        return formikActions.setSubmitting(false);
-      });
   }
 
   render() {
@@ -214,7 +176,6 @@ export class RegisterPage extends React.PureComponent {
 RegisterPage.propTypes = {
   isLogged: PropTypes.bool,
   history: PropTypes.object,
-  logInUser: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -224,12 +185,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    logInUser: tokens => {
-      localStorage.setItem('access_token', tokens.access_token);
-      localStorage.setItem('refresh_token', tokens.refresh_token);
-      dispatch(setUserUsername(JWTDecode(tokens.access_token).user.username));
-      dispatch(setLoggedStatus(true));
-    },
+    dispatch,
   };
 }
 
