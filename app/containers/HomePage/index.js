@@ -19,8 +19,6 @@ import { Container, Row, Col, Jumbotron, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
 import { makeSelectIsLogged } from '../Auth/selectors';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -42,17 +40,13 @@ class HomePage extends React.PureComponent {
           <Container>
             <Row>
               <Col>
-                <h1 className="homepage-intro-header">
-                  <FormattedMessage {...messages.header} />
-                </h1>
+                <h1 className="homepage-intro-header">Intro text</h1>
               </Col>
             </Row>
             <Row>
               <Col md="2" />
               <Col md="8">
-                <p className="homepage-intro-text">
-                  <FormattedMessage {...messages.subHeader} />
-                </p>
+                <p className="homepage-intro-text">Sub intro text</p>
               </Col>
               <Col md="2" />
             </Row>
@@ -126,7 +120,7 @@ class HomePage extends React.PureComponent {
 }
 
 HomePage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  // dispatch: PropTypes.func.isRequired,
   isLogged: PropTypes.bool,
   history: PropTypes.object,
 };

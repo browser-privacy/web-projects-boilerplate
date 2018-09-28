@@ -16,18 +16,13 @@ import injectReducer from 'utils/injectReducer';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import JWTDecode from 'jwt-decode';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { ReactstrapInput } from 'reactstrap-formik';
-import { FormattedMessage } from 'react-intl';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectLoginPage } from './selectors';
 import { makeSelectIsLogged } from '../Auth/selectors';
-import { setLoggedStatus, setUserUsername } from '../Auth/actions';
-import messages from './messages';
-import { AuthApi } from '../../api';
 
 const LoginSchema = Yup.object().shape({
   userIdentifier: Yup.string().required('Required'),
@@ -45,63 +40,12 @@ export class LoginPage extends React.PureComponent {
         text: '',
       },
     };
-
-    this.submitLogInRequest = this.submitLogInRequest.bind(this);
   }
 
   componentDidMount() {
     const { history, isLogged } = this.props;
 
     if (isLogged) history.push('/dashboard/index');
-  }
-
-  submitLogInRequest(values, formikActions) {
-    const { userIdentifier, password } = values;
-    const { history, logInUser } = this.props;
-
-    this.setState({
-      formMsg: {
-        color: '',
-        text: '',
-      },
-    });
-
-    AuthApi.login(userIdentifier, password)
-      .then(loginTokens => {
-        this.setState({
-          formMsg: {
-            color: 'success',
-            text: 'Redirecting to dashboard...',
-          },
-        });
-
-        setTimeout(() => {
-          logInUser(loginTokens);
-          history.push('/dashboard/index');
-        }, 500);
-      })
-      .catch(err => {
-        let formMsgText;
-
-        if (err.status === 401) {
-          formMsgText = 'Invalid credentials';
-        } else if (err.status === 403) {
-          formMsgText = 'Account desactivated';
-        } else {
-          console.log(err);
-          formMsgText = `Server error: "${err.message ||
-            err.data}". We have been notified about this error, our devs will fix it shortly.`;
-        }
-
-        this.setState({
-          formMsg: {
-            color: 'danger',
-            text: formMsgText,
-          },
-        });
-
-        formikActions.setSubmitting(false);
-      });
   }
 
   render() {
@@ -129,9 +73,7 @@ export class LoginPage extends React.PureComponent {
             <Row>
               <Col className="text-center">
                 {' '}
-                <h1 className="h3 mb-3 font-weight-normal">
-                  <FormattedMessage {...messages.header} />
-                </h1>
+                <h1 className="h3 mb-3 font-weight-normal">Authentication</h1>
                 <Alert
                   color={formMsg.color}
                   role="alert"
@@ -206,7 +148,6 @@ export class LoginPage extends React.PureComponent {
 LoginPage.propTypes = {
   isLogged: PropTypes.bool,
   history: PropTypes.object,
-  logInUser: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -216,12 +157,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    logInUser: tokens => {
-      localStorage.setItem('access_token', tokens.access_token);
-      localStorage.setItem('refresh_token', tokens.refresh_token);
-      dispatch(setUserUsername(JWTDecode(tokens.access_token).user.username));
-      dispatch(setLoggedStatus(true));
-    },
+    dispatch,
   };
 }
 

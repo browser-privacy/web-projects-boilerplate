@@ -5,10 +5,9 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
@@ -17,7 +16,6 @@ import injectReducer from 'utils/injectReducer';
 import makeSelectMainPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
 
 /* eslint-disable react/prefer-stateless-function */
 export class MainPage extends React.PureComponent {
@@ -28,14 +26,13 @@ export class MainPage extends React.PureComponent {
           <title>MainPage</title>
           <meta name="description" content="Description of MainPage" />
         </Helmet>
-        <FormattedMessage {...messages.header} />
       </div>
     );
   }
 }
 
 MainPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  // dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({

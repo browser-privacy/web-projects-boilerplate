@@ -10,24 +10,18 @@
  */
 
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
 import { Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import messages from './messages';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class NotFound extends React.PureComponent {
   render() {
     return (
       <div className="text-center">
-        <h1>
-          <FormattedMessage {...messages.header} />
-        </h1>
+        <h1>Foo 1</h1>
         <Link to="/">
           <Button>
-            <strong>
-              <FormattedMessage {...messages.backToHomeButton} />
-            </strong>
+            <strong>Foo 2</strong>
           </Button>
         </Link>
       </div>

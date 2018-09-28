@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 const shelljs = require('shelljs');
-const animateProgress = require('./helpers/progress');
 const chalk = require('chalk');
+const animateProgress = require('./helpers/progress');
 const addCheckMark = require('./helpers/checkmark');
 
 const progress = animateProgress('Generating stats');
@@ -13,6 +13,7 @@ shelljs.exec(
   addCheckMark.bind(null, callback), // Output a checkmark on completion
 );
 
+/* eslint-disable prefer-template */
 // Called after webpack has finished generating the stats.json file
 function callback() {
   clearInterval(progress);
