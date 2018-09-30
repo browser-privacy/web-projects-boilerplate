@@ -21,6 +21,7 @@ import * as Yup from 'yup';
 import { ReactstrapInput } from 'reactstrap-formik';
 import reducer from './reducer';
 import saga from './saga';
+import { loginRequestAction } from './actions';
 import { makeSelectLoginPage } from './selectors';
 import { makeSelectIsLogged } from '../Auth/selectors';
 
@@ -50,6 +51,7 @@ export class LoginPage extends React.PureComponent {
 
   render() {
     const { formMsg } = this.state;
+    const { onLoginFormSubmit } = this.props;
 
     return (
       <div>
@@ -90,7 +92,7 @@ export class LoginPage extends React.PureComponent {
                 password: '',
               }}
               validationSchema={LoginSchema}
-              onSubmit={this.submitLogInRequest}
+              onSubmit={onLoginFormSubmit}
             >
               {({ isSubmitting }) => (
                 <Form>
@@ -148,6 +150,7 @@ export class LoginPage extends React.PureComponent {
 LoginPage.propTypes = {
   isLogged: PropTypes.bool,
   history: PropTypes.object,
+  onLoginFormSubmit: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -157,7 +160,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    onLoginFormSubmit: values => dispatch(loginRequestAction(values)),
   };
 }
 

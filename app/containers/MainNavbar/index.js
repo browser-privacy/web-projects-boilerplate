@@ -1,3 +1,5 @@
+// @TODO: Refactor this container to use Redux actions?
+
 /**
  *
  * MainNavbar
