@@ -1,5 +1,3 @@
-// @TODO: Refactor this container to use Redux actions?
-
 /**
  *
  * MainNavbar
@@ -35,10 +33,9 @@ import {
 import { NavLink as RRNavLink } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { createStructuredSelector } from 'reselect';
-
-import { makeSelectIsLogged, makeSelectUsername } from '../Auth/selectors';
-import { logOut } from '../Auth/actions';
-import { makeSelectLocation } from '../App/selectors';
+import { makeSelectIsLogged } from '../Auth/selectors';
+import { logOutAction } from '../Auth/actions';
+import { makeSelectUsername } from '../App/selectors';
 
 /* eslint-disable react/prefer-stateless-function */
 export class MainNavbar extends React.PureComponent {
@@ -189,7 +186,6 @@ export class MainNavbar extends React.PureComponent {
 }
 
 MainNavbar.propTypes = {
-  // dispatch: PropTypes.func,
   isLogged: PropTypes.bool,
   username: PropTypes.string,
   signOut: PropTypes.func,
@@ -200,7 +196,6 @@ MainNavbar.propTypes = {
 const mapStateToProps = createStructuredSelector({
   isLogged: makeSelectIsLogged(),
   username: makeSelectUsername(),
-  location: makeSelectLocation(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -208,7 +203,7 @@ function mapDispatchToProps(dispatch) {
     signOut: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
 
-      dispatch(logOut());
+      dispatch(logOutAction());
     },
   };
 }

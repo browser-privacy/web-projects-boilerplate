@@ -14,4 +14,7 @@ const selectLoginPageDomain = state => state.get('loginPage', initialState);
 const makeSelectLoginPage = () =>
   createSelector(selectLoginPageDomain, substate => substate.toJS());
 
-export { makeSelectLoginPage, selectLoginPageDomain };
+const makeSelectFormMsg = () =>
+  createSelector(selectLoginPageDomain, state => state.get('formMsg'));
+
+export { makeSelectLoginPage, selectLoginPageDomain, makeSelectFormMsg };

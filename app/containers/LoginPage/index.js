@@ -14,6 +14,7 @@ import { Container, Row, Col, Button, Alert } from 'reactstrap';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Form, Field } from 'formik';
@@ -21,8 +22,8 @@ import * as Yup from 'yup';
 import { ReactstrapInput } from 'reactstrap-formik';
 import reducer from './reducer';
 import saga from './saga';
-import { loginRequestAction } from './actions';
-import { makeSelectLoginPage } from './selectors';
+import { loginRequestAction, resetState } from './actions';
+import { makeSelectLoginPage, makeSelectFormMsg } from './selectors';
 import { makeSelectIsLogged } from '../Auth/selectors';
 
 const LoginSchema = Yup.object().shape({
@@ -32,26 +33,17 @@ const LoginSchema = Yup.object().shape({
 
 /* eslint-disable react/prefer-stateless-function */
 export class LoginPage extends React.PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      formMsg: {
-        color: '',
-        text: '',
-      },
-    };
-  }
-
-  componentDidMount() {
-    const { history, isLogged } = this.props;
-
-    if (isLogged) history.push('/dashboard/index');
+  componentWillUnmount() {
+    const { dispatch } = this.props;
+    dispatch(resetState());
   }
 
   render() {
-    const { formMsg } = this.state;
-    const { onLoginFormSubmit } = this.props;
+    const { formMsg, isLogged, onLoginFormSubmit } = this.props;
+
+    if (isLogged) {
+      return <Redirect to="/foo" push />;
+    }
 
     return (
       <div>
@@ -76,13 +68,11 @@ export class LoginPage extends React.PureComponent {
               <Col className="text-center">
                 {' '}
                 <h1 className="h3 mb-3 font-weight-normal">Authentication</h1>
-                <Alert
-                  color={formMsg.color}
-                  role="alert"
-                  className={formMsg.text ? '' : 'd-none'}
-                >
-                  <strong>{formMsg.text}</strong>
-                </Alert>
+                {formMsg && (
+                  <Alert color={formMsg.color} role="alert">
+                    <strong>{formMsg.text}</strong>
+                  </Alert>
+                )}
               </Col>
             </Row>
 
@@ -148,19 +138,23 @@ export class LoginPage extends React.PureComponent {
 }
 
 LoginPage.propTypes = {
+  formMsg: PropTypes.object,
   isLogged: PropTypes.bool,
-  history: PropTypes.object,
   onLoginFormSubmit: PropTypes.func,
+  dispatch: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   loginpage: makeSelectLoginPage(),
+  formMsg: makeSelectFormMsg(),
   isLogged: makeSelectIsLogged(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    onLoginFormSubmit: values => dispatch(loginRequestAction(values)),
+    onLoginFormSubmit: (values, formik) =>
+      dispatch(loginRequestAction(values, formik)),
+    dispatch,
   };
 }
 

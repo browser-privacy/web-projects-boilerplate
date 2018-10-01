@@ -7,6 +7,7 @@ import { fromJS } from 'immutable';
 import { LOCATION_CHANGE } from 'react-router-redux';
 
 import authReducer from 'containers/Auth/reducer';
+import appReducer from 'containers/App/reducer';
 
 /*
  * routeReducer
@@ -41,8 +42,9 @@ export function routeReducer(state = routeInitialState, action) {
  */
 export default function createReducer(injectedReducers) {
   return combineReducers({
-    auth: authReducer,
     route: routeReducer,
+    auth: authReducer,
+    app: appReducer,
     ...injectedReducers,
   });
 }

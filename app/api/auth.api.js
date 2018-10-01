@@ -101,7 +101,7 @@ export const AuthApi = {
           refresh_token: response.data.refresh_token,
         }),
       )
-      .catch(err => Promise.reject(err));
+      .catch(err => Promise.reject(err.response));
   },
   /**
    * Registers an user
@@ -130,6 +130,6 @@ export const AuthApi = {
         refreshToken: localStorage.getItem('refresh_token'),
       })
       .then(response => Promise.resolve(response.data))
-      .catch(err => Promise.reject(err));
+      .catch(err => Promise.reject(err.response));
   },
 };

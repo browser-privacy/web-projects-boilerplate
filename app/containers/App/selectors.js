@@ -1,8 +1,7 @@
 import { createSelector } from 'reselect';
 
-const selectRoute = state => state.get('route');
+const selectAppDomain = state => state.get('app');
+const makeSelectUsername = () =>
+  createSelector(selectAppDomain, appState => appState.get('username'));
 
-const makeSelectLocation = () =>
-  createSelector(selectRoute, routeState => routeState.get('location').toJS());
-
-export { makeSelectLocation };
+export { makeSelectUsername };

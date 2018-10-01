@@ -4,23 +4,23 @@
  *
  */
 
-import { SET_LOGGED_STATUS, SET_USER_USERNAME, LOGOUT } from './constants';
+import { SET_LOGGED_STATUS, SAVE_USER_AUTH_TOKENS, LOGOUT } from './constants';
 
-export function setLoggedStatus(value) {
+export function setLoggedStatusAction(value) {
   return {
     type: SET_LOGGED_STATUS,
     value,
   };
 }
 
-export function setUserUsername(value) {
+export function saveUserAuthTokensAction(tokens) {
   return {
-    type: SET_USER_USERNAME,
-    value,
+    type: SAVE_USER_AUTH_TOKENS,
+    tokens,
   };
 }
 
-export function logOut() {
+export function logOutAction() {
   return {
     type: LOGOUT,
   };

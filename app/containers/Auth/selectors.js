@@ -13,7 +13,4 @@ const selectAuthDomain = state => state.get('auth', initialState);
 const makeSelectIsLogged = () =>
   createSelector(selectAuthDomain, state => state.get('isLogged'));
 
-const makeSelectUsername = () =>
-  createSelector(selectAuthDomain, state => state.get('username'));
-
-export { makeSelectIsLogged, makeSelectUsername };
+export { makeSelectIsLogged };

@@ -5,15 +5,15 @@
  */
 
 import JWTDecode from 'jwt-decode';
-import { setLoggedStatus, setUserUsername } from './actions';
+import { setLoggedStatusAction } from './actions';
 
 export function initAuthenticationMechanism(store) {
   let accessToken;
   let refreshToken;
 
   function authenticateUser() {
-    store.dispatch(setUserUsername(JWTDecode(accessToken).user.username));
-    store.dispatch(setLoggedStatus(true));
+    // store.dispatch(setUserUsername(JWTDecode(accessToken).user.username));
+    store.dispatch(setLoggedStatusAction(true));
   }
   function validateJSONWebToken(token) {
     try {
