@@ -11,6 +11,11 @@ axios.interceptors.request.use(
   reqConfig => {
     reqConfig.headers.authorization = localStorage.getItem('access_token');
 
+    if (reqConfig.url.includes('/auth/logout'))
+      reqConfig.headers['X-Refresh-Token'] = localStorage.getItem(
+        'refresh_token',
+      );
+
     return reqConfig;
   },
   err => Promise.reject(err),

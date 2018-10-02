@@ -87,9 +87,20 @@ const validateRefreshToken = refreshToken =>
     });
   });
 
+const invalidateRefreshToken = refreshToken =>
+  new Promise((res, rej) =>
+    RefreshToken.update(
+      { token: refreshToken },
+      { isActive: false, invalidatedAt: Date.now() },
+    )
+      .then(() => res())
+      .catch(err => rej(err)),
+  );
+
 module.exports = {
   loginUser,
   createAccessToken,
   createRefreshToken,
   validateRefreshToken,
+  invalidateRefreshToken,
 };

@@ -45,14 +45,25 @@ module.exports.login = (event, context, callback) => {
 };
 
 module.exports.logout = (event, context, callback) => {
-  const response = {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: '@TODO',
-    }),
-  };
+  context.callbackWaitsForEmptyEventLoop = false;
 
-  callback(null, response);
+  connectToDatabase().then(() => {
+    auth
+      .invalidateRefreshToken(event.headers['X-Refresh-Token'])
+      .then(() =>
+        callback(null, {
+          statusCode: 200,
+          headers: { 'Content-Type': 'text/plain' },
+        }),
+      )
+      .catch(err => {
+        callback(null, {
+          statusCode: 500,
+          headers: { 'Content-Type': 'text/plain' },
+          body: err.message,
+        });
+      });
+  });
 };
 
 module.exports.refreshAccessToken = (event, context, callback) => {
