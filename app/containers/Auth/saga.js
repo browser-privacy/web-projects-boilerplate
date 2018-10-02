@@ -1,6 +1,10 @@
 import { takeLatest, put } from 'redux-saga/effects';
 import JWTDecode from 'jwt-decode';
-import { SAVE_USER_AUTH_TOKENS, LOAD_USER_FROM_TOKEN } from './constants';
+import {
+  SAVE_USER_AUTH_TOKENS,
+  LOAD_USER_FROM_TOKEN,
+  LOGOUT,
+} from './constants';
 import { setLoggedStatusAction } from './actions';
 import { setUsernameAction } from '../App/actions';
 
@@ -48,9 +52,15 @@ export function* saveUserAuthTokens(action) {
   localStorage.setItem('refresh_token', action.tokens.refresh_token);
 }
 
+export function* logoutUser() {
+  // @TODO: Send API HTTP DELETE to invalidate used tokens by user
+  localStorage.clear();
+}
+
 export function* defaultSaga() {
   yield takeLatest(LOAD_USER_FROM_TOKEN, loadUserFromToken);
   yield takeLatest(SAVE_USER_AUTH_TOKENS, saveUserAuthTokens);
+  yield takeLatest(LOGOUT, logoutUser);
 }
 
 export default [defaultSaga];
