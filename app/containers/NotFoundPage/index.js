@@ -18,10 +18,10 @@ export default class NotFound extends React.PureComponent {
   render() {
     return (
       <div className="text-center">
-        <h1>Foo 1</h1>
+        <h1>404 Page not found</h1>
         <Link to="/">
           <Button>
-            <strong>Foo 2</strong>
+            <strong>Return to homepage</strong>
           </Button>
         </Link>
       </div>

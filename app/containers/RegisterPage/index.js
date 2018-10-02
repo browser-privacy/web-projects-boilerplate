@@ -11,6 +11,7 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import { Container, Button, Row, Col, Alert } from 'reactstrap';
 import { ReactstrapInput } from 'reactstrap-formik';
 import injectSaga from 'utils/injectSaga';
@@ -47,14 +48,14 @@ export class RegisterPage extends React.PureComponent {
     };
   }
 
-  componentDidMount() {
-    const { history, isLogged } = this.props;
-
-    if (isLogged) history.push('/dashboard/index');
-  }
-
   render() {
     const { serverMsgErr } = this.state;
+    const { isLogged } = this.props;
+
+    if (isLogged) {
+      return <Redirect to="/dashboard/index" push />;
+    }
+
     return (
       <div>
         <Helmet>
@@ -178,7 +179,6 @@ export class RegisterPage extends React.PureComponent {
 
 RegisterPage.propTypes = {
   isLogged: PropTypes.bool,
-  history: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
