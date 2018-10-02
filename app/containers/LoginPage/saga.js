@@ -10,7 +10,7 @@ import {
   saveUserAuthTokensAction,
 } from '../Auth/actions';
 import {} from '../App/actions';
-import { AuthApi } from '../../api/auth.api';
+import { AuthApi } from '../../api';
 import {
   LOGIN_REQUEST,
   LOGIN_REQUEST_SUCCESS,

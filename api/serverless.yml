@@ -79,6 +79,14 @@ functions:
           method: post
           cors: true
           reqValidatorName: onlyBody
+  logout:
+    handler: src/functions/auth.logout
+    events:
+      - http:
+          path: auth/logout
+          method: delete
+          cors: true
+          authorizer: authorize
   refreshAccessToken:
     handler: src/functions/auth.refreshAccessToken
     events:

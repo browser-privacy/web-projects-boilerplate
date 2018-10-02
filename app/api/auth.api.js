@@ -85,7 +85,7 @@ axios.interceptors.response.use(undefined, err => {
  */
 export const AuthApi = {
   /**
-   * Logs a user in
+   * Logs an user in
    * @param  {string} identifier User identifier (username or email)
    * @param  {string} password Password
    */
@@ -95,12 +95,21 @@ export const AuthApi = {
         userIdentifier: identifier,
         password,
       })
-      .then(response =>
+      .then(res =>
         Promise.resolve({
-          access_token: response.data.access_token,
-          refresh_token: response.data.refresh_token,
+          access_token: res.data.access_token,
+          refresh_token: res.data.refresh_token,
         }),
       )
+      .catch(err => Promise.reject(err.response));
+  },
+  /**
+   * Logs out an user in
+   */
+  logout() {
+    return axios
+      .delete(`/auth/logout`)
+      .then(res => Promise.resolve(res))
       .catch(err => Promise.reject(err.response));
   },
   /**

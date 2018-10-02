@@ -44,6 +44,17 @@ module.exports.login = (event, context, callback) => {
   });
 };
 
+module.exports.logout = (event, context, callback) => {
+  const response = {
+    statusCode: 200,
+    body: JSON.stringify({
+      message: '@TODO',
+    }),
+  };
+
+  callback(null, response);
+};
+
 module.exports.refreshAccessToken = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 

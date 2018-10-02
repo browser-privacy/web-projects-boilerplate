@@ -1,5 +1,6 @@
-import { takeLatest, put } from 'redux-saga/effects';
+import { takeLatest, put, call } from 'redux-saga/effects';
 import JWTDecode from 'jwt-decode';
+import { AuthApi } from '../../api';
 import {
   SAVE_USER_AUTH_TOKENS,
   LOAD_USER_FROM_TOKEN,
@@ -43,7 +44,7 @@ export function* loadUserFromToken() {
       localStorage.clear();
     }
   } catch (e) {
-    throw e;
+    console.log(e);
   }
 }
 
@@ -53,7 +54,12 @@ export function* saveUserAuthTokens(action) {
 }
 
 export function* logoutUser() {
-  // @TODO: Send API HTTP DELETE to invalidate used tokens by user
+  try {
+    yield call(AuthApi.logout);
+  } catch (e) {
+    console.log(e);
+  }
+
   localStorage.clear();
 }
 
