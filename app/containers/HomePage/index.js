@@ -10,7 +10,7 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -23,12 +23,6 @@ import { makeSelectIsLogged } from '../Auth/selectors';
 
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.PureComponent {
-  componentDidMount() {
-    const { isLogged, history } = this.props;
-
-    if (isLogged) history.push('/dashboard/index');
-  }
-
   render() {
     return (
       <div>
@@ -120,9 +114,7 @@ class HomePage extends React.PureComponent {
 }
 
 HomePage.propTypes = {
-  // dispatch: PropTypes.func.isRequired,
-  isLogged: PropTypes.bool,
-  history: PropTypes.object,
+  // isLogged: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({

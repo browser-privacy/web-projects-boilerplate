@@ -39,10 +39,18 @@ export class LoginPage extends React.PureComponent {
   }
 
   render() {
-    const { formMsg, isLogged, onLoginFormSubmit } = this.props;
+    const { formMsg, isLogged, onLoginFormSubmit, location } = this.props;
 
     if (isLogged) {
-      return <Redirect to="/foo" push />;
+      let defaultRedirect = '/dashboard/index';
+
+      if (location.state && location.state.from) {
+        const { pathname, search, hash } = location.state.from;
+
+        defaultRedirect = `${pathname + search + hash}`;
+      }
+
+      return <Redirect to={defaultRedirect} push />;
     }
 
     return (
@@ -92,6 +100,7 @@ export class LoginPage extends React.PureComponent {
                     type="userIdentifier"
                     placeholder="john@acme.com"
                     label="E-mail address"
+                    autoComplete="e-mail"
                   />
                   <Field
                     component={ReactstrapInput}
@@ -99,6 +108,7 @@ export class LoginPage extends React.PureComponent {
                     type="password"
                     placeholder="Password"
                     label="Password"
+                    autoComplete="password"
                   />
                   <div>
                     <Button
@@ -141,6 +151,7 @@ LoginPage.propTypes = {
   formMsg: PropTypes.object,
   isLogged: PropTypes.bool,
   onLoginFormSubmit: PropTypes.func,
+  location: PropTypes.object,
   dispatch: PropTypes.func,
 };
 

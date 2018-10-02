@@ -114,6 +114,7 @@ export class RegisterPage extends React.PureComponent {
                     type="email"
                     placeholder="john@acme.com"
                     label="E-mail address"
+                    autoComplete="email"
                   />
                   <Field
                     component={ReactstrapInput}
@@ -121,6 +122,7 @@ export class RegisterPage extends React.PureComponent {
                     type="text"
                     placeholder="johndoe"
                     label="Username"
+                    autoComplete="username"
                   />
                   <Field
                     component={ReactstrapInput}
@@ -128,6 +130,7 @@ export class RegisterPage extends React.PureComponent {
                     type="password"
                     placeholder="Password"
                     label="Password"
+                    autoComplete="new-password"
                   />
                   <div>
                     <Button

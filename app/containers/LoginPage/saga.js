@@ -1,12 +1,15 @@
 import { put, call, takeLatest } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
-import { push } from 'react-router-redux';
 import {
   loginRequestSuccessAction,
   loginRequestFailedAction,
   setLoginFormMessage,
 } from './actions';
-import { saveUserAuthTokensAction } from '../Auth/actions';
+import {
+  loadUserFromTokenAction,
+  saveUserAuthTokensAction,
+} from '../Auth/actions';
+import {} from '../App/actions';
 import { AuthApi } from '../../api/auth.api';
 import {
   LOGIN_REQUEST,
@@ -53,8 +56,8 @@ export function* loginRequestSuccess(action) {
     }),
   );
 
-  //yield call(delay, 1500);
-  //yield put(push('/dashboard/index'));
+  yield call(delay, 1300);
+  yield put(loadUserFromTokenAction());
 }
 
 export function* loginRequestFailed(action) {

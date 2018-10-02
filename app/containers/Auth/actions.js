@@ -4,7 +4,18 @@
  *
  */
 
-import { SET_LOGGED_STATUS, SAVE_USER_AUTH_TOKENS, LOGOUT } from './constants';
+import {
+  LOAD_USER_FROM_TOKEN,
+  SET_LOGGED_STATUS,
+  SAVE_USER_AUTH_TOKENS,
+  LOGOUT,
+} from './constants';
+
+export function loadUserFromTokenAction() {
+  return {
+    type: LOAD_USER_FROM_TOKEN,
+  };
+}
 
 export function setLoggedStatusAction(value) {
   return {

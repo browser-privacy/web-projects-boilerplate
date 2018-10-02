@@ -28,12 +28,12 @@ import '!file-loader?name=[name].[ext]!./images/favicon.ico';
 import 'file-loader?name=[name].[ext]!./.htaccess';
 /* eslint-enable import/no-unresolved, import/extensions */
 
-import { initAuthenticationMechanism } from 'containers/Auth';
-
 import configureStore from './configureStore';
 
 // Import CSS reset and Global Styles
 import './global-styles';
+
+import { loadUserFromTokenAction } from './containers/Auth/actions';
 
 // Create redux store with history
 const initialState = {};
@@ -41,7 +41,7 @@ const history = createHistory();
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
 
-initAuthenticationMechanism(store);
+store.dispatch(loadUserFromTokenAction());
 
 const render = () => {
   ReactDOM.render(
