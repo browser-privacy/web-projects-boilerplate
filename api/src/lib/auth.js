@@ -88,14 +88,18 @@ const validateRefreshToken = refreshToken =>
   });
 
 const invalidateRefreshToken = refreshToken =>
-  new Promise((res, rej) =>
-    RefreshToken.update(
-      { token: refreshToken },
-      { isActive: false, invalidatedAt: Date.now() },
-    )
-      .then(() => res())
-      .catch(err => rej(err)),
-  );
+  new Promise((res, rej) => {
+    jwt.verify(refreshToken, process.env.JWT_SECRET, jwtErr => {
+      if (jwtErr) return res();
+
+      return RefreshToken.update(
+        { token: refreshToken },
+        { isActive: false, invalidatedAt: Date.now() },
+      )
+        .then(() => res())
+        .catch(err => rej(err));
+    });
+  });
 
 module.exports = {
   loginUser,

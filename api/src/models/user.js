@@ -29,10 +29,6 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  emailStatus: {
-    type: String,
-    default: 'unconfirmed',
-  },
   emailChangeCandidate: {
     type: String,
     default: null,
@@ -44,6 +40,10 @@ const UserSchema = new mongoose.Schema({
   emailProofTokenExpiresAt: {
     type: Date,
     default: null,
+  },
+  isEmailConfirmed: {
+    type: Boolean,
+    default: false,
   },
   accountStatus: {
     type: String,
@@ -91,7 +91,6 @@ UserSchema.pre('save', function cb(next) {
   return bcrypt
     .hash(user.password, SALT_WORK_FACTOR)
     .then(hash => {
-      // Store hash in DB.
       user.password = hash;
       return next();
     })
