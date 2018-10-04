@@ -19,7 +19,7 @@ import {
 
 export function* loginRequest(action) {
   const { userIdentifier, password } = action.values;
-  const { formik } = action;
+  const { formikActions } = action;
 
   yield put(setLoginFormMessage(null));
 
@@ -30,10 +30,10 @@ export function* loginRequest(action) {
     let errMsg;
 
     switch (err.status) {
-      case 401:
+      case 403:
         errMsg = 'Invalid credentials';
         break;
-      case 403:
+      case 423:
         errMsg = 'Account desactivated';
         break;
       default:
@@ -41,7 +41,7 @@ export function* loginRequest(action) {
         break;
     }
 
-    formik.setSubmitting(false);
+    formikActions.setSubmitting(false);
     yield put(loginRequestFailedAction(errMsg));
   }
 }

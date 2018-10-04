@@ -163,8 +163,8 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    onLoginFormSubmit: (values, formik) =>
-      dispatch(loginRequestAction(values, formik)),
+    onLoginFormSubmit: (values, formikActions) =>
+      dispatch(loginRequestAction(values, formikActions)),
     dispatch,
   };
 }

@@ -1,6 +1,13 @@
-// import { take, call, put, select } from 'redux-saga/effects';
+import { takeLatest } from 'redux-saga/effects';
+import {} from './actions';
+// import { AuthApi } from '../../api';
+import { REGISTER_REQUEST } from './constants';
 
-// Individual exports for testing
+export function* registerRequest(action) {
+  console.log(action);
+  console.log('GOTCHA IT!');
+}
+
 export default function* defaultSaga() {
-  // See example in containers/HomePage/saga.js
+  yield takeLatest(REGISTER_REQUEST, registerRequest);
 }

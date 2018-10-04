@@ -12,6 +12,9 @@ const selectRegisterPageDomain = state =>
  * Other specific selectors
  */
 
+const makeSelectServerErrMsg = () =>
+  createSelector(selectRegisterPageDomain, state => state.get('serverErrMsg'));
+
 /**
  * Default selector used by RegisterPage
  */
@@ -19,5 +22,8 @@ const selectRegisterPageDomain = state =>
 const makeSelectRegisterPage = () =>
   createSelector(selectRegisterPageDomain, substate => substate.toJS());
 
-export default makeSelectRegisterPage;
-export { selectRegisterPageDomain };
+export {
+  selectRegisterPageDomain,
+  makeSelectRegisterPage,
+  makeSelectServerErrMsg,
+};

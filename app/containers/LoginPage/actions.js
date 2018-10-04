@@ -12,11 +12,11 @@ import {
   RESET_STATE,
 } from './constants';
 
-export function loginRequestAction(values, formik) {
+export function loginRequestAction(values, formikActions) {
   return {
     type: LOGIN_REQUEST,
     values,
-    formik,
+    formikActions,
   };
 }
 
