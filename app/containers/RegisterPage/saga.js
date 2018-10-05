@@ -1,10 +1,12 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
+import { push } from 'react-router-redux';
 import {
   registerRequestSuccessAction,
   registerRequestFailedAction,
   setRegisterFormMessageAction,
   setRecaptchaResponseAction,
 } from './actions';
+import { LOAD_USER_FROM_TOKEN_SUCCESS } from '../Auth/constants';
 import {
   loadUserFromTokenAction,
   saveUserAuthTokensAction,
@@ -69,8 +71,13 @@ export function* registerRequestFailed(action) {
   if (action.errMsg) yield put(setRegisterFormMessageAction(action.errMsg));
 }
 
+export function* loadUserFromTokenSuccess() {
+  yield put(push('/dashboard/index'));
+}
+
 export default function* defaultSaga() {
   yield takeLatest(REGISTER_REQUEST, registerRequest);
   yield takeLatest(REGISTER_REQUEST_SUCCESS, registerRequestSuccess);
   yield takeLatest(REGISTER_REQUEST_FAILED, registerRequestFailed);
+  yield takeLatest(LOAD_USER_FROM_TOKEN_SUCCESS, loadUserFromTokenSuccess);
 }

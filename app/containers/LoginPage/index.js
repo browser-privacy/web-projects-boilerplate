@@ -14,7 +14,6 @@ import { Container, Row, Col, Button, Alert } from 'reactstrap';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { Link } from 'react-router-dom';
-import { Redirect } from 'react-router';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Form, Field } from 'formik';
@@ -33,25 +32,19 @@ const LoginSchema = Yup.object().shape({
 
 /* eslint-disable react/prefer-stateless-function */
 export class LoginPage extends React.PureComponent {
+  componentDidMount() {
+    const { history, isLogged } = this.props;
+
+    if (isLogged) history.push('/dashboard/index');
+  }
+
   componentWillUnmount() {
     const { dispatch } = this.props;
     dispatch(resetStateAction());
   }
 
   render() {
-    const { formMsg, isLogged, onLoginFormSubmit, location } = this.props;
-
-    if (isLogged) {
-      let defaultRedirect = '/dashboard/index';
-
-      if (location.state && location.state.from) {
-        const { pathname, search, hash } = location.state.from;
-
-        defaultRedirect = `${pathname + search + hash}`;
-      }
-
-      return <Redirect to={defaultRedirect} push />;
-    }
+    const { formMsg, onLoginFormSubmit } = this.props;
 
     return (
       <div>
@@ -151,7 +144,7 @@ LoginPage.propTypes = {
   formMsg: PropTypes.object,
   isLogged: PropTypes.bool,
   onLoginFormSubmit: PropTypes.func,
-  location: PropTypes.object,
+  history: PropTypes.object,
   dispatch: PropTypes.func,
 };
 

@@ -6,7 +6,10 @@ import {
   LOAD_USER_FROM_TOKEN,
   LOGOUT,
 } from './constants';
-import { setLoggedStatusAction } from './actions';
+import {
+  setLoggedStatusAction,
+  loadUserFromTokenSuccessAction,
+} from './actions';
 import { setUsernameAction } from '../App/actions';
 
 export function* loadUserFromToken() {
@@ -40,6 +43,7 @@ export function* loadUserFromToken() {
       yield put(setUsernameAction(user.username));
 
       yield put(setLoggedStatusAction(true));
+      yield put(loadUserFromTokenSuccessAction());
     } else {
       localStorage.clear();
     }

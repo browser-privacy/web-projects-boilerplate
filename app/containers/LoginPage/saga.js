@@ -1,10 +1,12 @@
-import { put, call, takeLatest } from 'redux-saga/effects';
+import { put, call, takeLatest, select } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
+import { push } from 'react-router-redux';
 import {
   loginRequestSuccessAction,
   loginRequestFailedAction,
   setLoginFormMessageAction,
 } from './actions';
+import { LOAD_USER_FROM_TOKEN_SUCCESS } from '../Auth/constants';
 import {
   loadUserFromTokenAction,
   saveUserAuthTokensAction,
@@ -16,6 +18,7 @@ import {
   LOGIN_REQUEST_SUCCESS,
   LOGIN_REQUEST_FAILED,
 } from './constants';
+import { makeSelectLocation } from '../App/selectors';
 
 export function* loginRequest(action) {
   const { userIdentifier, password } = action.values;
@@ -58,7 +61,6 @@ export function* loginRequestSuccess(action) {
 
   yield call(delay, 1300);
   yield put(loadUserFromTokenAction());
-  yield;
 }
 
 export function* loginRequestFailed(action) {
@@ -70,8 +72,21 @@ export function* loginRequestFailed(action) {
   );
 }
 
+export function* loadUserFromTokenSuccess() {
+  const location = yield select(makeSelectLocation());
+  let redirectTo = '/dashboard/index';
+  if (location.state && location.state.from) {
+    const { pathname, search, hash } = location.state.from;
+
+    redirectTo = `${pathname + search + hash}`;
+  }
+
+  yield put(push(redirectTo));
+}
+
 export default function* defaultSaga() {
   yield takeLatest(LOGIN_REQUEST, loginRequest);
   yield takeLatest(LOGIN_REQUEST_SUCCESS, loginRequestSuccess);
   yield takeLatest(LOGIN_REQUEST_FAILED, loginRequestFailed);
+  yield takeLatest(LOAD_USER_FROM_TOKEN_SUCCESS, loadUserFromTokenSuccess);
 }

@@ -86,7 +86,6 @@ functions:
           path: auth/logout
           method: delete
           cors: true
-          authorizer: authorize
   refreshAccessToken:
     handler: src/functions/auth.refreshAccessToken
     events:

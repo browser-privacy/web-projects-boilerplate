@@ -6,6 +6,7 @@
 
 import {
   LOAD_USER_FROM_TOKEN,
+  LOAD_USER_FROM_TOKEN_SUCCESS,
   SET_LOGGED_STATUS,
   SAVE_USER_AUTH_TOKENS,
   LOGOUT,
@@ -14,6 +15,12 @@ import {
 export function loadUserFromTokenAction() {
   return {
     type: LOAD_USER_FROM_TOKEN,
+  };
+}
+
+export function loadUserFromTokenSuccessAction() {
+  return {
+    type: LOAD_USER_FROM_TOKEN_SUCCESS,
   };
 }
 
