@@ -11,7 +11,6 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Link } from 'react-router-dom';
-import { Redirect } from 'react-router';
 import { Container, Button, Row, Col, Alert } from 'reactstrap';
 import { ReactstrapInput } from 'reactstrap-formik';
 import injectSaga from 'utils/injectSaga';
@@ -53,6 +52,12 @@ export class RegisterPage extends React.PureComponent {
     this.recaptcha = null;
   }
 
+  componentDidMount() {
+    const { history, isLogged } = this.props;
+
+    if (isLogged) history.push('/dashboard/index');
+  }
+
   componentWillUnmount() {
     const { dispatch } = this.props;
     dispatch(resetStateAction());
@@ -60,16 +65,11 @@ export class RegisterPage extends React.PureComponent {
 
   render() {
     const {
-      isLogged,
       serverErrMsg,
       recaptchaResponse,
       onLoginFormSubmit,
       dispatch,
     } = this.props;
-
-    if (isLogged) {
-      return <Redirect to="/dashboard/index" push />;
-    }
 
     return (
       <div>
@@ -112,8 +112,6 @@ export class RegisterPage extends React.PureComponent {
               }}
               validationSchema={SignupSchema}
               onSubmit={(values, formik) => {
-                console.log(recaptchaResponse);
-
                 if (!recaptchaResponse) {
                   formik.setSubmitting(false);
                   return this.recaptcha.execute();
@@ -206,6 +204,7 @@ RegisterPage.propTypes = {
   serverErrMsg: PropTypes.string,
   recaptchaResponse: PropTypes.string,
   onLoginFormSubmit: PropTypes.func,
+  history: PropTypes.object,
   dispatch: PropTypes.func,
 };
 

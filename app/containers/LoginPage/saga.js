@@ -58,6 +58,7 @@ export function* loginRequestSuccess(action) {
 
   yield call(delay, 1300);
   yield put(loadUserFromTokenAction());
+  yield;
 }
 
 export function* loginRequestFailed(action) {
