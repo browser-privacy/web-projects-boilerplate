@@ -13,6 +13,9 @@ import {
 import { setUsernameAction } from '../App/actions';
 
 export function* loadUserFromToken() {
+  const isLogouting = localStorage.getItem('isLogouting');
+  if (isLogouting) localStorage.clear();
+
   let accessToken;
   let refreshToken;
 
@@ -58,6 +61,8 @@ export function* saveUserAuthTokens(action) {
 }
 
 export function* logoutUser() {
+  localStorage.setItem('isLogouting', true);
+
   try {
     yield call(AuthApi.logout);
   } catch (e) {
