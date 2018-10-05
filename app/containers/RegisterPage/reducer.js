@@ -7,10 +7,11 @@
 import { fromJS } from 'immutable';
 import {
   REGISTER_REQUEST,
-  RESET_STATE,
   REGISTER_REQUEST_SUCCESS,
   REGISTER_REQUEST_FAILED,
   SET_REGISTER_FORM_MESSAGE,
+  SET_RECAPTCHA_RESPONSE,
+  RESET_STATE,
 } from './constants';
 
 export const initialState = fromJS({});
@@ -24,7 +25,9 @@ function registerPageReducer(state = initialState, action) {
     case REGISTER_REQUEST_FAILED:
       return state;
     case SET_REGISTER_FORM_MESSAGE:
-      return state.set('serverMsgErr', action.value);
+      return state.set('serverErrMsg', action.value);
+    case SET_RECAPTCHA_RESPONSE:
+      return state.set('recaptchaResponse', action.value);
     case RESET_STATE:
       return initialState;
     default:

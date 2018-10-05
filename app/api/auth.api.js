@@ -130,7 +130,7 @@ export const AuthApi = {
         password,
         recaptcha,
       })
-      .then(res => Promise.resolve(res))
+      .then(res => Promise.resolve(res.data))
       .catch(err => Promise.reject(err.response));
   },
   /**
@@ -141,7 +141,7 @@ export const AuthApi = {
       .post(`/auth/refresh_access_token`, {
         refreshToken: localStorage.getItem('refresh_token'),
       })
-      .then(response => Promise.resolve(response.data))
+      .then(res => Promise.resolve(res.data))
       .catch(err => Promise.reject(err.response));
   },
 };

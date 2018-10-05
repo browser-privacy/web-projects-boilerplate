@@ -3,7 +3,7 @@ import { delay } from 'redux-saga';
 import {
   loginRequestSuccessAction,
   loginRequestFailedAction,
-  setLoginFormMessage,
+  setLoginFormMessageAction,
 } from './actions';
 import {
   loadUserFromTokenAction,
@@ -21,7 +21,7 @@ export function* loginRequest(action) {
   const { userIdentifier, password } = action.values;
   const { formikActions } = action;
 
-  yield put(setLoginFormMessage(null));
+  yield put(setLoginFormMessageAction(null));
 
   try {
     const tokens = yield call(AuthApi.login, userIdentifier, password);
@@ -50,7 +50,7 @@ export function* loginRequestSuccess(action) {
   yield put(saveUserAuthTokensAction(action.tokens));
 
   yield put(
-    setLoginFormMessage({
+    setLoginFormMessageAction({
       color: 'success',
       text: 'Redirecting to dashboard...',
     }),
@@ -62,7 +62,7 @@ export function* loginRequestSuccess(action) {
 
 export function* loginRequestFailed(action) {
   yield put(
-    setLoginFormMessage({
+    setLoginFormMessageAction({
       color: 'danger',
       text: action.errMsg,
     }),

@@ -56,17 +56,22 @@ module.exports.create = (event, context, callback) => {
       },
     ],
     (err, res) => {
-      if (err && err.name === 'ValidationError')
-        return callback(null, {
-          statusCode: 400,
-          headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify(err.errors),
-        });
+      let errStatusCode;
+      let errMsg;
+
+      if (err && err.name === 'ValidationError') {
+        errStatusCode = 400;
+        errMsg = JSON.stringify(err.errors);
+      }
+      if (err && err.message === 'google_recaptcha_error') {
+        errStatusCode = 403;
+      }
+
       if (err)
         return callback(null, {
-          statusCode: err.statusCode || 500,
+          statusCode: errStatusCode || err.status,
           headers: { 'Content-Type': 'text/plain' },
-          body: JSON.stringify(err),
+          body: errMsg || err.message,
         });
 
       return callback(null, {

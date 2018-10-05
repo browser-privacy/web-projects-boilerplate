@@ -9,14 +9,16 @@ import {
   REGISTER_REQUEST_SUCCESS,
   REGISTER_REQUEST_FAILED,
   SET_REGISTER_FORM_MESSAGE,
+  SET_RECAPTCHA_RESPONSE,
   RESET_STATE,
 } from './constants';
 
-export function registerRequestAction(values, formikActions) {
+export function registerRequestAction(values, formik, recaptcha) {
   return {
     type: REGISTER_REQUEST,
     values,
-    formikActions,
+    formik,
+    recaptcha,
   };
 }
 
@@ -34,14 +36,21 @@ export function registerRequestFailedAction(errMsg) {
   };
 }
 
-export function setLoginFormMessage(value) {
+export function setRegisterFormMessageAction(value) {
   return {
     type: SET_REGISTER_FORM_MESSAGE,
     value,
   };
 }
 
-export function resetState() {
+export function setRecaptchaResponseAction(value) {
+  return {
+    type: SET_RECAPTCHA_RESPONSE,
+    value,
+  };
+}
+
+export function resetStateAction() {
   return {
     type: RESET_STATE,
   };

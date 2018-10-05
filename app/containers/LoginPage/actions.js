@@ -34,14 +34,14 @@ export function loginRequestFailedAction(errMsg) {
   };
 }
 
-export function setLoginFormMessage(value) {
+export function setLoginFormMessageAction(value) {
   return {
     type: SET_LOGIN_FORM_MESSAGE,
     value,
   };
 }
 
-export function resetState() {
+export function resetStateAction() {
   return {
     type: RESET_STATE,
   };

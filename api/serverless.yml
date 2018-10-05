@@ -97,6 +97,7 @@ functions:
           path: auth/refresh_access_token
           method: post
           cors: true
+          authorizer: authorize
           reqValidatorName: onlyBody
   createUser:
     handler: src/functions/user.create

@@ -22,7 +22,7 @@ import * as Yup from 'yup';
 import { ReactstrapInput } from 'reactstrap-formik';
 import reducer from './reducer';
 import saga from './saga';
-import { loginRequestAction, resetState } from './actions';
+import { loginRequestAction, resetStateAction } from './actions';
 import { makeSelectLoginPage, makeSelectFormMsg } from './selectors';
 import { makeSelectIsLogged } from '../Auth/selectors';
 
@@ -35,7 +35,7 @@ const LoginSchema = Yup.object().shape({
 export class LoginPage extends React.PureComponent {
   componentWillUnmount() {
     const { dispatch } = this.props;
-    dispatch(resetState());
+    dispatch(resetStateAction());
   }
 
   render() {

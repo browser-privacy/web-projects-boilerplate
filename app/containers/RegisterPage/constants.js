@@ -11,4 +11,5 @@ export const REGISTER_REQUEST_FAILED =
   'app/RegisterPage/REGISTER_REQUEST_FAILED';
 export const SET_REGISTER_FORM_MESSAGE =
   'app/RegisterPage/SET_REGISTER_FORM_MESSAGE';
+export const SET_RECAPTCHA_RESPONSE = 'app/RegisterPage/SET_RECAPTCHA_RESPONSE';
 export const RESET_STATE = 'app/RegisterPage/RESET_STATE';

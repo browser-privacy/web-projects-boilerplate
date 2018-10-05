@@ -21,11 +21,19 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Reaptcha from 'reaptcha';
-import { makeSelectRegisterPage, makeSelectServerErrMsg } from './selectors';
+import {
+  makeSelectRegisterPage,
+  makeSelectServerErrMsg,
+  makeSelectRecaptchaResponse,
+} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import { makeSelectIsLogged } from '../Auth/selectors';
-import { registerRequestAction } from './actions';
+import {
+  registerRequestAction,
+  resetStateAction,
+  setRecaptchaResponseAction,
+} from './actions';
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
@@ -42,47 +50,22 @@ export class RegisterPage extends React.PureComponent {
   constructor(props) {
     super(props);
 
-    this.captcha = null;
-    this.state = {
-      recaptchaResponse: null,
-    };
+    this.recaptcha = null;
   }
 
-  submitSignUp(values) {
-    console.log(values);
-    console.log('GOT IT');
-
-    /* AuthApi.register(email, username, password, recaptchaResponse)
-      .then(res => {
-        const tokens = res.data;
-
-        if (!tokens.access_token && !tokens.refresh_token) {
-          this.setState({ recaptchaResponse: null });
-          this.captcha.reset();
-          this.setState({
-            serverMsgErr: 'An error ocurred, please try again.',
-          });
-          return formikActions.setSubmitting(false);
-        }
-
-        logInUser(tokens);
-        return history.push('/dashboard/index');
-      })
-      .catch(err => {
-        if (err.status === 400)
-          return this.setState({
-            serverMsgErr: `E-mail address or username already exists. Please try again.`,
-          });
-
-        this.setState({ serverMsgErr: `Server error: ${err.message}` });
-
-        this.captcha.reset();
-        return formikActions.setSubmitting(false);
-      }); */
+  componentWillUnmount() {
+    const { dispatch } = this.props;
+    dispatch(resetStateAction());
   }
 
   render() {
-    const { isLogged, serverErrMsg, onLoginFormSubmit } = this.props;
+    const {
+      isLogged,
+      serverErrMsg,
+      recaptchaResponse,
+      onLoginFormSubmit,
+      dispatch,
+    } = this.props;
 
     if (isLogged) {
       return <Redirect to="/dashboard/index" push />;
@@ -128,15 +111,16 @@ export class RegisterPage extends React.PureComponent {
                 password: '',
               }}
               validationSchema={SignupSchema}
-              onSubmit={(values, formikActions) => {
-                const { recaptchaResponse } = this.state;
+              onSubmit={(values, formik) => {
+                console.log(recaptchaResponse);
 
                 if (!recaptchaResponse) {
-                  formikActions.setSubmitting(false);
-                  return this.captcha.execute();
+                  formik.setSubmitting(false);
+                  return this.recaptcha.execute();
                 }
+                values.recaptchaResponse = recaptchaResponse;
 
-                return onLoginFormSubmit(values, formikActions);
+                return onLoginFormSubmit(values, formik, this.recaptcha);
               }}
             >
               {({ submitForm, isSubmitting }) => (
@@ -165,6 +149,7 @@ export class RegisterPage extends React.PureComponent {
                     label="Password"
                     autoComplete="new-password"
                   />
+
                   <div>
                     <Button
                       type="submit"
@@ -181,16 +166,23 @@ export class RegisterPage extends React.PureComponent {
                       Sign up to start
                     </Button>
                   </div>
+
                   <Reaptcha
                     // eslint-disable-next-line
-                    ref={e => (this.captcha = e)}
+                    ref={e => (this.recaptcha = e)}
                     sitekey="6LeJVnEUAAAAAAetIUT8Rb7yQJx8LquVS2EFQNvF"
                     onVerify={res => {
-                      this.setState({ recaptchaResponse: res });
+                      dispatch(setRecaptchaResponseAction(res));
                       submitForm();
                     }}
-                    onError={() => this.setState({ recaptchaResponse: null })}
-                    onExpire={() => this.setState({ recaptchaResponse: null })}
+                    onExpire={() => {
+                      dispatch(setRecaptchaResponseAction(''));
+                      this.recaptcha.reset();
+                    }}
+                    onError={() =>
+                      // eslint-disable-next-line
+                      alert(`Unable to load captcha. Please, try again.`)
+                    }
                     size="invisible"
                     theme="dark"
                     badge="inline"
@@ -212,20 +204,23 @@ export class RegisterPage extends React.PureComponent {
 RegisterPage.propTypes = {
   isLogged: PropTypes.bool,
   serverErrMsg: PropTypes.string,
+  recaptchaResponse: PropTypes.string,
   onLoginFormSubmit: PropTypes.func,
+  dispatch: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   registerpage: makeSelectRegisterPage(),
   isLogged: makeSelectIsLogged(),
   serverErrMsg: makeSelectServerErrMsg(),
+  recaptchaResponse: makeSelectRecaptchaResponse(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    onLoginFormSubmit: (values, formikActions) => {
-      dispatch(registerRequestAction(values, formikActions));
-    },
+    onLoginFormSubmit: (values, formik, recaptcha) =>
+      dispatch(registerRequestAction(values, formik, recaptcha)),
+    dispatch,
   };
 }
 
