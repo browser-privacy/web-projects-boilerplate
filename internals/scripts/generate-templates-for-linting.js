@@ -114,6 +114,3 @@ containerGen
   .then(checkForErrors)
   .then(removeTestsDirFrom('containers/RbGeneratedContainerStateless'))
   .catch(reportErrorsFor('container/Stateless'));
-
-const languageGen = plop.getGenerator('language');
-languageGen.runActions({ language: 'fr' }).catch(reportErrorsFor('language'));
