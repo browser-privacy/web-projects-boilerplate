@@ -5,7 +5,6 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 {{#if wantHeaders}}
 import { Helmet } from 'react-helmet';
@@ -42,8 +41,6 @@ export class {{ properCase name }} extends React.{{{ component }}} {
     );
   }
 }
-
-{{ properCase name }}.propTypes = {};
 
 {{#if wantActionsAndReducer}}
 const mapStateToProps = createStructuredSelector({
