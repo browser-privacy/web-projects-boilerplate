@@ -1,4 +1,7 @@
 export const config = {
+  test: {
+    API_ENDPOINT: 'http://localhost:3000',
+  },
   development: {
     API_ENDPOINT: 'http://localhost:3000',
   },
