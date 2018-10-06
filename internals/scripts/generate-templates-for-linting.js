@@ -43,7 +43,7 @@ componentGen
   .runActions({
     name: 'RbGeneratedComponentEsclass',
     type: 'React.Component',
-    wantMessages: true,
+    wantMessages: false,
     wantLoadable: true,
   })
   .then(checkForErrors)
@@ -54,7 +54,7 @@ componentGen
   .runActions({
     name: 'RbGeneratedComponentEsclasspure',
     type: 'React.PureComponent',
-    wantMessages: true,
+    wantMessages: false,
     wantLoadable: true,
   })
   .then(checkForErrors)
@@ -65,7 +65,7 @@ componentGen
   .runActions({
     name: 'RbGeneratedComponentStatelessfunction',
     type: 'Stateless Function',
-    wantMessages: true,
+    wantMessages: false,
     wantLoadable: true,
   })
   .then(checkForErrors)
@@ -80,7 +80,7 @@ containerGen
     wantHeaders: true,
     wantActionsAndReducer: true,
     wantSagas: true,
-    wantMessages: true,
+    wantMessages: false,
     wantLoadable: true,
   })
   .then(checkForErrors)
@@ -94,7 +94,7 @@ containerGen
     wantHeaders: true,
     wantActionsAndReducer: true,
     wantSagas: true,
-    wantMessages: true,
+    wantMessages: false,
     wantLoadable: true,
   })
   .then(checkForErrors)
@@ -108,7 +108,7 @@ containerGen
     wantHeaders: true,
     wantActionsAndReducer: true,
     wantSagas: true,
-    wantMessages: true,
+    wantMessages: false,
     wantLoadable: true,
   })
   .then(checkForErrors)
