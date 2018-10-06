@@ -17,6 +17,9 @@ provider:
 
 custom:
   documentation:
+    api:
+      info:
+        title: Web projects boilerplate
     models:
       - name: RefreshAccessTokenRequest
         contentType: 'application/json'
@@ -56,17 +59,15 @@ custom:
               type: string
 
 functions:
+  authorize:
+    handler: src/handlers/authorize.handler
   healthCheck:
     handler: src/functions/healthCheck.main
     events:
       - http:
-          documentation:
-            requestModels:
-              'application/json': LoginUserRequest
           path: health-check
           method: post
           cors: true
-          reqValidatorName: 'myReqValidator'
   login:
     handler: src/functions/auth.login
     events:
@@ -77,6 +78,7 @@ functions:
           path: auth/login
           method: post
           cors: true
+          reqValidatorName: onlyBody
   logout:
     handler: src/functions/auth.logout
     events:
@@ -94,6 +96,8 @@ functions:
           path: auth/refresh_access_token
           method: post
           cors: true
+          authorizer: authorize
+          reqValidatorName: onlyBody
   createUser:
     handler: src/functions/user.create
     events:
@@ -104,13 +108,14 @@ functions:
           path: users/create
           method: post
           cors: true
+          reqValidatorName: onlyBody
 
 resources:
   Resources:
-    xMyRequestValidator:
+    onlyBody:
       Type: 'AWS::ApiGateway::RequestValidator'
       Properties:
-        Name: 'my-req-validator'
+        Name: 'only-body'
         RestApiId:
           Ref: ApiGatewayRestApi
         ValidateRequestBody: true
