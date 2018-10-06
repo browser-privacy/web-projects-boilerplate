@@ -121,7 +121,7 @@ const mapStateToProps = createStructuredSelector({
   isLogged: makeSelectIsLogged(),
 });
 
-function mapDispatchToProps() {
+function mapDispatchToProps(dispatch) {
   return {
     dispatch,
   };

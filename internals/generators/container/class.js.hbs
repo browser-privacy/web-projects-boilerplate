@@ -52,9 +52,7 @@ export class {{ properCase name }} extends {{{ type }}} {
   }
 }
 
-{{ properCase name }}.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};
+{{ properCase name }}.propTypes = {};
 
 {{#if wantActionsAndReducer}}
 const mapStateToProps = createStructuredSelector({
@@ -62,10 +60,8 @@ const mapStateToProps = createStructuredSelector({
 });
 {{/if}}
 
-function mapDispatchToProps(dispatch) {
-  return {
-    dispatch,
-  };
+function mapDispatchToProps() {
+  return {};
 }
 
 {{#if wantActionsAndReducer}}
