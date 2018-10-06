@@ -49,7 +49,7 @@ module.exports.logout = (event, context, callback) => {
 
   connectToDatabase().then(() => {
     auth
-      .invalidateRefreshToken(event.headers['X-Refresh-Token'])
+      .invalidateRefreshToken(event.headers['X-REFRESH-TOKEN'])
       .then(() =>
         callback(null, {
           statusCode: 200,
