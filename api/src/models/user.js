@@ -78,7 +78,10 @@ const UserSchema = new mongoose.Schema({
 /**
  * Plugins
  */
-UserSchema.plugin(uniqueValidator, { type: 'mongoose-unique-validator' });
+UserSchema.plugin(uniqueValidator, {
+  type: 'mongoose-unique-validator',
+  message: 'Already in use, please choose another one.',
+});
 
 /**
  * Pre-save hooks
