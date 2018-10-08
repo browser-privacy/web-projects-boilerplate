@@ -58,8 +58,8 @@ export class LoginPage extends React.PureComponent {
               <Col className="text-center">
                 <img
                   className="mb-4"
-                  src="https://getbootstrap.com/docs/4.1/assets/brand/bootstrap-solid.svg"
-                  alt=""
+                  src="/icon.png"
+                  alt="app logo"
                   width="72"
                   height="72"
                 />

@@ -5,5 +5,10 @@
     "target": "es2016",
     "jsx": "react"
   },
-  "exclude": ["coverage", "internals", "node_modules", "**/node_modules/*"]
+  "exclude": [
+    "app/coverage",
+    "app/internals",
+    "node_modules",
+    "**/node_modules/*"
+  ]
 }
