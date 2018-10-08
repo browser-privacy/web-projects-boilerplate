@@ -24,12 +24,16 @@ module.exports.handler = (event, context, callback) => {
   if (token) token = token.replace('Bearer ', '');
 
   try {
-    // Verify JWT
+    // Verify JWT token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const { user } = decoded;
 
+    // @TODO: check if user's token has valid accountStatus and emailStatus
+
     // Checks if the user's scopes allow her to call the current endpoint ARN
     const isAllowed = authorizeUser(user, event.methodArn);
+
+    // @TODO: Check if user account is active or email is not verified, hitting database?
 
     // Return an IAM policy document for the current endpoint
     const effect = isAllowed ? 'Allow' : 'Deny';

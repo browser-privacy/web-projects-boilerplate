@@ -123,7 +123,7 @@ export class LoginPage extends React.PureComponent {
               )}
             </Formik>
 
-            <Link to="/auth/reset">
+            <Link to="/auth/forgot_password">
               <Button size="sm" color="secondary" block className="mt-2">
                 Forgot password?
               </Button>

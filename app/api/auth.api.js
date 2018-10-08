@@ -1,3 +1,5 @@
+// @TODO: Move axios defaults and interceptors to another file
+
 import axios from 'axios';
 import JWTDecode from 'jwt-decode';
 
@@ -38,6 +40,7 @@ function forceLogout() {
 }
 
 axios.interceptors.response.use(undefined, err => {
+  // @TODO: Handle 403 error code
   if (err.response.status !== 401) return Promise.reject(err);
 
   if (!isFetchingToken) {
