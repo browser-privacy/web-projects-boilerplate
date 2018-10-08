@@ -12,7 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Link } from 'react-router-dom';
 import { Container, Button, Row, Col, Alert } from 'reactstrap';
-import { ReactstrapInput } from 'reactstrap-formik';
+import { ReactstrapInput, ReactstrapRadio } from 'reactstrap-formik';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -163,6 +163,17 @@ export class RegisterPage extends React.PureComponent {
                       />
                       Sign up to start
                     </Button>
+                    <p className="mt-1 text-center text-muted small">
+                      By signing up you agree to our{' '}
+                      <a href="/legal/terms#to" target="popup">
+                        Terms of Service
+                      </a>{' '}
+                      and{' '}
+                      <a href="/legal/terms#pp" target="popup">
+                        Privacy Policy
+                      </a>
+                      .
+                    </p>
                   </div>
 
                   <Reaptcha
