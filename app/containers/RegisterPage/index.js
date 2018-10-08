@@ -12,7 +12,7 @@ import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Link } from 'react-router-dom';
 import { Container, Button, Row, Col, Alert } from 'reactstrap';
-import { ReactstrapInput, ReactstrapRadio } from 'reactstrap-formik';
+import { ReactstrapInput } from 'reactstrap-formik';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
