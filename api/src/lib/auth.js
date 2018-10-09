@@ -11,7 +11,7 @@ const loginUser = (userIdentifier, password) =>
       {
         $or: [{ email: userIdentifier }, { username: userIdentifier }],
       },
-      'username accountStatus roles password',
+      'username accountStatus isEmailConfirmed roles password',
     )
       .then(user => {
         if (!user) return rej1(new Error('authentication_error'));
@@ -37,6 +37,7 @@ const createAccessToken = user =>
         _id: user._id,
         username: user.username,
         accountStatus: user.accountStatus,
+        isEmailConfirmed: user.isEmailConfirmed,
         roles: user.roles,
       },
     },
@@ -92,7 +93,7 @@ const invalidateRefreshToken = refreshToken =>
     jwt.verify(refreshToken, process.env.JWT_SECRET, jwtErr => {
       if (jwtErr) return res();
 
-      return RefreshToken.update(
+      return RefreshToken.updateOne(
         { token: refreshToken },
         { isActive: false, invalidatedAt: Date.now() },
       )

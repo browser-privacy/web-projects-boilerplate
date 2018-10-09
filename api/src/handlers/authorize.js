@@ -28,16 +28,18 @@ module.exports.handler = (event, context, callback) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const { user } = decoded;
 
-    // @TODO: check if user's token has valid accountStatus and emailStatus
+    let isAllowed = null;
+
+    if (user.accountStatus !== 'active' || user.isEmailConfirmed === false) {
+      isAllowed = false;
+    }
 
     // Checks if the user's scopes allow her to call the current endpoint ARN
-    const isAllowed = authorizeUser(user, event.methodArn);
-
-    // @TODO: Check if user account is active or email is not verified, hitting database?
+    if (isAllowed === null) isAllowed = authorizeUser(user, event.methodArn);
 
     // Return an IAM policy document for the current endpoint
     const effect = isAllowed ? 'Allow' : 'Deny';
-    const userId = user.username;
+    const userId = user.username; // @FIXME: Use user._id instead of user.username
     const authorizerContext = { user: JSON.stringify(user) };
     const policyDocument = aws.buildIAMPolicy(
       userId,
