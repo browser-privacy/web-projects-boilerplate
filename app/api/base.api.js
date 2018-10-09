@@ -40,7 +40,7 @@ function forceLogout() {
 }
 
 axios.interceptors.response.use(undefined, err => {
-  // @TODO: Handle 403 error code
+  if (err.response.status === 403) return forceLogout();
   if (err.response.status !== 401) return Promise.reject(err);
 
   if (!isFetchingToken) {
