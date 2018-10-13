@@ -33,9 +33,9 @@ import {
 import { NavLink as RRNavLink } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { createStructuredSelector } from 'reselect';
-import { makeSelectIsLogged } from '../Auth/selectors';
-import { logOutAction } from '../Auth/actions';
-import { makeSelectUsername } from '../App/selectors';
+import { makeSelectIsLogged } from '../../containers/Auth/selectors';
+import { logOutAction } from '../../containers/Auth/actions';
+import { makeSelectUsername } from '../../containers/App/selectors';
 
 /* eslint-disable react/prefer-stateless-function */
 export class NavbarComponent extends React.PureComponent {
@@ -188,7 +188,7 @@ export class NavbarComponent extends React.PureComponent {
   }
 }
 
-Navbar.propTypes = {
+NavbarComponent.propTypes = {
   isLogged: PropTypes.bool,
   username: PropTypes.string,
   signOut: PropTypes.func,

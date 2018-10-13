@@ -10,3 +10,4 @@
  */
 
 export const SET_USER_USERNAME = 'app/App/SET_USER_USERNAME';
+export const SET_USER_EMAIL = 'app/App/SET_USER_EMAIL';

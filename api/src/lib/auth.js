@@ -11,7 +11,7 @@ const loginUser = (userIdentifier, password) =>
       {
         $or: [{ email: userIdentifier }, { username: userIdentifier }],
       },
-      'username accountStatus isEmailConfirmed roles password',
+      'email username accountStatus isEmailConfirmed roles password',
     )
       .then(user => {
         if (!user) return rej1(new Error('authentication_error'));
@@ -35,6 +35,7 @@ const createAccessToken = user =>
     {
       user: {
         _id: user._id,
+        email: user.email,
         username: user.username,
         accountStatus: user.accountStatus,
         isEmailConfirmed: user.isEmailConfirmed,
@@ -75,7 +76,7 @@ const validateRefreshToken = refreshToken =>
         { token: refreshToken, isActive: true },
         { lastUseAt: Date.now() },
       )
-        .populate('_user', 'username accountStatus roles')
+        .populate('_user', 'email username accountStatus roles')
         .select('_user')
         .then(validRefreshToken => {
           if (!validRefreshToken) return rej(new Error('authentication_error'));

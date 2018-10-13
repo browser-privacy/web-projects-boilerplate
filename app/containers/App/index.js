@@ -8,7 +8,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
-import Navbar from 'containers/Navbar/Loadable';
+import Navbar from 'components/Navbar/Loadable';
 import Footer from 'components/Footer/Loadable';
 
 import HomePage from 'containers/HomePage/Loadable';
@@ -21,6 +21,7 @@ import RegisterPage from 'containers/RegisterPage/Loadable';
 
 import UserDashboardMainPage from 'containers/UserDashboard/MainPage/Loadable';
 import UserDashboardSettingsPage from 'containers/UserDashboard/SettingsPage/Loadable';
+import UserDashboardEmailVerificationPage from 'containers/UserDashboard/EmailVerificationPage/Loadable';
 
 import PrivateRoute from '../../components/PrivateRoute';
 
@@ -45,6 +46,11 @@ export default function App() {
           exact
           path="/dashboard/user/settings"
           component={UserDashboardSettingsPage}
+        />
+        <PrivateRoute
+          exact
+          path="/dashboard/user/email/verification"
+          component={UserDashboardEmailVerificationPage}
         />
 
         <Route component={NotFoundPage} />
