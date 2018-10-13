@@ -38,7 +38,10 @@ import { withRouter } from 'react-router';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectIsLogged } from '../../containers/Auth/selectors';
 import { logOutAction } from '../../containers/Auth/actions';
-import { makeSelectUsername } from '../../containers/App/selectors';
+import {
+  makeSelectUsername,
+  makeSelectIsEmailConfirmed,
+} from '../../containers/App/selectors';
 
 /* eslint-disable react/prefer-stateless-function */
 export class NavbarComponent extends React.PureComponent {
@@ -129,7 +132,7 @@ export class NavbarComponent extends React.PureComponent {
   }
 
   dropdownMenuLinks() {
-    const { location, history } = this.props;
+    const { isUserEmailConfirmed, location, history } = this.props;
 
     const links = [];
 
@@ -148,6 +151,7 @@ export class NavbarComponent extends React.PureComponent {
         <DropdownItem
           key="dropdownitem-settings"
           onClick={() => history.push('/dashboard/user/settings')}
+          className={isUserEmailConfirmed ? '' : 'd-none'}
         >
           <FontAwesomeIcon icon={faCog} className="align-text-top mr-1" />
           Settings
@@ -192,6 +196,7 @@ export class NavbarComponent extends React.PureComponent {
 
 NavbarComponent.propTypes = {
   isLogged: PropTypes.bool,
+  isUserEmailConfirmed: PropTypes.bool,
   username: PropTypes.string,
   signOut: PropTypes.func,
   location: PropTypes.object,
@@ -200,6 +205,7 @@ NavbarComponent.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   isLogged: makeSelectIsLogged(),
+  isUserEmailConfirmed: makeSelectIsEmailConfirmed(),
   username: makeSelectUsername(),
 });
 

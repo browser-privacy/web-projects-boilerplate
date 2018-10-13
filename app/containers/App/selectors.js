@@ -3,6 +3,8 @@ import { createSelector } from 'reselect';
 const selectAppDomain = state => state.get('app');
 const makeSelectUsername = () =>
   createSelector(selectAppDomain, appState => appState.get('username'));
+const makeSelectIsEmailConfirmed = () =>
+  createSelector(selectAppDomain, appState => appState.get('isEmailConfirmed'));
 
 const selectRouteDomain = state => state.get('route');
 const makeSelectLocation = () =>
@@ -10,4 +12,4 @@ const makeSelectLocation = () =>
     routeState.get('location').toJS(),
   );
 
-export { makeSelectUsername, makeSelectLocation };
+export { makeSelectUsername, makeSelectLocation, makeSelectIsEmailConfirmed };

@@ -16,7 +16,7 @@ import injectReducer from 'utils/injectReducer';
 import makeSelectMainPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { makeSelectIsEmailConfirmed } from '../../Auth/selectors';
+import { makeSelectIsEmailConfirmed } from '../../App/selectors';
 
 /* eslint-disable react/prefer-stateless-function */
 export class MainPage extends React.PureComponent {
@@ -33,6 +33,7 @@ export class MainPage extends React.PureComponent {
           <title>MainPage</title>
           <meta name="description" content="Description of MainPage" />
         </Helmet>
+        <h1>vamoss</h1>
       </div>
     );
   }
