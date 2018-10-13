@@ -12,15 +12,15 @@ import { Link } from 'react-router-dom';
 export class Footer extends React.PureComponent {
   render() {
     return (
-      // @TODO: Add pre-footer
       <footer className="bg-dark">
         <Container>
           <Row className="text-light">
             <Col xs="4">
-              <span>
+              <span>© Domain.io</span>
+              {/* <span>
                 Domain.io ® 2017, {new Date().getFullYear()}. All Rights
                 Reserved
-              </span>
+              </span> */}
             </Col>
             <Col className="footer-text text-right">
               <span>
