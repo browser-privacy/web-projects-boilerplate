@@ -13,4 +13,7 @@ const selectAuthDomain = state => state.get('auth', initialState);
 const makeSelectIsLogged = () =>
   createSelector(selectAuthDomain, state => state.get('isLogged'));
 
-export { makeSelectIsLogged };
+const makeSelectIsEmailConfirmed = () =>
+  createSelector(selectAuthDomain, state => state.get('isEmailConfirmed'));
+
+export { makeSelectIsLogged, makeSelectIsEmailConfirmed };

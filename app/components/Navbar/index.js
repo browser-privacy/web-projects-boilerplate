@@ -1,3 +1,5 @@
+// @TODO: Refactor this component
+
 /**
  *
  * Navbar
@@ -29,6 +31,7 @@ import {
   faUnlockAlt,
   faHome,
   faRocket,
+  faUserAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { NavLink as RRNavLink } from 'react-router-dom';
 import { withRouter } from 'react-router';
@@ -68,12 +71,11 @@ export class NavbarComponent extends React.PureComponent {
         <Nav key="nav" className="ml-auto align-items-center" navbar>
           <UncontrolledDropdown key="user-options" nav inNavbar>
             <DropdownToggle nav caret>
-              <img
-                key="user-avatar"
-                src="https://res.cloudinary.com/coinbase/image/upload/c_fill,h_128,w_128/q8x14xbptmjcusxmolwl.png"
-                alt="user avatar"
-                className="navbar-user-img"
+              <FontAwesomeIcon
+                icon={faUserAlt}
+                className="fa-lg navbar-user-icon"
               />
+
               <span className="navbar-user-username">{username}</span>
             </DropdownToggle>
             <DropdownMenu right>
@@ -84,7 +86,7 @@ export class NavbarComponent extends React.PureComponent {
                   icon={faUnlockAlt}
                   className="align-text-top mr-1"
                 />
-                Sign Out
+                Sign out
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
@@ -203,11 +205,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    signOut: evt => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-
-      dispatch(logOutAction());
-    },
+    signOut: () => dispatch(logOutAction()),
   };
 }
 

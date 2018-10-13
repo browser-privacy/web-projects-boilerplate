@@ -28,6 +28,7 @@ export class EmailVerificationPage extends React.PureComponent {
             content="Description of EmailVerificationPage"
           />
         </Helmet>
+        <h1>Verify</h1>
       </div>
     );
   }

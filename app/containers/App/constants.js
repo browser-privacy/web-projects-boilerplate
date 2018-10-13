@@ -11,3 +11,5 @@
 
 export const SET_USER_USERNAME = 'app/App/SET_USER_USERNAME';
 export const SET_USER_EMAIL = 'app/App/SET_USER_EMAIL';
+export const SET_IS_USER_EMAIL_CONFIRMED =
+  'app/App/SET_IS_USER_EMAIL_CONFIRMED';

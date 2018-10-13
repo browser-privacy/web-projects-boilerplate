@@ -10,7 +10,11 @@ import {
   setLoggedStatusAction,
   loadUserFromTokenSuccessAction,
 } from './actions';
-import { setUsernameAction, setUserEmailAction } from '../App/actions';
+import {
+  setUsernameAction,
+  setUserEmailAction,
+  setIsUserEmailConfirmedAction,
+} from '../App/actions';
 
 export function* loadUserFromToken() {
   const isLogouting = localStorage.getItem('isLogouting');
@@ -45,6 +49,7 @@ export function* loadUserFromToken() {
 
       yield put(setUsernameAction(user.username));
       yield put(setUserEmailAction(user.email));
+      yield put(setIsUserEmailConfirmedAction(user.isEmailConfirmed));
 
       yield put(setLoggedStatusAction(true));
       yield put(loadUserFromTokenSuccessAction());

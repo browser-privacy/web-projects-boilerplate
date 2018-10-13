@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
@@ -16,9 +16,16 @@ import injectReducer from 'utils/injectReducer';
 import makeSelectMainPage from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import { makeSelectIsEmailConfirmed } from '../../Auth/selectors';
 
 /* eslint-disable react/prefer-stateless-function */
 export class MainPage extends React.PureComponent {
+  componentDidMount() {
+    const { history, isUserEmailConfirmed } = this.props;
+
+    if (!isUserEmailConfirmed) history.push('/dashboard/email/verification');
+  }
+
   render() {
     return (
       <div>
@@ -32,11 +39,14 @@ export class MainPage extends React.PureComponent {
 }
 
 MainPage.propTypes = {
+  history: PropTypes.object,
+  isUserEmailConfirmed: PropTypes.bool,
   // dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   mainpage: makeSelectMainPage(),
+  isUserEmailConfirmed: makeSelectIsEmailConfirmed(),
 });
 
 function mapDispatchToProps(dispatch) {

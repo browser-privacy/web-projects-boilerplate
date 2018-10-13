@@ -5,28 +5,36 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectIsLogged } from '../../containers/Auth/selectors';
 
-const PrivateRoute = ({
-  component: Component,
-  redirect: pathname,
-  isLogged,
-  ...rest
-}) => (
-  <Route
-    {...rest}
-    render={props =>
-      isLogged === true ? (
-        <Component {...rest} {...props} />
-      ) : (
-        <Redirect
-          to={{
-            pathname,
-            state: { from: props.location },
-          }}
+export class PrivateRoute extends React.PureComponent {
+  render() {
+    const {
+      component: Component,
+      redirect: pathname,
+      isLogged,
+      ...rest
+    } = this.props;
+
+    return (
+      <div>
+        <Route
+          {...rest}
+          render={props =>
+            isLogged === true ? (
+              <Component {...rest} {...props} />
+            ) : (
+              <Redirect
+                to={{
+                  pathname,
+                  state: { from: props.location },
+                }}
+              />
+            )
+          }
         />
-      )
-    }
-  />
-);
+      </div>
+    );
+  }
+}
 
 PrivateRoute.defaultProps = {
   redirect: '/auth/login',

@@ -49,7 +49,7 @@ export default function App() {
         />
         <PrivateRoute
           exact
-          path="/dashboard/user/email/verification"
+          path="/dashboard/email/verification"
           component={UserDashboardEmailVerificationPage}
         />
 

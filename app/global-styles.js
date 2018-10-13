@@ -1,5 +1,7 @@
 import { injectGlobal } from 'styled-components';
 
+// @TODO: Refactor this to styled-components
+
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
   html {
@@ -24,19 +26,13 @@ injectGlobal`
     display: unset !important;
     padding: 0 !important;
   }
-  .navbar-user-img {
-    width: 32px;
-    height: 32px;
-    border-top-left-radius: 50%;
-    border-top-right-radius: 50%;
-    border-bottom-right-radius: 50%;
-    border-bottom-left-radius: 50%;
-    background-color: rgb(255, 255, 255);
+  .navbar-user-icon {
+    color: white;
   }
 
   .navbar-user-username {
     margin-left: 8px;
-    color: #fff;
+    color: #d3d3d3;
   }
 
   /*HOMEPAGE*/
