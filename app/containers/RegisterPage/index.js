@@ -165,7 +165,7 @@ export class RegisterPage extends React.PureComponent {
                     </Button>
                     <p className="mt-1 text-center text-muted small">
                       By signing up you agree to our{' '}
-                      <a href="/legal/terms#to" target="popup">
+                      <a href="/legal/terms#tos" target="popup">
                         Terms of Service
                       </a>{' '}
                       and{' '}

@@ -39,10 +39,10 @@ module.exports.handler = (event, context, callback) => {
 
     // Return an IAM policy document for the current endpoint
     const effect = isAllowed ? 'Allow' : 'Deny';
-    const userId = user.username; // @FIXME: Use user._id instead of user.username
+    const userUsername = user.username;
     const authorizerContext = { user: JSON.stringify(user) };
     const policyDocument = aws.buildIAMPolicy(
-      userId,
+      userUsername,
       effect,
       event.methodArn,
       authorizerContext,

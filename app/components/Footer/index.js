@@ -9,14 +9,18 @@ import { Container, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 /* eslint-disable react/prefer-stateless-function */
-export class MainFooter extends React.PureComponent {
+export class Footer extends React.PureComponent {
   render() {
     return (
+      // @TODO: Add pre-footer
       <footer className="bg-dark">
         <Container>
           <Row className="text-light">
             <Col xs="4">
-              <span>© Domain.io</span>
+              <span>
+                Domain.io ® 2017, {new Date().getFullYear()}. All Rights
+                Reserved
+              </span>
             </Col>
             <Col className="footer-text text-right">
               <span>
@@ -40,6 +44,6 @@ export class MainFooter extends React.PureComponent {
   }
 }
 
-MainFooter.propTypes = {};
+Footer.propTypes = {};
 
-export default MainFooter;
+export default Footer;

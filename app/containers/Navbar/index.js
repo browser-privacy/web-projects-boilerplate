@@ -1,6 +1,6 @@
 /**
  *
- * MainNavbar
+ * Navbar
  *
  */
 
@@ -38,7 +38,7 @@ import { logOutAction } from '../Auth/actions';
 import { makeSelectUsername } from '../App/selectors';
 
 /* eslint-disable react/prefer-stateless-function */
-export class MainNavbar extends React.PureComponent {
+export class NavbarComponent extends React.PureComponent {
   constructor(props) {
     super(props);
 
@@ -143,7 +143,10 @@ export class MainNavbar extends React.PureComponent {
       );
     } else {
       links.push(
-        <DropdownItem key="dropdownitem-settings">
+        <DropdownItem
+          key="dropdownitem-settings"
+          onClick={() => history.push('/dashboard/user/settings')}
+        >
           <FontAwesomeIcon icon={faCog} className="align-text-top mr-1" />
           Settings
         </DropdownItem>,
@@ -185,7 +188,7 @@ export class MainNavbar extends React.PureComponent {
   }
 }
 
-MainNavbar.propTypes = {
+Navbar.propTypes = {
   isLogged: PropTypes.bool,
   username: PropTypes.string,
   signOut: PropTypes.func,
@@ -216,4 +219,4 @@ const withConnect = connect(
 export default compose(
   withRouter,
   withConnect,
-)(MainNavbar);
+)(NavbarComponent);

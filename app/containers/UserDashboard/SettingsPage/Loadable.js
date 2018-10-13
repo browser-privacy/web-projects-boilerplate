@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for MainNavbar
+ * Asynchronously loads the component for SettingsPage
  *
  */
 

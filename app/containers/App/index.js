@@ -8,8 +8,8 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
-import MainNavbar from 'containers/MainNavbar/Loadable';
-import MainFooter from 'components/MainFooter/Loadable';
+import Navbar from 'containers/Navbar/Loadable';
+import Footer from 'components/Footer/Loadable';
 
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'components/NotFoundPage/Loadable';
@@ -20,13 +20,15 @@ import LoginPage from 'containers/LoginPage/Loadable';
 import RegisterPage from 'containers/RegisterPage/Loadable';
 
 import UserDashboardMainPage from 'containers/UserDashboard/MainPage/Loadable';
+import UserDashboardSettingsPage from 'containers/UserDashboard/SettingsPage/Loadable';
+
 import PrivateRoute from '../../components/PrivateRoute';
 
 export default function App() {
   return (
     <div>
       <Helmet titleTemplate="%s - Domain.io" />
-      <MainNavbar />
+      <Navbar />
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/auth/login" component={LoginPage} />
@@ -39,10 +41,15 @@ export default function App() {
           path="/dashboard/index"
           component={UserDashboardMainPage}
         />
+        <PrivateRoute
+          exact
+          path="/dashboard/user/settings"
+          component={UserDashboardSettingsPage}
+        />
 
         <Route component={NotFoundPage} />
       </Switch>
-      <MainFooter />
+      <Footer />
     </div>
   );
 }

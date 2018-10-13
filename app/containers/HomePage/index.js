@@ -10,7 +10,7 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -24,6 +24,36 @@ import { makeSelectIsLogged } from '../Auth/selectors';
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.PureComponent {
   render() {
+    const { isLogged } = this.props;
+
+    function CTAButtons() {
+      if (isLogged)
+        return [
+          <Link key="register-button" to="/dashboard/index">
+            <Button size="lg" color="primary">
+              <strong>Go to Dashboard</strong>
+            </Button>
+          </Link>,
+        ];
+
+      return [
+        <Button
+          key="demo-button"
+          size="lg"
+          color="info"
+          className="homepage-intro-cta"
+        >
+          <FontAwesomeIcon icon={faPlay} className="align-text-top mr-2" />
+          WATCH DEMO
+        </Button>,
+        <Link key="register-button" to="/auth/register">
+          <Button size="lg" color="primary" className="homepage-intro-cta">
+            <strong>GET STARTED</strong>
+          </Button>
+        </Link>,
+      ];
+    }
+
     return (
       <div>
         <Helmet>
@@ -46,27 +76,7 @@ class HomePage extends React.PureComponent {
             </Row>
             <Row className="center-xs">
               <Col xs="12">
-                <Button
-                  key="demo-button"
-                  size="lg"
-                  color="info"
-                  className="homepage-intro-cta"
-                >
-                  <FontAwesomeIcon
-                    icon={faPlay}
-                    className="align-text-top mr-2"
-                  />
-                  WATCH DEMO
-                </Button>
-                <Link key="register-button" to="/auth/register">
-                  <Button
-                    size="lg"
-                    color="primary"
-                    className="homepage-intro-cta"
-                  >
-                    <strong>GET STARTED</strong>
-                  </Button>
-                </Link>
+                <CTAButtons />
               </Col>
             </Row>
           </Container>
@@ -114,7 +124,7 @@ class HomePage extends React.PureComponent {
 }
 
 HomePage.propTypes = {
-  // isLogged: PropTypes.bool,
+  isLogged: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({

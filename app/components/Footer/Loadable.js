@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for MainFooter
+ * Asynchronously loads the component for Footer
  *
  */
 
