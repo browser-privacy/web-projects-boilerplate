@@ -93,7 +93,7 @@ export class RegisterPage extends React.PureComponent {
             <Row>
               <Col className="text-center">
                 {' '}
-                <h1 className="h3 mb-3 font-weight-normal">Registration</h1>
+                <h1 className="h3 mb-3 font-weight-normal">Create Account</h1>
                 <Alert
                   color="danger"
                   role="alert"

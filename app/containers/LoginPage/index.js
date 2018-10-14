@@ -68,7 +68,7 @@ export class LoginPage extends React.PureComponent {
             <Row>
               <Col className="text-center">
                 {' '}
-                <h1 className="h3 mb-3 font-weight-normal">Authentication</h1>
+                <h1 className="h3 mb-3 font-weight-normal">Welcome back</h1>
                 {formMsg && (
                   <Alert color={formMsg.color} role="alert">
                     <strong>{formMsg.text}</strong>
