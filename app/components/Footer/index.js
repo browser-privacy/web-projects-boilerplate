@@ -44,6 +44,4 @@ export class Footer extends React.PureComponent {
   }
 }
 
-Footer.propTypes = {};
-
 export default Footer;
