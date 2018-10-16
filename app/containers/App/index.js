@@ -13,7 +13,7 @@ import Footer from 'components/Footer/Loadable';
 
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'components/NotFoundPage/Loadable';
-import SupportPage from 'containers/SupportPage/Loadable';
+import PricingPage from 'containers/PricingPage/Loadable';
 import LegalTerms from 'components/LegalTerms/Loadable';
 
 import LoginPage from 'containers/LoginPage/Loadable';
@@ -22,8 +22,11 @@ import RegisterPage from 'containers/RegisterPage/Loadable';
 import UserDashboardMainPage from 'containers/UserDashboard/MainPage/Loadable';
 import UserDashboardSettingsPage from 'containers/UserDashboard/SettingsPage/Loadable';
 import UserDashboardEmailVerificationPage from 'containers/UserDashboard/EmailVerificationPage/Loadable';
+import UserDashboardSupportPage from 'containers/UserDashboard/SupportPage/Loadable';
 
+import FAQPage from '../../components/FaqPage';
 import PrivateRoute from '../../components/PrivateRoute';
+import AboutPage from '../../components/AboutPage';
 
 export default function App() {
   return (
@@ -34,7 +37,9 @@ export default function App() {
         <Route exact path="/" component={HomePage} />
         <Route exact path="/auth/login" component={LoginPage} />
         <Route exact path="/auth/register" component={RegisterPage} />
-        <Route exact path="/support" component={SupportPage} />
+        <Route exact path="/faq" component={FAQPage} />
+        <Route exact path="/pricing" component={PricingPage} />
+        <Route exact path="/about" component={AboutPage} />
         <Route exact path="/legal/terms" component={LegalTerms} />
 
         <PrivateRoute
@@ -51,6 +56,11 @@ export default function App() {
           exact
           path="/dashboard/email/verification"
           component={UserDashboardEmailVerificationPage}
+        />
+        <PrivateRoute
+          exact
+          path="/dashboard/support"
+          component={UserDashboardSupportPage}
         />
 
         <Route component={NotFoundPage} />

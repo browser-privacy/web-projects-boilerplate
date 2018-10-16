@@ -52,7 +52,7 @@ export class LoginPage extends React.PureComponent {
           <title>Sign in</title>
           <meta name="description" content="Description of LoginPage" />
         </Helmet>
-        <Container className="auth-container">
+        <Container>
           <div className="form-page">
             <Row>
               <Col className="text-center">

@@ -81,7 +81,7 @@ class HomePage extends React.PureComponent {
             </Row>
           </Container>
         </Jumbotron>
-        <main role="main" className="container">
+        <Container>
           <h1 className="mt-5">Sticky footer with fixed navbar</h1>
           <p className="lead">
             Pin a fixed-height footer to the bottom of the viewport in desktop
@@ -89,35 +89,7 @@ class HomePage extends React.PureComponent {
             added with <code>padding-top: 60px;</code> on the{' '}
             <code>body &gt; .container</code>.
           </p>
-          <h1 className="mt-5">Sticky footer with fixed navbar</h1>
-          <p className="lead">
-            Pin a fixed-height footer to the bottom of the viewport in desktop
-            browsers with this custom HTML and CSS. A fixed navbar has been
-            added with <code>padding-top: 60px;</code> on the{' '}
-            <code>body &gt; .container</code>.
-          </p>
-          <h1 className="mt-5">Sticky footer with fixed navbar</h1>
-          <p className="lead">
-            Pin a fixed-height footer to the bottom of the viewport in desktop
-            browsers with this custom HTML and CSS. A fixed navbar has been
-            added with <code>padding-top: 60px;</code> on the{' '}
-            <code>body &gt; .container</code>.
-          </p>
-          <h1 className="mt-5">Sticky footer with fixed navbar</h1>
-          <p className="lead">
-            Pin a fixed-height footer to the bottom of the viewport in desktop
-            browsers with this custom HTML and CSS. A fixed navbar has been
-            added with <code>padding-top: 60px;</code> on the{' '}
-            <code>body &gt; .container</code>.
-          </p>
-          <h1 className="mt-5">Sticky footer with fixed navbar</h1>
-          <p className="lead">
-            Pin a fixed-height footer to the bottom of the viewport in desktop
-            browsers with this custom HTML and CSS. A fixed navbar has been
-            added with <code>padding-top: 60px;</code> on the{' '}
-            <code>body &gt; .container</code>.
-          </p>
-        </main>
+        </Container>
       </div>
     );
   }

@@ -106,7 +106,7 @@ export class NavbarComponent extends React.PureComponent {
                 activeClassName="active"
                 tag={RRNavLink}
               >
-                Sign In
+                Log In
               </NavLink>
             </NavItem>
             <NavItem key="register" onClick={this.handleClick}>

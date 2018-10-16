@@ -100,7 +100,7 @@ injectGlobal`
   }
 
   /* FOOTER */
-  footer {
+  .footer {
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -108,6 +108,11 @@ injectGlobal`
     height: 60px;
     line-height: 60px; /* Vertically center the text there */
   }
+
+  .footer-1 {
+    background-color: #2b2b2b;
+  }
+
   .footer-text {
     font-size: 14px;
   }

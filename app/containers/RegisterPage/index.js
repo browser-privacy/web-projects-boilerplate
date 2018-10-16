@@ -77,7 +77,7 @@ export class RegisterPage extends React.PureComponent {
           <title>Sign up</title>
           <meta name="description" content="Description of RegisterPage" />
         </Helmet>
-        <Container className="auth-container">
+        <Container>
           <div className="form-page">
             <Row>
               <Col className="text-center">
