@@ -10,11 +10,11 @@ injectGlobal`
   }
 
   body {
-    margin-bottom: 60px;
+    margin-bottom: 312px;
   }
 
-  .app-container {
-    padding-top: 40px;
+  #app {
+    background-color: #fafafa;
   }
 
   /* NAVBAR */

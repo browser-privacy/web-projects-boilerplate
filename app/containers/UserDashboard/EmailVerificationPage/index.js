@@ -20,7 +20,7 @@ import saga from './saga';
 export class EmailVerificationPage extends React.PureComponent {
   render() {
     return (
-      <div>
+      <article>
         <Helmet>
           <title>EmailVerificationPage</title>
           <meta
@@ -29,7 +29,7 @@ export class EmailVerificationPage extends React.PureComponent {
           />
         </Helmet>
         <h1>Verify</h1>
-      </div>
+      </article>
     );
   }
 }

@@ -32,7 +32,7 @@ import AboutPage from '../../components/AboutPage';
 export default function App() {
   return (
     <div>
-      <Helmet titleTemplate="%s - Domain.io" />
+      <Helmet titleTemplate="%s | Domain.io" />
       <Navbar />
       <ScrollToTop>
         <Switch>

@@ -20,14 +20,14 @@ import saga from './saga';
 export class SettingsPage extends React.PureComponent {
   render() {
     return (
-      <div>
+      <article>
         <Helmet>
           <title>SettingsPage</title>
           <meta name="description" content="Description of SettingsPage" />
         </Helmet>
 
         <h1>wowo</h1>
-      </div>
+      </article>
     );
   }
 }

@@ -21,13 +21,13 @@ import saga from './saga';
 export class SupportPage extends React.PureComponent {
   render() {
     return (
-      <div>
+      <article>
         <Helmet>
           <title>SupportPage</title>
           <meta name="description" content="Description of SupportPage" />
         </Helmet>
         Foo 1
-      </div>
+      </article>
     );
   }
 }

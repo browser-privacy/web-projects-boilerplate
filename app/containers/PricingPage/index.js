@@ -21,7 +21,7 @@ import saga from './saga';
 export class PricingPage extends React.PureComponent {
   render() {
     return (
-      <div>
+      <article>
         <Helmet>
           <title>PricingPage</title>
           <meta name="description" content="Description of PricingPage" />
@@ -104,7 +104,7 @@ export class PricingPage extends React.PureComponent {
             </div>
           </div>
         </Container>
-      </div>
+      </article>
     );
   }
 }

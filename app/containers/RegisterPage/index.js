@@ -72,7 +72,7 @@ export class RegisterPage extends React.PureComponent {
     } = this.props;
 
     return (
-      <div>
+      <article>
         <Helmet>
           <title>Sign up</title>
           <meta name="description" content="Description of RegisterPage" />
@@ -207,7 +207,7 @@ export class RegisterPage extends React.PureComponent {
             </p>
           </div>
         </Container>
-      </div>
+      </article>
     );
   }
 }

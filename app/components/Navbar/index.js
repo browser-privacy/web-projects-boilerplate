@@ -169,7 +169,7 @@ export class NavbarComponent extends React.PureComponent {
 
   render() {
     return (
-      <div>
+      <header>
         <Navbar color="dark" dark expand="md">
           <Container>
             <NavLink
@@ -193,7 +193,7 @@ export class NavbarComponent extends React.PureComponent {
             {this.navbarLinks()}
           </Container>
         </Navbar>
-      </div>
+      </header>
     );
   }
 }

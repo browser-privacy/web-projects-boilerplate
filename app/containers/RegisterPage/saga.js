@@ -35,7 +35,6 @@ export function* registerRequest(action) {
 
     yield put(registerRequestSuccessAction(tokens));
   } catch (err) {
-    console.log(err);
     let errMsg = err.message;
 
     if (err.status) {

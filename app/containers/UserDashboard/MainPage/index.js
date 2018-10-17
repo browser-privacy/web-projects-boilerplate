@@ -28,13 +28,13 @@ export class MainPage extends React.PureComponent {
 
   render() {
     return (
-      <div>
+      <article>
         <Helmet>
           <title>MainPage</title>
           <meta name="description" content="Description of MainPage" />
         </Helmet>
         <h1>vamoss</h1>
-      </div>
+      </article>
     );
   }
 }

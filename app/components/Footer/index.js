@@ -13,8 +13,8 @@ const Footer = styled.footer`
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 60px;
-  line-height: 60px;
+  height: 312px;
+  line-height: 60px; /* Vertically center the text there */
   font-size: 14px;
 `;
 

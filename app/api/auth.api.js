@@ -11,7 +11,7 @@ export const AuthApi = {
    */
   login(identifier, password) {
     return axios
-      .post(`/auth/login`, {
+      .post('/auth/login', {
         userIdentifier: identifier,
         password,
       })
@@ -28,7 +28,7 @@ export const AuthApi = {
    */
   logout() {
     return axios
-      .delete(`/auth/logout`)
+      .delete('/auth/logout')
       .then(res => Promise.resolve(res))
       .catch(err => Promise.reject(err.response));
   },
@@ -41,7 +41,7 @@ export const AuthApi = {
    */
   register(email, username, password, recaptcha) {
     return axios
-      .post(`/users/create`, {
+      .post('/users/create', {
         email,
         username,
         password,
@@ -55,7 +55,7 @@ export const AuthApi = {
    */
   refreshAccessToken() {
     return axios
-      .post(`/auth/refresh_access_token`, {
+      .post('/auth/refresh_access_token', {
         refreshToken: localStorage.getItem('refresh_token'),
       })
       .then(res => Promise.resolve(res.data))
