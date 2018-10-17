@@ -24,6 +24,7 @@ import UserDashboardSettingsPage from 'containers/UserDashboard/SettingsPage/Loa
 import UserDashboardEmailVerificationPage from 'containers/UserDashboard/EmailVerificationPage/Loadable';
 import UserDashboardSupportPage from 'containers/UserDashboard/SupportPage/Loadable';
 
+import ScrollToTop from '../../components/ScrollToTop';
 import FAQPage from '../../components/FaqPage';
 import PrivateRoute from '../../components/PrivateRoute';
 import AboutPage from '../../components/AboutPage';
@@ -33,38 +34,40 @@ export default function App() {
     <div>
       <Helmet titleTemplate="%s - Domain.io" />
       <Navbar />
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route exact path="/auth/login" component={LoginPage} />
-        <Route exact path="/auth/register" component={RegisterPage} />
-        <Route exact path="/faq" component={FAQPage} />
-        <Route exact path="/pricing" component={PricingPage} />
-        <Route exact path="/about" component={AboutPage} />
-        <Route exact path="/legal/terms" component={LegalTerms} />
+      <ScrollToTop>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/auth/login" component={LoginPage} />
+          <Route exact path="/auth/register" component={RegisterPage} />
+          <Route exact path="/faq" component={FAQPage} />
+          <Route exact path="/pricing" component={PricingPage} />
+          <Route exact path="/about" component={AboutPage} />
+          <Route exact path="/legal/terms" component={LegalTerms} />
 
-        <PrivateRoute
-          exact
-          path="/dashboard/index"
-          component={UserDashboardMainPage}
-        />
-        <PrivateRoute
-          exact
-          path="/dashboard/user/settings"
-          component={UserDashboardSettingsPage}
-        />
-        <PrivateRoute
-          exact
-          path="/dashboard/email/verification"
-          component={UserDashboardEmailVerificationPage}
-        />
-        <PrivateRoute
-          exact
-          path="/dashboard/support"
-          component={UserDashboardSupportPage}
-        />
+          <PrivateRoute
+            exact
+            path="/dashboard/index"
+            component={UserDashboardMainPage}
+          />
+          <PrivateRoute
+            exact
+            path="/dashboard/user/settings"
+            component={UserDashboardSettingsPage}
+          />
+          <PrivateRoute
+            exact
+            path="/dashboard/email/verification"
+            component={UserDashboardEmailVerificationPage}
+          />
+          <PrivateRoute
+            exact
+            path="/dashboard/support"
+            component={UserDashboardSupportPage}
+          />
 
-        <Route component={NotFoundPage} />
-      </Switch>
+          <Route component={NotFoundPage} />
+        </Switch>
+      </ScrollToTop>
       <Footer />
     </div>
   );

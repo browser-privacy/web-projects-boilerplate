@@ -91,35 +91,6 @@ injectGlobal`
     border-top-right-radius: 0;
   }
 
-  /* REGISTER PAGE */
-  .register-page-recaptcha-col > div {
-    display: inline-block;
-  }
-  .register-page-recaptcha-modal-header {
-    justify-content: center !important;
-  }
-
-  /* FOOTER */
-  .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    /* Set the fixed height of the footer here */
-    height: 60px;
-    line-height: 60px; /* Vertically center the text there */
-  }
-
-  .footer-1 {
-    background-color: #2b2b2b;
-  }
-
-  .footer-text {
-    font-size: 14px;
-  }
-  .footer-link {
-    color: #fff;
-  }
-
   .auth-container  {
     display: flex;
     align-items: center;

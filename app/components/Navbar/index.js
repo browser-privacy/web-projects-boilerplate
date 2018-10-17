@@ -99,16 +99,6 @@ export class NavbarComponent extends React.PureComponent {
         <NavbarToggler key="navbar-toggler" onClick={this.toggle} />,
         <Collapse key="navbar-collapse" isOpen={isOpen} navbar>
           <Nav className="ml-auto align-items-center" navbar>
-            <NavItem key="login" onClick={this.handleClick}>
-              <NavLink
-                to="/auth/login"
-                exact
-                activeClassName="active"
-                tag={RRNavLink}
-              >
-                Log In
-              </NavLink>
-            </NavItem>
             <NavItem key="register" onClick={this.handleClick}>
               <NavLink
                 to="/auth/register"
@@ -117,8 +107,19 @@ export class NavbarComponent extends React.PureComponent {
                 tag={RRNavLink}
               >
                 <Button color="primary">
-                  <strong>Get started</strong>
+                  <strong>Sign up</strong>
                 </Button>
+              </NavLink>
+            </NavItem>
+            <NavItem key="login" onClick={this.handleClick}>
+              <NavLink
+                to="/auth/login"
+                exact
+                activeClassName="active"
+                className="text-light"
+                tag={RRNavLink}
+              >
+                Log In
               </NavLink>
             </NavItem>
           </Nav>
@@ -177,11 +178,14 @@ export class NavbarComponent extends React.PureComponent {
               className="navbar-brand navbar-brandname"
               onClick={this.handleClick}
             >
+              <img
+                className="mr-2"
+                src="/icon.png"
+                alt="app logo"
+                width="32"
+                height="32"
+              />
               <span>
-                <FontAwesomeIcon
-                  icon={faRocket}
-                  className="align-text-top mr-2"
-                />
                 Domain.io
                 <span className="beta-icon align-text-bottom">beta</span>
               </span>

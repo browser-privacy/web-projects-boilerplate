@@ -44,11 +44,11 @@ class HomePage extends React.PureComponent {
           className="homepage-intro-cta"
         >
           <FontAwesomeIcon icon={faPlay} className="align-text-top mr-2" />
-          WATCH DEMO
+          Watch demo
         </Button>,
         <Link key="register-button" to="/auth/register">
           <Button size="lg" color="primary" className="homepage-intro-cta">
-            <strong>GET STARTED</strong>
+            <strong>Sign up free</strong>
           </Button>
         </Link>,
       ];

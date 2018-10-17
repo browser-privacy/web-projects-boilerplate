@@ -93,7 +93,9 @@ export class RegisterPage extends React.PureComponent {
             <Row>
               <Col className="text-center">
                 {' '}
-                <h1 className="h3 mb-3 font-weight-normal">Create Account</h1>
+                <h1 className="h3 mb-3 font-weight-normal">
+                  Get started for free
+                </h1>
                 <Alert
                   color="danger"
                   role="alert"
@@ -161,7 +163,7 @@ export class RegisterPage extends React.PureComponent {
                         icon={faSpinner}
                         className={isSubmitting ? 'mr-2' : 'd-none'}
                       />
-                      Sign up to start
+                      Get started now
                     </Button>
                     <p className="mt-1 text-center text-muted small">
                       By signing up you agree to our{' '}
