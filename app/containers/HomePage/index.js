@@ -55,12 +55,12 @@ class HomePage extends React.PureComponent {
     }
 
     return (
-      <main>
+      <main className="container">
         <Helmet>
           <title>Homepage</title>
           <meta name="description" content="Domain.io homepage" />
         </Helmet>
-        <h1 className="mt-5">Lorem ipsum dolor sit amet</h1>
+        <h1>Lorem ipsum dolor sit amet</h1>
         <p className="lead">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -78,7 +78,7 @@ class HomePage extends React.PureComponent {
           </a>{' '}
           if need be, too.
         </p>
-        <h1 className="mt-5">Lorem ipsum dolor sit amet</h1>
+        <h1>Lorem ipsum dolor sit amet</h1>
         <p className="lead">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -96,7 +96,7 @@ class HomePage extends React.PureComponent {
           </a>{' '}
           if need be, too.
         </p>
-        <h1 className="mt-5">Lorem ipsum dolor sit amet</h1>
+        <h1>Lorem ipsum dolor sit amet</h1>
         <p className="lead">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -114,7 +114,7 @@ class HomePage extends React.PureComponent {
           </a>{' '}
           if need be, too.
         </p>
-        <h1 className="mt-5">Lorem ipsum dolor sit amet</h1>
+        <h1>Lorem ipsum dolor sit amet</h1>
         <p className="lead">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -132,7 +132,7 @@ class HomePage extends React.PureComponent {
           </a>{' '}
           if need be, too.
         </p>
-        <h1 className="mt-5">Lorem ipsum dolor sit amet</h1>
+        <h1>Lorem ipsum dolor sit amet</h1>
         <p className="lead">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -150,7 +150,7 @@ class HomePage extends React.PureComponent {
           </a>{' '}
           if need be, too.
         </p>
-        <h1 className="mt-5">Lorem ipsum dolor sit amet</h1>
+        <h1>Lorem ipsum dolor sit amet</h1>
         <p className="lead">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
@@ -168,7 +168,7 @@ class HomePage extends React.PureComponent {
           </a>{' '}
           if need be, too.
         </p>
-        <h1 className="mt-5">Lorem ipsum dolor sit amet</h1>
+        <h1>Lorem ipsum dolor sit amet</h1>
         <p className="lead">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
