@@ -47,95 +47,92 @@ export class LoginPage extends React.PureComponent {
     const { formMsg, onLoginFormSubmit } = this.props;
 
     return (
-      <div>
+      <main className="container d-flex">
         <Helmet>
           <title>Sign in</title>
           <meta name="description" content="Description of LoginPage" />
         </Helmet>
-        <Container>
-          <div className="form-page">
-            <Row>
-              <Col className="text-center">
-                <img
-                  className="mb-4"
-                  src="/icon.png"
-                  alt="app logo"
-                  width="72"
-                  height="72"
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col className="text-center">
-                {' '}
-                <h1 className="h3 mb-3 font-weight-normal">Welcome back</h1>
-                {formMsg && (
-                  <Alert color={formMsg.color} role="alert">
-                    <strong>{formMsg.text}</strong>
-                  </Alert>
-                )}
-              </Col>
-            </Row>
 
-            <Formik
-              initialValues={{
-                userIdentifier: '',
-                password: '',
-              }}
-              validationSchema={LoginSchema}
-              onSubmit={onLoginFormSubmit}
-            >
-              {({ isSubmitting }) => (
-                <Form>
-                  <Field
-                    component={ReactstrapInput}
-                    name="userIdentifier"
-                    type="userIdentifier"
-                    placeholder="john@acme.com"
-                    label="E-mail address"
-                    autoComplete="e-mail"
-                  />
-                  <Field
-                    component={ReactstrapInput}
-                    name="password"
-                    type="password"
-                    placeholder="Password"
-                    label="Password"
-                    autoComplete="password"
-                  />
-                  <div>
-                    <Button
-                      type="submit"
-                      block
-                      size="lg"
-                      color="primary"
-                      disabled={isSubmitting}
-                    >
-                      <FontAwesomeIcon
-                        pulse
-                        icon={faSpinner}
-                        className={isSubmitting ? 'mr-2' : 'd-none'}
-                      />
-                      Log in to access
-                    </Button>
-                  </div>
-                </Form>
+        <div className="form-page">
+          <Row>
+            <Col className="text-center">
+              <img
+                className="mb-4"
+                src="/icon.png"
+                alt="app logo"
+                width="72"
+                height="72"
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col className="text-center">
+              {' '}
+              <h1 className="h3 mb-3 font-weight-normal">Welcome back</h1>
+              {formMsg && (
+                <Alert color={formMsg.color} role="alert">
+                  <strong>{formMsg.text}</strong>
+                </Alert>
               )}
-            </Formik>
+            </Col>
+          </Row>
 
-            <Link to="/auth/forgot_password">
-              <Button size="sm" color="secondary" block className="mt-2">
-                Forgot password?
-              </Button>
-            </Link>
-            <p className="mt-5 mb-3 text-center">
-              <Link to="/auth/register">
-                Don&#39;t have an account? Sign up
-              </Link>
-            </p>
-          </div>
-        </Container>
-      </div>
+          <Formik
+            initialValues={{
+              userIdentifier: '',
+              password: '',
+            }}
+            validationSchema={LoginSchema}
+            onSubmit={onLoginFormSubmit}
+          >
+            {({ isSubmitting }) => (
+              <Form>
+                <Field
+                  component={ReactstrapInput}
+                  name="userIdentifier"
+                  type="userIdentifier"
+                  placeholder="john@acme.com"
+                  label="E-mail address"
+                  autoComplete="e-mail"
+                />
+                <Field
+                  component={ReactstrapInput}
+                  name="password"
+                  type="password"
+                  placeholder="Password"
+                  label="Password"
+                  autoComplete="password"
+                />
+                <div>
+                  <Button
+                    type="submit"
+                    block
+                    size="lg"
+                    color="primary"
+                    disabled={isSubmitting}
+                  >
+                    <FontAwesomeIcon
+                      pulse
+                      icon={faSpinner}
+                      className={isSubmitting ? 'mr-2' : 'd-none'}
+                    />
+                    Log in to access
+                  </Button>
+                </div>
+              </Form>
+            )}
+          </Formik>
+
+          <Link to="/auth/forgot_password">
+            <Button size="sm" color="secondary" block className="mt-2">
+              Forgot password?
+            </Button>
+          </Link>
+          <p className="mt-5 mb-3 text-center">
+            <Link to="/auth/register">Don&#39;t have an account? Sign up</Link>
+          </p>
+        </div>
+      </main>
     );
   }
 }

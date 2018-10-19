@@ -4,10 +4,23 @@ import { injectGlobal } from 'styled-components';
 
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
-  html, body { height: 100%; }
+  html {
+    position: relative;
+    min-height: 100%;
+  }
+  body {
+    margin-bottom: 313px; /* Margin bottom by footer height */
+  }
+  .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 60px; /* Set the fixed height of the footer here */
+    line-height: 60px; /* Vertically center the text there */
+  }
 
   #app {
-    background-color: #fafafa;
+    background-color: #f2a6a6;
   }
 
   .beta-icon {
