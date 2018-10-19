@@ -190,13 +190,7 @@ export class RegisterPage extends React.PureComponent {
                       dispatch(setRecaptchaResponseAction(''));
                       this.recaptcha.reset();
                     }}
-                    onError={() => {
-                      /* eslint-disable no-alert */
-                      if (touched)
-                        alert(
-                          `Unable to load captcha. Please, try it again to continue.`,
-                        );
-                    }}
+                    onError={() => console.log(`Unable to load captcha.`)}
                     size="invisible"
                     theme="dark"
                     badge="inline"
