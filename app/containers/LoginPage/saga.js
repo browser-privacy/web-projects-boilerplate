@@ -30,21 +30,20 @@ export function* loginRequest(action) {
     const tokens = yield call(AuthApi.login, userIdentifier, password);
     yield put(loginRequestSuccessAction(tokens));
   } catch (err) {
-    console.log(err);
-    console.log('log err');
+    let errMsg =
+      'An server error ocurred. We have been notified about this error, our devs will fix it shortly.';
 
-    let errMsg;
-
-    switch (err.status) {
-      case 403:
-        errMsg = 'Invalid credentials';
-        break;
-      case 423:
-        errMsg = 'Account desactivated';
-        break;
-      default:
-        errMsg = `An server error ocurred. We have been notified about this error, our devs will fix it shortly.`;
-        break;
+    if (err && err.status) {
+      switch (err.status) {
+        case 403:
+          errMsg = 'Invalid credentials';
+          break;
+        case 423:
+          errMsg = 'Account desactivated';
+          break;
+        default:
+          break;
+      }
     }
 
     formikActions.setSubmitting(false);

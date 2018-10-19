@@ -35,9 +35,10 @@ export function* registerRequest(action) {
 
     yield put(registerRequestSuccessAction(tokens));
   } catch (err) {
-    let errMsg = err.message;
+    let errMsg =
+      'An server error ocurred. We have been notified about this error, our devs will fix it shortly.';
 
-    if (err.status) {
+    if (err) {
       switch (err.status) {
         case 400:
           Object.keys(err.data).forEach(k => {
@@ -48,7 +49,7 @@ export function* registerRequest(action) {
           errMsg = `Submitted captcha is not valid.`;
           break;
         default:
-          errMsg = `An server error ocurred. We have been notified about this error, our devs will fix it shortly.`;
+          errMsg = err.message || errMsg;
           break;
       }
     }

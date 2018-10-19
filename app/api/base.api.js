@@ -40,6 +40,7 @@ function forceLogout() {
 }
 
 axios.interceptors.response.use(undefined, err => {
+  if (!err) return Promise.reject(err);
   if (err.response.config.url.includes('/auth/login'))
     return Promise.reject(err);
 

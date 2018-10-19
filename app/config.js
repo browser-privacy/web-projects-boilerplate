@@ -3,7 +3,8 @@ export const config = {
     API_ENDPOINT: 'http://localhost:3000',
   },
   development: {
-    API_ENDPOINT: 'http://localhost:3000',
+    API_ENDPOINT:
+      'https://x1pct1mfd7c.execute-api.us-east-1.amazonaws.com/prod',
   },
   production: {
     API_ENDPOINT:
