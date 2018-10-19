@@ -47,7 +47,7 @@ export class LoginPage extends React.PureComponent {
     const { formMsg, onLoginFormSubmit } = this.props;
 
     return (
-      <main className="container d-flex">
+      <main className="container">
         <Helmet>
           <title>Sign in</title>
           <meta name="description" content="Description of LoginPage" />
