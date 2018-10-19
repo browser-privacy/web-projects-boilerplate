@@ -76,61 +76,73 @@ export class LoginPage extends React.PureComponent {
               )}
             </Col>
           </Row>
-
-          <Formik
-            initialValues={{
-              userIdentifier: '',
-              password: '',
-            }}
-            validationSchema={LoginSchema}
-            onSubmit={onLoginFormSubmit}
-          >
-            {({ isSubmitting }) => (
-              <Form>
-                <Field
-                  component={ReactstrapInput}
-                  name="userIdentifier"
-                  type="userIdentifier"
-                  placeholder="john@acme.com"
-                  label="E-mail address"
-                  autoComplete="e-mail"
-                />
-                <Field
-                  component={ReactstrapInput}
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  label="Password"
-                  autoComplete="password"
-                />
-                <div>
-                  <Button
-                    type="submit"
-                    block
-                    size="lg"
-                    color="primary"
-                    disabled={isSubmitting}
-                  >
-                    <FontAwesomeIcon
-                      pulse
-                      icon={faSpinner}
-                      className={isSubmitting ? 'mr-2' : 'd-none'}
+          <Row>
+            <Col>
+              <Formik
+                initialValues={{
+                  userIdentifier: '',
+                  password: '',
+                }}
+                validationSchema={LoginSchema}
+                onSubmit={onLoginFormSubmit}
+              >
+                {({ isSubmitting }) => (
+                  <Form>
+                    <Field
+                      component={ReactstrapInput}
+                      name="userIdentifier"
+                      type="userIdentifier"
+                      placeholder="john@acme.com"
+                      label="E-mail address"
+                      autoComplete="e-mail"
                     />
-                    Log in to access
-                  </Button>
-                </div>
-              </Form>
-            )}
-          </Formik>
-
-          <Link to="/auth/forgot_password">
-            <Button size="sm" color="secondary" block className="mt-2">
-              Forgot password?
-            </Button>
-          </Link>
-          <p className="mt-5 mb-3 text-center">
-            <Link to="/auth/register">Don&#39;t have an account? Sign up</Link>
-          </p>
+                    <Field
+                      component={ReactstrapInput}
+                      name="password"
+                      type="password"
+                      placeholder="Password"
+                      label="Password"
+                      autoComplete="password"
+                    />
+                    <div>
+                      <Button
+                        type="submit"
+                        block
+                        size="lg"
+                        color="primary"
+                        disabled={isSubmitting}
+                      >
+                        <FontAwesomeIcon
+                          pulse
+                          icon={faSpinner}
+                          className={isSubmitting ? 'mr-2' : 'd-none'}
+                        />
+                        Log in to access
+                      </Button>
+                    </div>
+                  </Form>
+                )}
+              </Formik>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Link to="/auth/forgot_password">
+                <Button size="sm" color="secondary" block className="mt-2">
+                  Forgot password?
+                </Button>
+              </Link>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <p className="mt-5 mb-3 text-center">
+                <Link to="/auth/register">
+                  Don&#39;t have an account? Sign up
+                </Link>
+              </p>
+            </Col>
+          </Row>
         </div>
       </main>
     );
