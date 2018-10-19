@@ -1,26 +1,19 @@
 import { injectGlobal } from 'styled-components';
 
-// @TODO: Refactor this to styled-components
-
 /* eslint no-unused-expressions: 0 */
 injectGlobal`
   html {
     position: relative;
     min-height: 100%;
   }
-  body {
-    margin-bottom: 313px; /* Margin bottom by footer height */
-  }
-  .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 60px; /* Set the fixed height of the footer here */
-    line-height: 60px; /* Vertically center the text there */
-  }
 
   #app {
-    background-color: #f2a6a6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    background-color: #fafafa;
   }
 
   .beta-icon {
