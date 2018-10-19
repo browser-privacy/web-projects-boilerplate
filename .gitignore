@@ -5,9 +5,11 @@ node_modules
 stats.json
 api/env.yml
 .serverless
+TODO
 
 # Cruft
 .DS_Store
 npm-debug.log
 .idea
 yarn-error.log
+.nyc_output

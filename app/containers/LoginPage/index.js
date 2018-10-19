@@ -10,27 +10,12 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import styled from 'styled-components';
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Alert,
-  Card,
-  CardHeader,
-  CardFooter,
-  CardBody,
-  CardTitle,
-  CardText,
-  InputGroup,
-  InputGroupAddon,
-} from 'reactstrap';
+import { Container, Row, Col, Button, Alert } from 'reactstrap';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner, faLock, faIdCard } from '@fortawesome/free-solid-svg-icons';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { ReactstrapInput } from 'reactstrap-formik';
@@ -39,37 +24,6 @@ import saga from './saga';
 import { loginRequestAction, resetStateAction } from './actions';
 import { makeSelectLoginPage, makeSelectFormMsg } from './selectors';
 import { makeSelectIsLogged } from '../Auth/selectors';
-
-const Login = styled(Card)`
-  width: 100%;
-  max-width: 520px;
-  padding: 15px;
-  margin: auto;
-`;
-const LoginContainer = styled(CardBody)``;
-const LoginTitle = styled.h1`
-  font-size: 32px;
-  font-weight: 700;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 40px;
-  text-align: left;
-`;
-const LoginSubtitle = styled.span`
-  padding-bottom: 422px;
-  line-height: 24px;
-  letter-spacing: normal;
-`;
-const LoginForm = styled(Form)`
-  width: 100%;
-  margin-top: 20px;
-`;
-const ForgotPasswordContainer = styled.div`
-  font-size: 12px;
-  text-align: right;
-  margin-top: 7px;
-  margin-bottom: 7px;
-`;
 
 const LoginSchema = Yup.object().shape({
   userIdentifier: Yup.string().required('Required'),
@@ -90,120 +44,98 @@ export class LoginPage extends React.PureComponent {
   }
 
   render() {
-    const { formMsg, onLoginSubmit } = this.props;
+    const { formMsg, onLoginFormSubmit } = this.props;
 
     return (
-      <main role="main">
+      <div>
         <Helmet>
-          <title>Log in</title>
+          <title>Sign in</title>
           <meta name="description" content="Description of LoginPage" />
         </Helmet>
+        <Container>
+          <div className="form-page">
+            <Row>
+              <Col className="text-center">
+                <img
+                  className="mb-4"
+                  src="/icon.png"
+                  alt="app logo"
+                  width="72"
+                  height="72"
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col className="text-center">
+                {' '}
+                <h1 className="h3 mb-3 font-weight-normal">Welcome back</h1>
+                {formMsg && (
+                  <Alert color={formMsg.color} role="alert">
+                    <strong>{formMsg.text}</strong>
+                  </Alert>
+                )}
+              </Col>
+            </Row>
 
-        <Container className="">
-          <Login className="">
-            <LoginContainer>
-              <Container>
-                <Row>
-                  <Col className="text-center">
-                    <img
-                      className="mb-4"
-                      src="/icon.png"
-                      alt="app logo"
-                      width="72"
-                      height="72"
-                    />
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <LoginTitle>Log in to account</LoginTitle>
-                    <LoginSubtitle>Enter your details below</LoginSubtitle>
-                    {formMsg && (
-                      <Alert color={formMsg.color} role="alert">
-                        <strong>{formMsg.text}</strong>
-                      </Alert>
-                    )}
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <Formik
-                      initialValues={{
-                        userIdentifier: '',
-                        password: '',
-                      }}
-                      validationSchema={LoginSchema}
-                      onSubmit={onLoginSubmit}
+            <Formik
+              initialValues={{
+                userIdentifier: '',
+                password: '',
+              }}
+              validationSchema={LoginSchema}
+              onSubmit={onLoginFormSubmit}
+            >
+              {({ isSubmitting }) => (
+                <Form>
+                  <Field
+                    component={ReactstrapInput}
+                    name="userIdentifier"
+                    type="userIdentifier"
+                    placeholder="john@acme.com"
+                    label="E-mail address"
+                    autoComplete="e-mail"
+                  />
+                  <Field
+                    component={ReactstrapInput}
+                    name="password"
+                    type="password"
+                    placeholder="Password"
+                    label="Password"
+                    autoComplete="password"
+                  />
+                  <div>
+                    <Button
+                      type="submit"
+                      block
+                      size="lg"
+                      color="primary"
+                      disabled={isSubmitting}
                     >
-                      {({ isSubmitting }) => (
-                        <LoginForm>
-                          <InputGroup size="lg">
-                            <InputGroupAddon addonType="prepend">
-                              <span className="input-group-text" id="addon1">
-                                <FontAwesomeIcon icon={faIdCard} fixedWidth />
-                              </span>
-                            </InputGroupAddon>
-                            <Field
-                              name="userIdentifier"
-                              type="text"
-                              placeholder="Email or username"
-                              autoComplete="e-mail"
-                              aria-label="User identifier"
-                              aria-describedby="addon1"
-                              className="form-control"
-                            />
-                          </InputGroup>
-                          <InputGroup size="lg">
-                            <InputGroupAddon addonType="prepend">
-                              <span className="input-group-text" id="addon2">
-                                <FontAwesomeIcon icon={faLock} fixedWidth />
-                              </span>
-                            </InputGroupAddon>
-                            <Field
-                              name="password"
-                              type="password"
-                              placeholder="Password"
-                              autoComplete="password"
-                              aria-label="User password"
-                              aria-describedby="addon2"
-                              className="form-control"
-                            />
-                          </InputGroup>
-                          <ForgotPasswordContainer>
-                            <Link
-                              to="/auth/forgot_password"
-                              className="text-muted"
-                            >
-                              Forgot password?
-                            </Link>
-                          </ForgotPasswordContainer>
-                          <div>
-                            <Button
-                              type="submit"
-                              block
-                              size="lg"
-                              color="primary"
-                              disabled={isSubmitting}
-                            >
-                              <FontAwesomeIcon
-                                pulse
-                                icon={faSpinner}
-                                className={isSubmitting ? 'mr-2' : 'd-none'}
-                              />
-                              Log In
-                            </Button>
-                          </div>
-                        </LoginForm>
-                      )}
-                    </Formik>
-                  </Col>
-                </Row>
-              </Container>
-            </LoginContainer>
-            <Link to="/auth/register">Don&#39;t have an account? Sign up</Link>
-          </Login>
+                      <FontAwesomeIcon
+                        pulse
+                        icon={faSpinner}
+                        className={isSubmitting ? 'mr-2' : 'd-none'}
+                      />
+                      Log in to access
+                    </Button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
+
+            <Link to="/auth/forgot_password">
+              <Button size="sm" color="secondary" block className="mt-2">
+                Forgot password?
+              </Button>
+            </Link>
+            <p className="mt-5 mb-3 text-center">
+              <Link to="/auth/register">
+                Don&#39;t have an account? Sign up
+              </Link>
+            </p>
+          </div>
         </Container>
-      </main>
+      </div>
     );
   }
 }
@@ -211,7 +143,7 @@ export class LoginPage extends React.PureComponent {
 LoginPage.propTypes = {
   formMsg: PropTypes.object,
   isLogged: PropTypes.bool,
-  onLoginSubmit: PropTypes.func,
+  onLoginFormSubmit: PropTypes.func,
   history: PropTypes.object,
   dispatch: PropTypes.func,
 };
@@ -224,7 +156,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    onLoginSubmit: (values, formikActions) =>
+    onLoginFormSubmit: (values, formikActions) =>
       dispatch(loginRequestAction(values, formikActions)),
     dispatch,
   };

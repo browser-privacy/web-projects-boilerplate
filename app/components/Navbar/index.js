@@ -14,6 +14,7 @@ import {
   Container,
   Collapse,
   Navbar,
+  NavbarBrand,
   NavbarToggler,
   Nav,
   NavItem,
@@ -30,7 +31,6 @@ import {
   faCog,
   faUnlockAlt,
   faHome,
-  faRocket,
   faUserAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { NavLink as RRNavLink } from 'react-router-dom';
@@ -72,7 +72,7 @@ export class NavbarComponent extends React.PureComponent {
     const links = {
       logged: [
         <Nav key="nav" className="ml-auto align-items-center" navbar>
-          <UncontrolledDropdown key="user-options" nav inNavbar>
+          <UncontrolledDropdown key="user-options" nav>
             <DropdownToggle nav caret>
               <FontAwesomeIcon
                 icon={faUserAlt}
@@ -170,7 +170,7 @@ export class NavbarComponent extends React.PureComponent {
   render() {
     return (
       <header>
-        <Navbar color="dark" dark expand="md">
+        <Navbar color="dark" dark expand="sm">
           <Container>
             <NavLink
               to="/"
@@ -178,18 +178,12 @@ export class NavbarComponent extends React.PureComponent {
               className="navbar-brand navbar-brandname"
               onClick={this.handleClick}
             >
-              <img
-                className="mr-2"
-                src="/icon.png"
-                alt="app logo"
-                width="32"
-                height="32"
-              />
-              <span>
+              <NavbarBrand tag="span">
                 Domain.io
                 <span className="beta-icon align-text-bottom">beta</span>
-              </span>
+              </NavbarBrand>
             </NavLink>
+
             {this.navbarLinks()}
           </Container>
         </Navbar>
