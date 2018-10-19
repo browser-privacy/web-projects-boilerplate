@@ -55,137 +55,157 @@ class HomePage extends React.PureComponent {
     }
 
     return (
-      <main className="container">
+      <main>
         <Helmet>
           <title>Homepage</title>
           <meta name="description" content="Domain.io homepage" />
         </Helmet>
-        <h1>Lorem ipsum dolor sit amet</h1>
-        <p className="lead">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <p>
-          Use{' '}
-          <a href="#foo">
+        <section className="jumbotron text-center">
+          <div className="container">
+            <h1 className="jumbotron-heading">Album example</h1>
+            <p className="lead text-muted">
+              Something short and leading about the collection below—its
+              contents, the creator, etc. Make it short and sweet, but not too
+              short so folks dont simply skip over it entirely.
+            </p>
+            <p>
+              <a href="#foo" className="btn btn-primary my-2">
+                Main call to action
+              </a>
+              <a href="#foo" className="btn btn-secondary my-2">
+                Secondary action
+              </a>
+            </p>
+          </div>
+        </section>
+        <Container>
+          <h1>Lorem ipsum dolor sit amet</h1>
+          <p className="lead">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod
-          </a>{' '}
-          if need be, too.
-        </p>
-        <h1>Lorem ipsum dolor sit amet</h1>
-        <p className="lead">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <p>
-          Use{' '}
-          <a href="#foo">
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <p>
+            Use{' '}
+            <a href="#foo">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod
+            </a>{' '}
+            if need be, too.
+          </p>
+          <h1>Lorem ipsum dolor sit amet</h1>
+          <p className="lead">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod
-          </a>{' '}
-          if need be, too.
-        </p>
-        <h1>Lorem ipsum dolor sit amet</h1>
-        <p className="lead">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <p>
-          Use{' '}
-          <a href="#foo">
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <p>
+            Use{' '}
+            <a href="#foo">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod
+            </a>{' '}
+            if need be, too.
+          </p>
+          <h1>Lorem ipsum dolor sit amet</h1>
+          <p className="lead">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod
-          </a>{' '}
-          if need be, too.
-        </p>
-        <h1>Lorem ipsum dolor sit amet</h1>
-        <p className="lead">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <p>
-          Use{' '}
-          <a href="#foo">
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <p>
+            Use{' '}
+            <a href="#foo">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod
+            </a>{' '}
+            if need be, too.
+          </p>
+          <h1>Lorem ipsum dolor sit amet</h1>
+          <p className="lead">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod
-          </a>{' '}
-          if need be, too.
-        </p>
-        <h1>Lorem ipsum dolor sit amet</h1>
-        <p className="lead">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <p>
-          Use{' '}
-          <a href="#foo">
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <p>
+            Use{' '}
+            <a href="#foo">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod
+            </a>{' '}
+            if need be, too.
+          </p>
+          <h1>Lorem ipsum dolor sit amet</h1>
+          <p className="lead">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod
-          </a>{' '}
-          if need be, too.
-        </p>
-        <h1>Lorem ipsum dolor sit amet</h1>
-        <p className="lead">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <p>
-          Use{' '}
-          <a href="#foo">
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <p>
+            Use{' '}
+            <a href="#foo">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod
+            </a>{' '}
+            if need be, too.
+          </p>
+          <h1>Lorem ipsum dolor sit amet</h1>
+          <p className="lead">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod
-          </a>{' '}
-          if need be, too.
-        </p>
-        <h1>Lorem ipsum dolor sit amet</h1>
-        <p className="lead">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <p>
-          Use{' '}
-          <a href="#foo">
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <p>
+            Use{' '}
+            <a href="#foo">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod
+            </a>{' '}
+            if need be, too.
+          </p>
+          <h1>Lorem ipsum dolor sit amet</h1>
+          <p className="lead">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod
-          </a>{' '}
-          if need be, too.
-        </p>
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum.
+          </p>
+          <p>
+            Use{' '}
+            <a href="#foo">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod
+            </a>{' '}
+            if need be, too.
+          </p>
+        </Container>
       </main>
     );
   }

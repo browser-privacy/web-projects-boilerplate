@@ -1,6 +1,6 @@
 /**
  *
- * LegalTerms
+ * LegalTermsPage
  *
  */
 
@@ -9,13 +9,13 @@ import { Helmet } from 'react-helmet';
 import { Container, Row, Col } from 'reactstrap';
 
 /* eslint-disable react/prefer-stateless-function */
-class LegalTerms extends React.PureComponent {
+class LegalTermsPage extends React.PureComponent {
   render() {
     return (
       <div>
         <Helmet>
-          <title>LegalTerms</title>
-          <meta name="description" content="Description of LegalTerms" />
+          <title>LegalTermsPage</title>
+          <meta name="description" content="Description of LegalTermsPage" />
         </Helmet>
         <Container className="app-container">
           <Row>
@@ -238,6 +238,6 @@ class LegalTerms extends React.PureComponent {
   }
 }
 
-LegalTerms.propTypes = {};
+LegalTermsPage.propTypes = {};
 
-export default LegalTerms;
+export default LegalTermsPage;

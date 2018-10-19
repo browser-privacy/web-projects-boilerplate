@@ -44,6 +44,7 @@ export function* registerRequest(action) {
           Object.keys(err.data).forEach(k => {
             formik.setFieldError(err.data[k].path, err.data[k].message);
           });
+          errMsg = null;
           break;
         case 403:
           errMsg = `Submitted captcha is not valid.`;

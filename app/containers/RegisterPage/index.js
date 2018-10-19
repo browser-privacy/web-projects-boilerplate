@@ -11,7 +11,16 @@ import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import { Link } from 'react-router-dom';
-import { Container, Button, Row, Col, Alert } from 'reactstrap';
+import {
+  Container,
+  Card,
+  CardBody,
+  CardHeader,
+  Button,
+  Row,
+  Col,
+  Alert,
+} from 'reactstrap';
 import { ReactstrapInput } from 'reactstrap-formik';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -33,16 +42,6 @@ import {
   resetStateAction,
   setRecaptchaResponseAction,
 } from './actions';
-
-const SignupSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Invalid email')
-    .required('Required'),
-  username: Yup.string().required('Required'),
-  password: Yup.string()
-    .min(3, 'Password must be at least 3 characters')
-    .required('Required'),
-});
 
 /* eslint-disable react/prefer-stateless-function */
 export class RegisterPage extends React.PureComponent {
@@ -77,131 +76,132 @@ export class RegisterPage extends React.PureComponent {
           <title>Sign up</title>
           <meta name="description" content="Description of RegisterPage" />
         </Helmet>
-        <div className="form-page">
-          <Row>
-            <Col className="text-center">
-              <img
-                className="mb-4"
-                src="/icon.png"
-                alt="app logo"
-                width="72"
-                height="72"
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col className="text-center">
-              {' '}
-              <h1 className="h3 mb-3 font-weight-normal">
-                Get started for free
-              </h1>
-              <Alert
-                color="danger"
-                role="alert"
-                className={serverErrMsg ? '' : 'd-none'}
-              >
-                <strong>{serverErrMsg}</strong>
-              </Alert>
-            </Col>
-          </Row>
+        <Row>
+          <Col md={{ size: 6, offset: 3 }}>
+            <Card>
+              <CardHeader>
+                <h3 className="mb-0">Sign up</h3>
+              </CardHeader>
+              <CardBody>
+                <Row>
+                  <Col className="text-center">
+                    <Alert
+                      color="danger"
+                      role="alert"
+                      className={serverErrMsg ? '' : 'd-none'}
+                    >
+                      <strong>{serverErrMsg}</strong>
+                    </Alert>
+                  </Col>
+                </Row>
 
-          <Formik
-            initialValues={{
-              email: '',
-              username: '',
-              password: '',
-            }}
-            validationSchema={SignupSchema}
-            onSubmit={(values, formik) => {
-              if (!recaptchaResponse) {
-                formik.setSubmitting(false);
-                return this.recaptcha.execute();
-              }
-              values.recaptchaResponse = recaptchaResponse;
-
-              return onLoginFormSubmit(values, formik, this.recaptcha);
-            }}
-          >
-            {({ submitForm, isSubmitting, touched }) => (
-              <Form>
-                <Field
-                  component={ReactstrapInput}
-                  name="email"
-                  type="email"
-                  placeholder="john@acme.com"
-                  label="E-mail address"
-                  autoComplete="email"
-                />
-                <Field
-                  component={ReactstrapInput}
-                  name="username"
-                  type="text"
-                  placeholder="johndoe"
-                  label="Username"
-                  autoComplete="username"
-                />
-                <Field
-                  component={ReactstrapInput}
-                  name="password"
-                  type="password"
-                  placeholder="Password"
-                  label="Password"
-                  autoComplete="new-password"
-                />
-
-                <div>
-                  <Button
-                    type="submit"
-                    block
-                    size="lg"
-                    color="primary"
-                    disabled={isSubmitting}
-                  >
-                    <FontAwesomeIcon
-                      pulse
-                      icon={faSpinner}
-                      className={isSubmitting ? 'mr-2' : 'd-none'}
-                    />
-                    Get started now
-                  </Button>
-                  <p className="mt-1 text-center text-muted small">
-                    By signing up you agree to our{' '}
-                    <a href="/legal/terms#tos" target="popup">
-                      Terms of Service
-                    </a>{' '}
-                    and{' '}
-                    <a href="/legal/terms#pp" target="popup">
-                      Privacy Policy
-                    </a>
-                    .
-                  </p>
-                </div>
-
-                <Reaptcha
-                  // eslint-disable-next-line
-                  ref={e => (this.recaptcha = e)}
-                  sitekey="6LeJVnEUAAAAAAetIUT8Rb7yQJx8LquVS2EFQNvF"
-                  onVerify={res => {
-                    dispatch(setRecaptchaResponseAction(res));
-                    submitForm();
+                <Formik
+                  initialValues={{
+                    email: '',
+                    username: '',
+                    password: '',
                   }}
-                  onExpire={() => {
-                    dispatch(setRecaptchaResponseAction(''));
-                    this.recaptcha.reset();
-                  }}
-                  onError={() => console.log(`Unable to load captcha.`)}
-                  size="invisible"
-                  theme="dark"
-                  badge="inline"
-                />
-              </Form>
-            )}
-          </Formik>
+                  validationSchema={Yup.object().shape({
+                    email: Yup.string()
+                      .email('Invalid email')
+                      .required('Required'),
+                    username: Yup.string().required('Required'),
+                    password: Yup.string()
+                      .min(3, 'Password must be at least 3 characters')
+                      .required('Required'),
+                  })}
+                  onSubmit={(values, formik) => {
+                    if (!recaptchaResponse) {
+                      formik.setSubmitting(false);
+                      return this.recaptcha.execute();
+                    }
+                    values.recaptchaResponse = recaptchaResponse;
 
-          <p className="mt-5 mb-3 text-center">
-            <Link to="/auth/login">Already have an account? Log in</Link>
-          </p>
-        </div>
+                    return onLoginFormSubmit(values, formik, this.recaptcha);
+                  }}
+                >
+                  {({ submitForm, isSubmitting, touched }) => (
+                    <Form>
+                      <Field
+                        component={ReactstrapInput}
+                        name="email"
+                        type="email"
+                        placeholder="john@acme.com"
+                        label="E-mail address"
+                        autoComplete="email"
+                      />
+                      <Field
+                        component={ReactstrapInput}
+                        name="username"
+                        type="text"
+                        placeholder="johndoe"
+                        label="Username"
+                        autoComplete="username"
+                      />
+                      <Field
+                        component={ReactstrapInput}
+                        name="password"
+                        type="password"
+                        placeholder="Password"
+                        label="Password"
+                        autoComplete="new-password"
+                      />
+
+                      <div>
+                        <Button
+                          type="submit"
+                          block
+                          size="lg"
+                          color="success"
+                          disabled={isSubmitting}
+                        >
+                          <FontAwesomeIcon
+                            pulse
+                            icon={faSpinner}
+                            className={isSubmitting ? 'mr-2' : 'd-none'}
+                          />
+                          Get started now
+                        </Button>
+                        <p className="mt-1 text-center text-muted small">
+                          By signing up you agree to our{' '}
+                          <a href="/legal/terms#tos" target="popup">
+                            Terms of Service
+                          </a>{' '}
+                          and{' '}
+                          <a href="/legal/terms#pp" target="popup">
+                            Privacy Policy
+                          </a>
+                          .
+                        </p>
+                      </div>
+
+                      <Reaptcha
+                        // eslint-disable-next-line
+                        ref={e => (this.recaptcha = e)}
+                        sitekey="6LeJVnEUAAAAAAetIUT8Rb7yQJx8LquVS2EFQNvF"
+                        onVerify={res => {
+                          dispatch(setRecaptchaResponseAction(res));
+                          submitForm();
+                        }}
+                        onExpire={() => {
+                          dispatch(setRecaptchaResponseAction(''));
+                          this.recaptcha.reset();
+                        }}
+                        onError={() => console.log(`Unable to load captcha.`)}
+                        size="invisible"
+                        theme="dark"
+                        badge="inline"
+                      />
+                    </Form>
+                  )}
+                </Formik>
+              </CardBody>
+            </Card>
+            <div className="mt-5 text-center">
+              <Link to="/auth/login">Already have an account? Log in</Link>
+            </div>
+          </Col>
+        </Row>
       </main>
     );
   }

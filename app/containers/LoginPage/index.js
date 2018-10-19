@@ -10,7 +10,16 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Container, Row, Col, Button, Alert } from 'reactstrap';
+import {
+  Container,
+  Card,
+  CardHeader,
+  CardBody,
+  Row,
+  Col,
+  Button,
+  Alert,
+} from 'reactstrap';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { Link } from 'react-router-dom';
@@ -19,16 +28,18 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { ReactstrapInput } from 'reactstrap-formik';
+import styled from 'styled-components';
 import reducer from './reducer';
 import saga from './saga';
 import { loginRequestAction, resetStateAction } from './actions';
 import { makeSelectLoginPage, makeSelectFormMsg } from './selectors';
 import { makeSelectIsLogged } from '../Auth/selectors';
 
-const LoginSchema = Yup.object().shape({
-  userIdentifier: Yup.string().required('Required'),
-  password: Yup.string().required('Required'),
-});
+const ForgotPasswordContainer = styled.div`
+  margin-top: -10px;
+  font-size: 12px;
+  line-height: 18px;
+`;
 
 /* eslint-disable react/prefer-stateless-function */
 export class LoginPage extends React.PureComponent {
@@ -53,97 +64,91 @@ export class LoginPage extends React.PureComponent {
           <meta name="description" content="Description of LoginPage" />
         </Helmet>
 
-        <div className="form-page">
-          <Row>
-            <Col className="text-center">
-              <img
-                className="mb-4"
-                src="/icon.png"
-                alt="app logo"
-                width="72"
-                height="72"
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col className="text-center">
-              {' '}
-              <h1 className="h3 mb-3 font-weight-normal">Welcome back</h1>
-              {formMsg && (
-                <Alert color={formMsg.color} role="alert">
-                  <strong>{formMsg.text}</strong>
-                </Alert>
-              )}
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Formik
-                initialValues={{
-                  userIdentifier: '',
-                  password: '',
-                }}
-                validationSchema={LoginSchema}
-                onSubmit={onLoginFormSubmit}
-              >
-                {({ isSubmitting }) => (
-                  <Form>
-                    <Field
-                      component={ReactstrapInput}
-                      name="userIdentifier"
-                      type="userIdentifier"
-                      placeholder="john@acme.com"
-                      label="E-mail address"
-                      autoComplete="e-mail"
-                    />
-                    <Field
-                      component={ReactstrapInput}
-                      name="password"
-                      type="password"
-                      placeholder="Password"
-                      label="Password"
-                      autoComplete="password"
-                    />
-                    <div>
-                      <Button
-                        type="submit"
-                        block
-                        size="lg"
-                        color="primary"
-                        disabled={isSubmitting}
-                      >
-                        <FontAwesomeIcon
-                          pulse
-                          icon={faSpinner}
-                          className={isSubmitting ? 'mr-2' : 'd-none'}
-                        />
-                        Log in to access
-                      </Button>
-                    </div>
-                  </Form>
-                )}
-              </Formik>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <Link to="/auth/forgot_password">
-                <Button size="sm" color="secondary" block className="mt-2">
-                  Forgot password?
-                </Button>
+        <Row>
+          <Col md={{ size: 6, offset: 3 }}>
+            <Card>
+              <CardHeader>
+                <h3 className="mb-0">Log in</h3>
+              </CardHeader>
+              <CardBody>
+                <Row>
+                  <Col className="text-center">
+                    {formMsg && (
+                      <Alert color={formMsg.color} role="alert">
+                        <strong>{formMsg.text}</strong>
+                      </Alert>
+                    )}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Formik
+                      initialValues={{
+                        userIdentifier: '',
+                        password: '',
+                      }}
+                      validationSchema={Yup.object().shape({
+                        userIdentifier: Yup.string().required('Required'),
+                        password: Yup.string().required('Required'),
+                      })}
+                      onSubmit={onLoginFormSubmit}
+                    >
+                      {({ isSubmitting }) => (
+                        <Form>
+                          <Field
+                            component={ReactstrapInput}
+                            name="userIdentifier"
+                            type="userIdentifier"
+                            placeholder="john@acme.com"
+                            label="E-mail address"
+                            autoComplete="e-mail"
+                          />
+                          <Field
+                            component={ReactstrapInput}
+                            name="password"
+                            type="password"
+                            placeholder="Password"
+                            label="Password"
+                            autoComplete="password"
+                          />
+                          <ForgotPasswordContainer className="text-right mb-3">
+                            <Link
+                              to="/auth/forgot_password"
+                              className="text-muted"
+                            >
+                              forgot password?
+                            </Link>
+                          </ForgotPasswordContainer>
+                          <div>
+                            <Button
+                              type="submit"
+                              block
+                              size="lg"
+                              color="success"
+                              disabled={isSubmitting}
+                            >
+                              <FontAwesomeIcon
+                                pulse
+                                icon={faSpinner}
+                                className={isSubmitting ? 'mr-2' : 'd-none'}
+                              />
+                              Log in to access
+                            </Button>
+                          </div>
+                        </Form>
+                      )}
+                    </Formik>
+                  </Col>
+                </Row>
+              </CardBody>
+            </Card>
+            <div className="mt-5 text-center">
+              <Link to="/auth/register">
+                Don&#39;t have an account? Sign up
               </Link>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              <p className="mt-5 mb-3 text-center">
-                <Link to="/auth/register">
-                  Don&#39;t have an account? Sign up
-                </Link>
-              </p>
-            </Col>
-          </Row>
-        </div>
+            </div>
+          </Col>
+        </Row>
       </main>
     );
   }
