@@ -115,10 +115,7 @@ export class FooterComponent extends React.PureComponent {
           </Row>
           <Row>
             <Col xs="10">
-              <span>
-                ® 2008–
-                {new Date().getFullYear()} ACME Inc.
-              </span>
+              <span>® {new Date().getFullYear()} ACME Inc.</span>
             </Col>
             <Col xs="2" className="text-right">
               <img
