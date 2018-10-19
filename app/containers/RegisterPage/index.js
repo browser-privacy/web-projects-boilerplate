@@ -123,7 +123,7 @@ export class RegisterPage extends React.PureComponent {
                 return onLoginFormSubmit(values, formik, this.recaptcha);
               }}
             >
-              {({ submitForm, isSubmitting }) => (
+              {({ submitForm, isSubmitting, touched }) => (
                 <Form>
                   <Field
                     component={ReactstrapInput}
@@ -190,10 +190,13 @@ export class RegisterPage extends React.PureComponent {
                       dispatch(setRecaptchaResponseAction(''));
                       this.recaptcha.reset();
                     }}
-                    onError={() =>
-                      // eslint-disable-next-line
-                      alert(`Unable to load captcha. Please, try again.`)
-                    }
+                    onError={() => {
+                      /* eslint-disable no-alert */
+                      if (touched)
+                        alert(
+                          `Unable to load captcha. Please, try it again to continue.`,
+                        );
+                    }}
                     size="invisible"
                     theme="dark"
                     badge="inline"
