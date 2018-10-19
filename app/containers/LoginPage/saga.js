@@ -30,6 +30,9 @@ export function* loginRequest(action) {
     const tokens = yield call(AuthApi.login, userIdentifier, password);
     yield put(loginRequestSuccessAction(tokens));
   } catch (err) {
+    console.log(err);
+    console.log('log err');
+
     let errMsg;
 
     switch (err.status) {
