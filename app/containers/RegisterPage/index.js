@@ -71,7 +71,7 @@ export class RegisterPage extends React.PureComponent {
     } = this.props;
 
     return (
-      <main className="container">
+      <Container tag="main">
         <Helmet>
           <title>Sign up</title>
           <meta name="description" content="Description of RegisterPage" />
@@ -120,7 +120,7 @@ export class RegisterPage extends React.PureComponent {
                     return onLoginFormSubmit(values, formik, this.recaptcha);
                   }}
                 >
-                  {({ submitForm, isSubmitting, touched }) => (
+                  {({ submitForm, isSubmitting }) => (
                     <Form>
                       <Field
                         component={ReactstrapInput}
@@ -190,7 +190,6 @@ export class RegisterPage extends React.PureComponent {
                         onError={() => console.log(`Unable to load captcha.`)}
                         size="invisible"
                         theme="dark"
-                        badge="inline"
                       />
                     </Form>
                   )}
@@ -202,7 +201,7 @@ export class RegisterPage extends React.PureComponent {
             </div>
           </Col>
         </Row>
-      </main>
+      </Container>
     );
   }
 }
