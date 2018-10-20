@@ -68,6 +68,13 @@ functions:
           path: health-check
           method: post
           cors: true
+  contact:
+    handler: src/functions/misc.contact
+    events:
+      - http:
+          path: misc/contact
+          method: post
+          cors: true
   login:
     handler: src/functions/auth.login
     events:
