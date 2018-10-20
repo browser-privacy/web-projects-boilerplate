@@ -86,7 +86,7 @@ export class FooterComponent extends React.PureComponent {
                 </li>
                 <li>
                   <Link to="/contact" className="text-light">
-                    Contact
+                    Contact us
                   </Link>
                 </li>
               </ul>
