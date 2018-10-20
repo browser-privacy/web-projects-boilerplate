@@ -10,23 +10,23 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import Helmet from 'react-helmet';
-import { Container, Row, Col, Jumbotron, Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay } from '@fortawesome/free-solid-svg-icons';
+import { Container } from 'reactstrap';
+// import { Link } from 'react-router-dom';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { makeSelectIsLogged } from '../Auth/selectors';
 
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.PureComponent {
   render() {
-    const { isLogged } = this.props;
+    // const { isLogged } = this.props;
 
-    function CTAButtons() {
+    /* function CTAButtons() {
       if (isLogged)
         return [
           <Link key="register-button" to="/dashboard/index">
@@ -52,7 +52,7 @@ class HomePage extends React.PureComponent {
           </Button>
         </Link>,
       ];
-    }
+    } */
 
     return (
       <main>
@@ -211,9 +211,9 @@ class HomePage extends React.PureComponent {
   }
 }
 
-HomePage.propTypes = {
-  isLogged: PropTypes.bool,
-};
+// HomePage.propTypes = {
+//   // isLogged: PropTypes.bool,
+// };
 
 const mapStateToProps = createStructuredSelector({
   isLogged: makeSelectIsLogged(),
