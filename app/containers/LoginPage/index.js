@@ -58,7 +58,7 @@ export class LoginPage extends React.PureComponent {
     const { formMsg, onLoginFormSubmit } = this.props;
 
     return (
-      <main className="container">
+      <Container tag="main">
         <Helmet>
           <title>Sign in</title>
           <meta name="description" content="Description of LoginPage" />
@@ -149,7 +149,7 @@ export class LoginPage extends React.PureComponent {
             </div>
           </Col>
         </Row>
-      </main>
+      </Container>
     );
   }
 }
