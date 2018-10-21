@@ -1,5 +1,7 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
 import JWTDecode from 'jwt-decode';
+
+import * as localStorage from '../../api/vendors/localStorage';
 import { AuthApi } from '../../api';
 import {
   SAVE_USER_AUTH_TOKENS,
