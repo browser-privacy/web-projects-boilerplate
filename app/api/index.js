@@ -1,4 +1,4 @@
-require('./base.api');
+require('./base');
 
-export { AuthApi } from './auth.api';
-export { CoreApi } from './core.api';
+export { AuthApi } from './auth';
+export { CoreApi } from './core';

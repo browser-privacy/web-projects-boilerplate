@@ -1,9 +1,9 @@
 import axios from 'axios';
 import JWTDecode from 'jwt-decode';
 
-import { AuthApi } from './auth.api';
-
+import { AuthApi } from './auth';
 import { config } from '../config';
+
 const { API_ENDPOINT } = config[process.env.NODE_ENV];
 
 axios.defaults.baseURL = API_ENDPOINT;
