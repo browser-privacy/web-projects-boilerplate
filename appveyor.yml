@@ -24,7 +24,7 @@ install:
   - ps: Install-Product node $env:nodejs_version
   - set PATH=%APPDATA%\yarn;%PATH%
   - yarn
-  - ps: cd api
+  - ps: cd serverless
   - yarn
   - ps: cd ..
 
@@ -44,7 +44,7 @@ test_script:
 cache:
   - "%LOCALAPPDATA%\\Yarn"
   - node_modules -> package.json
-  - api/node_modules -> api/package.json
+  - serverless/node_modules -> serverless/package.json
 
 # remove, as appveyor doesn't support secure variables on pr builds
 # so `COVERALLS_REPO_TOKEN` cannot be set, without hard-coding in this file
