@@ -3,7 +3,7 @@ coverage
 build
 node_modules
 stats.json
-api/env.yml
+serverless/env.yml
 .serverless
 TODO
 
