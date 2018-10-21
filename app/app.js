@@ -24,9 +24,8 @@ import App from 'containers/App';
 
 // Load the favicon and the .htaccess file
 /* eslint-disable import/no-unresolved, import/extensions */
-import '!file-loader?name=[name].[ext]!./images/favicon.ico';
-import '!file-loader?name=[name].[ext]!./images/icon.png';
-import 'file-loader?name=[name].[ext]!./.htaccess';
+import '!file-loader?name=[name].[ext]!./assets/images/favicon.ico';
+import '!file-loader?name=[name].[ext]!./assets/images/icon.png';
 /* eslint-enable import/no-unresolved, import/extensions */
 
 import configureStore from './configureStore';
