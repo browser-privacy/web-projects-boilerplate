@@ -99,15 +99,13 @@ export class LoginPage extends React.PureComponent {
                             component={ReactstrapInput}
                             name="userIdentifier"
                             type="userIdentifier"
-                            placeholder="john@acme.com"
-                            label="E-mail address"
+                            label="Email address or username"
                             autoComplete="e-mail"
                           />
                           <Field
                             component={ReactstrapInput}
                             name="password"
                             type="password"
-                            placeholder="Password"
                             label="Password"
                             autoComplete="password"
                           />
