@@ -101,7 +101,7 @@ export class NavbarComponent extends React.PureComponent {
           <Nav className="ml-auto align-items-center" navbar>
             <NavItem key="register" onClick={this.handleClick}>
               <NavLink
-                to="/auth/register"
+                to="/register"
                 exact
                 activeClassName="active"
                 tag={RRNavLink}
