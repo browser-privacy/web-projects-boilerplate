@@ -35,7 +35,7 @@ module.exports.create = (event, context, callback) => {
       },
       cb => {
         connectToDatabase().then(() => {
-          User.create(JSON.parse(event.body))
+          User.create(JSON.parse(event.body)) // @FIX
             .then(user => {
               createdUser = user;
               cb(null);
