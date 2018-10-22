@@ -97,7 +97,7 @@ class FAQPage extends React.PureComponent {
             <FAQHeader>Sellers</FAQHeader>
             <Card>
               <CardHeader onClick={() => this.toggle(3)}>
-                Who cen sell items?
+                Who can sell items?
               </CardHeader>
               <Collapse isOpen={collapses[3]}>
                 <CardBody>
