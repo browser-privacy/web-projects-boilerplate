@@ -5,12 +5,10 @@
  */
 
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route as DefaultRoute } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 
 import PrivateRoute from 'components/PrivateRoute';
-import Navbar from 'components/Navbar/Loadable';
-import Footer from 'components/Footer/Loadable';
 import ScrollToTop from 'components/ScrollToTop';
 
 import HomePage from 'containers/HomePage/Loadable';
@@ -29,38 +27,79 @@ import UserDashboardSettingsPage from 'containers/UserDashboard/SettingsPage/Loa
 import UserDashboardEmailVerificationPage from 'containers/UserDashboard/EmailVerificationPage/Loadable';
 import UserDashboardSupportPage from 'containers/UserDashboard/SupportPage/Loadable';
 
+import PropTypes from 'prop-types';
+
+import DefaultLayout from 'layout';
+import RouteAnalytics from 'components/RouteAnalytics';
+
+const Route = ({
+  component: Component,
+  layout: Layout = DefaultLayout,
+  ...rest
+}) => (
+  <DefaultRoute
+    {...rest}
+    render={props => {
+      let privateRoute = null;
+      if (rest.protected) {
+        privateRoute = <PrivateRoute exact path={rest.path} />;
+      }
+
+      return (
+        <React.Fragment>
+          {privateRoute}
+          <RouteAnalytics key={rest.path} {...props}>
+            <Layout>
+              <Component {...props} />
+            </Layout>
+          </RouteAnalytics>
+        </React.Fragment>
+      );
+    }}
+  />
+);
+
+Route.propTypes = {
+  component: PropTypes.func,
+  layout: PropTypes.object,
+  protected: PropTypes.bool,
+};
+
 export default function App() {
   return (
     <React.Fragment>
       <Helmet titleTemplate="%s | Domain.io" />
-      <Navbar />
       <ScrollToTop>
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/auth/login" component={LoginPage} />
-          <Route exact path="/auth/register" component={RegisterPage} />
+          <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/faq" component={FAQPage} />
           <Route exact path="/pricing" component={PricingPage} />
           <Route exact path="/about" component={AboutPage} />
           <Route exact path="/legal/terms" component={LegalTermsPage} />
           <Route exact path="/contact" component={ContactPage} />
 
-          <PrivateRoute
+          <Route
+            protected
             exact
             path="/dashboard/index"
             component={UserDashboardMainPage}
           />
-          <PrivateRoute
+          <Route
+            protected
             exact
             path="/dashboard/user/settings"
             component={UserDashboardSettingsPage}
           />
-          <PrivateRoute
+          <Route
+            protected
             exact
             path="/dashboard/email/verification"
             component={UserDashboardEmailVerificationPage}
           />
-          <PrivateRoute
+          <Route
+            protected
             exact
             path="/dashboard/support"
             component={UserDashboardSupportPage}
@@ -69,7 +108,6 @@ export default function App() {
           <Route component={NotFoundPage} />
         </Switch>
       </ScrollToTop>
-      <Footer />
     </React.Fragment>
   );
 }
