@@ -129,21 +129,21 @@ export class ContactPage extends React.PureComponent {
                             component={ReactstrapInput}
                             name="name"
                             type="text"
-                            label="Your name *"
+                            label="Your name"
                             autoComplete="name"
                           />
                           <Field
                             component={ReactstrapInput}
                             name="email"
                             type="email"
-                            label="Email *"
+                            label="Email"
                             autoComplete="e-mail"
                           />
                           <Field
                             component={ReactstrapInput}
                             name="message"
                             type="textarea"
-                            label="How can we help? *"
+                            label="How can we help?"
                           />
 
                           <div>
