@@ -55,7 +55,7 @@ class HomePage extends React.PureComponent {
     } */
 
     return (
-      <main>
+      <main className="flex-grow-1">
         <Helmet>
           <title>Homepage</title>
           <meta name="description" content="Domain.io homepage" />
