@@ -10,21 +10,28 @@
  */
 
 import React from 'react';
-import { Button } from 'reactstrap';
+import { Container, Row, Col, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
 /* eslint-disable react/prefer-stateless-function */
 export default class NotFound extends React.PureComponent {
   render() {
     return (
-      <div className="text-center">
-        <h1>404 Page not found</h1>
-        <Link to="/">
-          <Button>
-            <strong>Return to homepage</strong>
-          </Button>
-        </Link>
-      </div>
+      <Container tag="main">
+        <Row className="justify-content-center">
+          <Col md="12" className="text-center">
+            <span className="display-1 d-block">404</span>
+            <div className="mb-4 lead">
+              The page you are looking for was not found.
+            </div>
+            <Link to="/">
+              <Button>
+                <strong>Return to homepage</strong>
+              </Button>
+            </Link>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 }
