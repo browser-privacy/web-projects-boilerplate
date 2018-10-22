@@ -11,13 +11,13 @@ export const CoreApi = {
    * @param  {string} message
    * @param  {string} recaptchaResponse
    */
-  contact(name, email, message, recaptchaResponse) {
+  contact(name, email, message, recaptcha) {
     return axios
       .post('/misc/contact', {
         name,
         email,
         message,
-        recaptchaResponse,
+        recaptcha,
       })
       .then(res => Promise.resolve(res))
       .catch(err => Promise.reject(err.response));
