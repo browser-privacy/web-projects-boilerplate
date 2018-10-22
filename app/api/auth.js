@@ -24,6 +24,20 @@ export const AuthApi = {
       .catch(err => Promise.reject(err.response));
   },
   /**
+   * User password recovery (forgot password)
+   * @param  {string} email User email address
+   * @param  {string} recaptcha recaptcha
+   */
+  forgot(email, recaptcha) {
+    return axios
+      .post('/auth/forgot_password', {
+        email,
+        recaptcha,
+      })
+      .then(res => Promise.resolve(res))
+      .catch(err => Promise.reject(err.response));
+  },
+  /**
    * Logs out an user in
    */
   logout() {
