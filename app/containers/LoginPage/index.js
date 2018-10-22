@@ -143,9 +143,7 @@ export class LoginPage extends React.PureComponent {
               </CardBody>
             </Card>
             <div className="mt-5 text-center">
-              <Link to="/auth/register">
-                Don&#39;t have an account? Sign up
-              </Link>
+              <Link to="/register">Don&#39;t have an account? Sign up</Link>
             </div>
           </Col>
         </Row>
