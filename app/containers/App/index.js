@@ -62,7 +62,7 @@ const Route = ({
 
 Route.propTypes = {
   component: PropTypes.func,
-  layout: PropTypes.object,
+  layout: PropTypes.func,
   protected: PropTypes.bool,
 };
 
