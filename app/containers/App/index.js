@@ -21,7 +21,7 @@ import AboutPage from 'components/AboutPage';
 import RegisterPage from 'containers/RegisterPage/Loadable';
 
 import LoginPage from 'containers/LoginPage/Loadable';
-import ForgotPasswordPage from 'containers/ForgotPasswordPage';
+import ForgotPasswordPage from 'containers/ForgotPasswordPage/Loadable';
 
 import UserDashboardMainPage from 'containers/UserDashboard/MainPage/Loadable';
 import UserDashboardSettingsPage from 'containers/UserDashboard/SettingsPage/Loadable';
