@@ -3,36 +3,30 @@ import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+
 import { makeSelectIsLogged } from '../../containers/Auth/selectors';
 
 export class PrivateRoute extends React.PureComponent {
   render() {
-    const {
-      component: Component,
-      redirect: pathname,
-      isLogged,
-      ...rest
-    } = this.props;
+    const { redirect: pathname, isLogged, children, ...rest } = this.props;
 
-    return (
-      <div>
+    if (!isLogged) {
+      return (
         <Route
           {...rest}
-          render={props =>
-            isLogged === true ? (
-              <Component {...rest} {...props} />
-            ) : (
-              <Redirect
-                to={{
-                  pathname,
-                  state: { from: props.location },
-                }}
-              />
-            )
-          }
+          render={props => (
+            <Redirect
+              to={{
+                pathname,
+                state: { from: props.location },
+              }}
+            />
+          )}
         />
-      </div>
-    );
+      );
+    }
+
+    return null;
   }
 }
 
@@ -41,10 +35,11 @@ PrivateRoute.defaultProps = {
 };
 
 PrivateRoute.propTypes = {
-  component: PropTypes.func.isRequired,
+  layout: PropTypes.func,
   redirect: PropTypes.string,
   location: PropTypes.object,
   isLogged: PropTypes.bool,
+  children: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
