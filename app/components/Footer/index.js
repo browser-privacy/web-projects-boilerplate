@@ -13,7 +13,7 @@ const Footer = styled.footer`
   position: relative;
   bottom: 0;
   width: 100%;
-  line-height: 60px; /* Vertically center the text there */
+  line-height: 34px; /* Vertically center the text there */
   background-color: #f5f5f5;
 `;
 
@@ -33,7 +33,7 @@ export class FooterComponent extends React.PureComponent {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/auth/register" className="text-light">
+                  <Link to="/register" className="text-light">
                     Sign up
                   </Link>
                 </li>
