@@ -57,6 +57,34 @@ custom:
               type: string
             password:
               type: string
+      - name: ForgotRequest
+        contentType: 'application/json'
+        schema:
+          required:
+            - email
+            - recaptcha
+          properties:
+            email:
+              type: string
+            recaptcha:
+              type: string
+      - name: ContactRequest
+        contentType: 'application/json'
+        schema:
+          required:
+            - name
+            - email
+            - message
+            - recaptcha
+          properties:
+            name:
+              type: string
+            email:
+              type: string
+            message:
+              type: string
+            recaptcha:
+              type: string
 
 functions:
   authorize:
@@ -72,6 +100,9 @@ functions:
     handler: src/functions/misc.contact
     events:
       - http:
+          documentation:
+            requestModels:
+              'application/json': ContactRequest
           path: misc/contact
           method: post
           cors: true
@@ -83,6 +114,17 @@ functions:
             requestModels:
               'application/json': LoginUserRequest
           path: auth/login
+          method: post
+          cors: true
+          reqValidatorName: onlyBody
+  forgot:
+    handler: src/functions/auth.forgot
+    events:
+      - http:
+          documentation:
+            requestModels:
+              'application/json': ForgotPasswordRequest
+          path: auth/forgot_password
           method: post
           cors: true
           reqValidatorName: onlyBody
