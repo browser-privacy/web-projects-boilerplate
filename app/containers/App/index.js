@@ -18,9 +18,10 @@ import LegalTermsPage from 'components/LegalTermsPage/Loadable';
 import ContactPage from 'containers/ContactPage/Loadable';
 import FAQPage from 'components/FaqPage';
 import AboutPage from 'components/AboutPage';
+import RegisterPage from 'containers/RegisterPage/Loadable';
 
 import LoginPage from 'containers/LoginPage/Loadable';
-import RegisterPage from 'containers/RegisterPage/Loadable';
+import ForgotPasswordPage from 'containers/ForgotPasswordPage';
 
 import UserDashboardMainPage from 'containers/UserDashboard/MainPage/Loadable';
 import UserDashboardSettingsPage from 'containers/UserDashboard/SettingsPage/Loadable';
@@ -72,13 +73,19 @@ export default function App() {
       <ScrollToTop>
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/auth/login" component={LoginPage} />
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/faq" component={FAQPage} />
           <Route exact path="/pricing" component={PricingPage} />
           <Route exact path="/about" component={AboutPage} />
           <Route exact path="/legal/terms" component={LegalTermsPage} />
           <Route exact path="/contact" component={ContactPage} />
+
+          <Route exact path="/auth/login" component={LoginPage} />
+          <Route
+            exact
+            path="/auth/forgot_password"
+            component={ForgotPasswordPage}
+          />
 
           <Route
             protected
