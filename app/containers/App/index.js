@@ -30,7 +30,7 @@ import UserDashboardSupportPage from 'containers/UserDashboard/SupportPage/Loada
 
 import PropTypes from 'prop-types';
 
-import DefaultLayout from 'layout';
+import { DefaultLayout, UserDashboardLayout } from 'layout';
 import RouteAnalytics from 'components/RouteAnalytics';
 
 const Route = ({
@@ -91,24 +91,28 @@ export default function App() {
             protected
             exact
             path="/dashboard/index"
+            layout={UserDashboardLayout}
             component={UserDashboardMainPage}
           />
           <Route
             protected
             exact
             path="/dashboard/user/settings"
+            layout={UserDashboardLayout}
             component={UserDashboardSettingsPage}
           />
           <Route
             protected
             exact
             path="/dashboard/email/verification"
+            layout={UserDashboardLayout}
             component={UserDashboardEmailVerificationPage}
           />
           <Route
             protected
             exact
             path="/dashboard/support"
+            layout={UserDashboardLayout}
             component={UserDashboardSupportPage}
           />
 

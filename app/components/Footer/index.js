@@ -5,25 +5,31 @@
  */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Container, Row, Col } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Footer = styled.footer`
+const FooterContainer = styled.footer`
   position: relative;
   bottom: 0;
   width: 100%;
-  line-height: 34px; /* Vertically center the text there */
+  line-height: 34px;
   background-color: #f5f5f5;
 `;
 
 /* eslint-disable react/prefer-stateless-function */
 export class FooterComponent extends React.PureComponent {
   render() {
+    const { minimal } = this.props;
+
     return (
-      <Footer className="bg-dark text-light">
+      <FooterContainer className="bg-dark text-light">
         <Container>
-          <Row className="mx-auto pt-4 border-bottom border-bottom-4">
+          <Row
+            className="mx-auto pt-4 border-bottom border-bottom-4"
+            hidden={minimal}
+          >
             <div className="col-6 col-md offset-md-1">
               <h5 className="font-weight-bold">Product</h5>
               <ul className="list-unstyled text-small">
@@ -112,7 +118,7 @@ export class FooterComponent extends React.PureComponent {
               </ul>
             </div>
           </Row>
-          <Row>
+          <Row className="mt-1 mb-1">
             <Col xs="10">
               <span>® {new Date().getFullYear()} ACME Inc.</span>
             </Col>
@@ -127,9 +133,13 @@ export class FooterComponent extends React.PureComponent {
             </Col>
           </Row>
         </Container>
-      </Footer>
+      </FooterContainer>
     );
   }
 }
+
+FooterComponent.propTypes = {
+  minimal: PropTypes.bool,
+};
 
 export default FooterComponent;
