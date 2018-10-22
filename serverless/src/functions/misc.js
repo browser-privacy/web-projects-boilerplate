@@ -1,6 +1,7 @@
 const axios = require('axios');
 const querystring = require('querystring');
 
+// @TODO: Finish this function
 module.exports.contact = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
@@ -11,7 +12,7 @@ module.exports.contact = (event, context, callback) => {
       'https://google.com/recaptcha/api/siteverify',
       querystring.stringify({
         secret: process.env.GOOGLE_RECAPTCHA_PRIVATE_KEY,
-        response: receivedFormDetails.recaptchaResponse,
+        response: receivedFormDetails.recaptcha,
       }),
     )
     .then(response => {

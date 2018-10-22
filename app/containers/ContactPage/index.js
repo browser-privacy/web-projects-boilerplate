@@ -25,7 +25,6 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { ReactstrapInput } from 'reactstrap-formik';
-// import styled from 'styled-components';
 import Reaptcha from 'reaptcha';
 
 import injectSaga from 'utils/injectSaga';
@@ -146,6 +145,23 @@ export class ContactPage extends React.PureComponent {
                             type="textarea"
                             label="How can we help? *"
                           />
+
+                          <div>
+                            <Button
+                              type="submit"
+                              block
+                              size="lg"
+                              color="primary"
+                              disabled={isSubmitting}
+                            >
+                              <FontAwesomeIcon
+                                pulse
+                                icon={faSpinner}
+                                className={isSubmitting ? 'mr-2' : 'd-none'}
+                              />
+                              Get in touch
+                            </Button>
+                          </div>
                           <Reaptcha
                             // eslint-disable-next-line
                             ref={e => (this.recaptcha = e)}
@@ -163,22 +179,6 @@ export class ContactPage extends React.PureComponent {
                             }
                             size="invisible"
                           />
-                          <div>
-                            <Button
-                              type="submit"
-                              block
-                              size="lg"
-                              color="primary"
-                              disabled={isSubmitting}
-                            >
-                              <FontAwesomeIcon
-                                pulse
-                                icon={faSpinner}
-                                className={isSubmitting ? 'mr-2' : 'd-none'}
-                              />
-                              Get in touch
-                            </Button>
-                          </div>
                         </Form>
                       )}
                     </Formik>

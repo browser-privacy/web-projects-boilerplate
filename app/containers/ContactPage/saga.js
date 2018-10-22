@@ -17,19 +17,15 @@ export function* contactRequest(action) {
   const { name, email, message, recaptchaResponse } = action.values;
   const { formik, recaptcha } = action;
 
+  yield put(setContactRequestStatusAction(null));
+
   try {
-    const tokens = yield call(
-      CoreApi.contact,
-      name,
-      email,
-      message,
-      recaptchaResponse,
-    );
+    yield call(CoreApi.contact, name, email, message, recaptchaResponse);
 
     formik.setSubmitting(false);
     formik.resetForm();
 
-    yield put(contactRequestSuccessAction(tokens));
+    yield put(contactRequestSuccessAction());
   } catch (err) {
     yield put(setRecaptchaResponseAction(''));
     recaptcha.reset();
