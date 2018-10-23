@@ -86,7 +86,7 @@ export class ForgotPasswordPage extends React.PureComponent {
           <Col md={{ size: 6, offset: 3 }}>
             <Card>
               <CardHeader>
-                <h3 className="mb-0">Password Reset</h3>
+                <h3 className="mb-0">Password reset</h3>
               </CardHeader>
               <CardBody>
                 <Row>
