@@ -15,8 +15,8 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
 import Helmet from 'react-helmet';
-import { Container } from 'reactstrap';
-// import { Link } from 'react-router-dom';
+import { Container, Row, Col, Button } from 'reactstrap';
+import { Link } from 'react-router-dom';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { makeSelectIsLogged } from '../Auth/selectors';
@@ -55,156 +55,81 @@ class HomePage extends React.PureComponent {
     } */
 
     return (
-      <main className="flex-grow-1">
+      <main className="d-flex flex-column flex-grow-1">
         <Helmet>
           <title>Homepage</title>
           <meta name="description" content="Domain.io homepage" />
         </Helmet>
-        <section className="jumbotron text-center">
+        <section className="jumbotron text-center mb-0">
           <div className="container">
-            <h1 className="jumbotron-heading">Album example</h1>
-            <p className="lead text-muted">
-              Something short and leading about the collection below—its
-              contents, the creator, etc. Make it short and sweet, but not too
-              short so folks dont simply skip over it entirely.
+            <h1 className="jumbotron-heading">Intro title</h1>
+            <p className="lead">
+              Make it short and sweet, but not too short so folks dont simply
+              skip over it entirely.
             </p>
             <p>
-              <a href="#foo" className="btn btn-primary my-2">
-                Main call to action
-              </a>
-              <a href="#foo" className="btn btn-secondary my-2">
-                Secondary action
-              </a>
+              <Link to="/register">
+                <Button color="primary" size="lg">
+                  Sign up free
+                </Button>
+              </Link>
             </p>
           </div>
         </section>
-        <Container>
-          <h1>Lorem ipsum dolor sit amet</h1>
-          <p className="lead">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <p>
-            Use{' '}
-            <a href="#foo">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod
-            </a>{' '}
-            if need be, too.
-          </p>
-          <h1>Lorem ipsum dolor sit amet</h1>
-          <p className="lead">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <p>
-            Use{' '}
-            <a href="#foo">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod
-            </a>{' '}
-            if need be, too.
-          </p>
-          <h1>Lorem ipsum dolor sit amet</h1>
-          <p className="lead">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <p>
-            Use{' '}
-            <a href="#foo">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod
-            </a>{' '}
-            if need be, too.
-          </p>
-          <h1>Lorem ipsum dolor sit amet</h1>
-          <p className="lead">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <p>
-            Use{' '}
-            <a href="#foo">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod
-            </a>{' '}
-            if need be, too.
-          </p>
-          <h1>Lorem ipsum dolor sit amet</h1>
-          <p className="lead">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <p>
-            Use{' '}
-            <a href="#foo">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod
-            </a>{' '}
-            if need be, too.
-          </p>
-          <h1>Lorem ipsum dolor sit amet</h1>
-          <p className="lead">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <p>
-            Use{' '}
-            <a href="#foo">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod
-            </a>{' '}
-            if need be, too.
-          </p>
-          <h1>Lorem ipsum dolor sit amet</h1>
-          <p className="lead">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <p>
-            Use{' '}
-            <a href="#foo">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod
-            </a>{' '}
-            if need be, too.
-          </p>
+        <Container className="d-flex flex-column flex-grow-1 justify-content-center">
+          <Row className="mb-5">
+            <Col>
+              <h1>Lorem ipsum dolor sit amet, consectetur adipiscin</h1>
+              <p className="lead">
+                Excepteur sint occaecat cupidatat non proident, sunt in culpa
+                qui officia deserunt mollit anim id est laborum{' '}
+                <code>padding-top: 60px;</code> liquip ex ea commodo consequat{' '}
+                <code>body &gt; .container</code>. sed quia non numquam eius
+                modi tempora incidunt ut labore et dolore magnam aliquam quaerat
+                voluptatem. Ut enim ad minima veniam, quis nostrum
+                exercitationem ullam corporis suscipit laboriosam, nisi ut
+                aliquid <strong>ex ea commodi consequatur?</strong>
+              </p>
+            </Col>
+          </Row>
+          <Row>
+            <Col md="4">
+              <h2>Heading</h2>
+              <p>
+                Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
+                tellus ac cursus commodo, tortor mauris condimentum nibh, ut
+                fermentum massa justo sit amet risus. Etiam porta sem malesuada
+                magna mollis euismod. Donec sed odio dui.{' '}
+              </p>
+              <p>
+                <Button color="secondary">View details »</Button>
+              </p>
+            </Col>
+            <Col md="4">
+              <h2>Heading</h2>
+              <p>
+                Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
+                tellus ac cursus commodo, tortor mauris condimentum nibh, ut
+                fermentum massa justo sit amet risus. Etiam porta sem malesuada
+                magna mollis euismod. Donec sed odio dui.{' '}
+              </p>
+              <p>
+                <Button color="secondary">View details »</Button>
+              </p>
+            </Col>
+            <Col md="4">
+              <h2>Heading</h2>
+              <p>
+                Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
+                tellus ac cursus commodo, tortor mauris condimentum nibh, ut
+                fermentum massa justo sit amet risus. Etiam porta sem malesuada
+                magna mollis euismod. Donec sed odio dui.{' '}
+              </p>
+              <p>
+                <Button color="secondary">View details »</Button>
+              </p>
+            </Col>
+          </Row>
         </Container>
       </main>
     );
