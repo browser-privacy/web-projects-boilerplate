@@ -82,15 +82,6 @@ export class FooterComponent extends React.PureComponent {
                   </Link>
                 </li>
                 <li>
-                  <a
-                    href="https://blog.domain.io"
-                    className="text-light"
-                    target="new"
-                  >
-                    Blog
-                  </a>
-                </li>
-                <li>
                   <Link to="/contact" className="text-light">
                     Contact us
                   </Link>
@@ -104,6 +95,15 @@ export class FooterComponent extends React.PureComponent {
                   <Link to="/dashboard/support" className="text-light">
                     Support
                   </Link>
+                </li>
+                <li>
+                  <a
+                    href="https://blog.domain.io"
+                    className="text-light"
+                    target="new"
+                  >
+                    Blog
+                  </a>
                 </li>
                 <li>
                   <Link to="/legal/terms" className="text-light">
