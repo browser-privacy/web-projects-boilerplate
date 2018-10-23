@@ -21,7 +21,7 @@
     "preinstall": "npm run npmcheckversion",
     "postinstall": "npm run build:dll",
     "prebuild": "npm run build:clean",
-    "build": "cross-env NODE_ENV=production webpack --config internals/webpack/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout && cp build/index.html build/404.html",
+    "build": "cross-env NODE_ENV=production webpack --config internals/webpack/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout && cp build/index.html build/404.html && npm run sitemap",
     "build:clean": "rimraf ./build",
     "build:dll": "node ./internals/scripts/dependencies.js",
     "start": "cross-env NODE_ENV=development node server",
@@ -45,7 +45,8 @@
     "test": "cross-env NODE_ENV=test jest --coverage",
     "test:watch": "cross-env NODE_ENV=test jest --watchAll",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "prettify": "prettier --write"
+    "prettify": "prettier --write",
+    "sitemap": "node ./internals/scripts/sitemap.js"
   },
   "lint-staged": {
     "*.js": [
@@ -242,6 +243,7 @@
     "react-test-renderer": "16.4.1",
     "rimraf": "2.6.2",
     "shelljs": "^0.8.2",
+    "sitemap": "^2.1.0",
     "style-loader": "0.21.0",
     "stylelint": "9.3.0",
     "stylelint-config-recommended": "2.1.0",
