@@ -9,6 +9,11 @@ module.exports.create = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
   const receivedSubmitedValues = JSON.parse(event.body);
+  const newUser = {
+    email: receivedSubmitedValues.email,
+    username: receivedSubmitedValues.username,
+    password: receivedSubmitedValues.password,
+  };
 
   let createdUser;
   async.series(
@@ -35,7 +40,7 @@ module.exports.create = (event, context, callback) => {
       },
       cb => {
         connectToDatabase().then(() => {
-          User.create(JSON.parse(event.body)) // @FIX
+          User.create(newUser)
             .then(user => {
               createdUser = user;
               cb(null);
