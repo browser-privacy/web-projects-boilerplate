@@ -27,6 +27,7 @@ import App from 'containers/App';
 import '!file-loader?name=[name].[ext]!./assets/images/favicon.ico';
 import '!file-loader?name=[name].[ext]!./assets/images/icon.png';
 import '!file-loader?name=[name].[ext]!./assets/sitemap.xml';
+
 /* eslint-enable import/no-unresolved, import/extensions */
 
 import configureStore from './configureStore';
