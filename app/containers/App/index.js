@@ -92,7 +92,7 @@ export default function App() {
           <Route
             protected
             exact
-            path="/dashboard/index"
+            path="/dashboard"
             layout={UserDashboardLayout}
             component={UserDashboardMainPage}
           />

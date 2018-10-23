@@ -73,7 +73,7 @@ export function* registerRequestFailed(action) {
 }
 
 export function* loadUserFromTokenSuccess() {
-  yield put(push('/dashboard/index'));
+  yield put(push('/dashboard'));
 }
 
 export default function* defaultSaga() {

@@ -141,7 +141,7 @@ export class NavbarComponent extends React.PureComponent {
       links.push(
         <DropdownItem
           key="dropdownitem-dashboard"
-          onClick={() => history.push('/dashboard/index')}
+          onClick={() => history.push('/dashboard')}
         >
           <FontAwesomeIcon icon={faHome} className="align-text-top mr-1" />
           Dashboard

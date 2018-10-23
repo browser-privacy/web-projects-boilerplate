@@ -76,7 +76,7 @@ export function* loginRequestFailed(action) {
 
 export function* loadUserFromTokenSuccess() {
   const location = yield select(makeSelectLocation());
-  let redirectTo = '/dashboard/index';
+  let redirectTo = '/dashboard';
   if (location.state && location.state.from) {
     const { pathname, search, hash } = location.state.from;
 

@@ -46,7 +46,7 @@ export class LoginPage extends React.PureComponent {
   componentDidMount() {
     const { history, isLogged } = this.props;
 
-    if (isLogged) history.push('/dashboard/index');
+    if (isLogged) history.push('/dashboard');
   }
 
   componentWillUnmount() {

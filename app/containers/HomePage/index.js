@@ -29,7 +29,7 @@ class HomePage extends React.PureComponent {
     function IntroButtons() {
       if (isLogged)
         return [
-          <Link key="register-button" to="/dashboard/index">
+          <Link key="register-button" to="/dashboard">
             <Button size="lg" color="primary">
               <strong>Go to dashboard</strong>
             </Button>
