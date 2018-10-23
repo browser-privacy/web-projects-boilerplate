@@ -36,13 +36,13 @@ class HomePage extends React.PureComponent {
           </Link>,
         ];
 
-      return [
+      return (
         <Link to="/register">
           <Button color="primary" size="lg">
             <strong>Sign up free</strong>
           </Button>
-        </Link>,
-      ];
+        </Link>
+      );
     }
 
     return (
