@@ -10,7 +10,7 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
@@ -24,35 +24,26 @@ import { makeSelectIsLogged } from '../Auth/selectors';
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.PureComponent {
   render() {
-    // const { isLogged } = this.props;
+    const { isLogged } = this.props;
 
-    /* function CTAButtons() {
+    function IntroButtons() {
       if (isLogged)
         return [
           <Link key="register-button" to="/dashboard/index">
             <Button size="lg" color="primary">
-              <strong>Go to Dashboard</strong>
+              <strong>Go to dashboard</strong>
             </Button>
           </Link>,
         ];
 
       return [
-        <Button
-          key="demo-button"
-          size="lg"
-          color="info"
-          className="homepage-intro-cta"
-        >
-          <FontAwesomeIcon icon={faPlay} className="align-text-top mr-2" />
-          Watch demo
-        </Button>,
-        <Link key="register-button" to="/register">
-          <Button size="lg" color="primary" className="homepage-intro-cta">
+        <Link to="/register">
+          <Button color="primary" size="lg">
             <strong>Sign up free</strong>
           </Button>
         </Link>,
       ];
-    } */
+    }
 
     return (
       <main className="d-flex flex-column flex-grow-1">
@@ -68,11 +59,7 @@ class HomePage extends React.PureComponent {
               skip over it entirely.
             </p>
             <p>
-              <Link to="/register">
-                <Button color="primary" size="lg">
-                  Sign up free
-                </Button>
-              </Link>
+              <IntroButtons />
             </p>
           </div>
         </section>
@@ -136,9 +123,9 @@ class HomePage extends React.PureComponent {
   }
 }
 
-// HomePage.propTypes = {
-//   // isLogged: PropTypes.bool,
-// };
+HomePage.propTypes = {
+  isLogged: PropTypes.bool,
+};
 
 const mapStateToProps = createStructuredSelector({
   isLogged: makeSelectIsLogged(),
