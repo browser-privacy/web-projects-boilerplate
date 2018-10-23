@@ -167,6 +167,7 @@
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.11",
     "minimist": "1.2.0",
+    "postmark": "^1.6.1",
     "prop-types": "15.6.1",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
