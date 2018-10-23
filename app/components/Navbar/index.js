@@ -168,12 +168,14 @@ export class NavbarComponent extends React.PureComponent {
   }
 
   render() {
+    const { navbarBrandLink } = this.props;
+
     return (
       <header>
         <Navbar color="dark" dark expand="sm">
           <Container>
             <NavLink
-              to="/"
+              to={navbarBrandLink}
               tag={RRNavLink}
               className="navbar-brand navbar-brandname"
               onClick={this.handleClick}
@@ -192,7 +194,11 @@ export class NavbarComponent extends React.PureComponent {
   }
 }
 
+NavbarComponent.defaultProps = {
+  navbarBrandLink: '/',
+};
 NavbarComponent.propTypes = {
+  navbarBrandLink: PropTypes.string,
   isLogged: PropTypes.bool,
   isUserEmailConfirmed: PropTypes.bool,
   username: PropTypes.string,
