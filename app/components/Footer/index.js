@@ -110,11 +110,6 @@ export class FooterComponent extends React.PureComponent {
                     Legal
                   </Link>
                 </li>
-                <li>
-                  <Link to="/sitemap" className="text-light">
-                    Sitemap
-                  </Link>
-                </li>
               </ul>
             </div>
           </Row>
