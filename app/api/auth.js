@@ -28,7 +28,7 @@ export const AuthApi = {
    * @param  {string} email User email address
    * @param  {string} recaptcha recaptcha
    */
-  forgot(email, recaptcha) {
+  forgotPassword(email, recaptcha) {
     return axios
       .post('/auth/forgot_password', {
         email,
@@ -42,7 +42,7 @@ export const AuthApi = {
    * @param  {string} token
    * @param  {string} password
    */
-  reset(token, password) {
+  resetPassword(token, password) {
     return axios
       .post('/auth/reset_password', {
         token,
