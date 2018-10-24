@@ -40,10 +40,12 @@ custom:
           properties:
             email:
               type: string
+              format: email
             username:
               type: string
             password:
               type: string
+              minLength: 3
             recaptcha:
               type: string
       - name: LoginUserRequest
@@ -57,7 +59,7 @@ custom:
               type: string
             password:
               type: string
-      - name: ForgotRequest
+      - name: ForgotPasswordRequest
         contentType: 'application/json'
         schema:
           required:
@@ -66,6 +68,7 @@ custom:
           properties:
             email:
               type: string
+              format: email
             recaptcha:
               type: string
       - name: ContactRequest
@@ -81,6 +84,7 @@ custom:
               type: string
             email:
               type: string
+              format: email
             message:
               type: string
             recaptcha:
