@@ -5,6 +5,7 @@ const querystring = require('querystring');
 const connectToDatabase = require('../helpers/db');
 const auth = require('../lib/auth');
 const User = require('../models/user');
+const ResetPasswordToken = require('../models/resetPasswordToken');
 
 module.exports.login = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
@@ -49,10 +50,10 @@ module.exports.login = (event, context, callback) => {
   });
 };
 
-module.exports.forgot = (event, context, callback) => {
+module.exports.forgotPassword = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
-  const receivedSubmitedValues = JSON.parse(event.body);
+  const submitedValues = JSON.parse(event.body);
 
   async.series(
     [
@@ -62,7 +63,7 @@ module.exports.forgot = (event, context, callback) => {
             'https://google.com/recaptcha/api/siteverify',
             querystring.stringify({
               secret: process.env.GOOGLE_RECAPTCHA_PRIVATE_KEY,
-              response: receivedSubmitedValues.recaptcha,
+              response: submitedValues.recaptcha,
             }),
           )
           .then(response => {
@@ -78,11 +79,23 @@ module.exports.forgot = (event, context, callback) => {
       },
       cb => {
         connectToDatabase().then(() => {
-          User.findOne({ email: receivedSubmitedValues.email })
+          User.findOne({ email: submitedValues.email })
+            .select('_id')
             .then(user => {
-              console.log(user);
-              console.log('---------');
-              cb(null);
+              if (!user) return cb(null);
+
+              const { _id } = user;
+
+              const newResetPasswordToken = new ResetPasswordToken({
+                _user: _id,
+              });
+
+              return newResetPasswordToken.save(err => {
+                if (err) return cb(err);
+
+                // @TODO: Send email with reset url
+                return cb(null);
+              });
             })
             .catch(err => cb(err));
         });
@@ -109,6 +122,50 @@ module.exports.forgot = (event, context, callback) => {
       });
     },
   );
+};
+
+module.exports.resetPassword = (event, context, callback) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+  const submitedValues = JSON.parse(event.body);
+
+  connectToDatabase().then(() => {
+    ResetPasswordToken.findOne({ token: submitedValues.token })
+      .populate('_user', '_id password')
+      .then(passwordToken => {
+        if (!passwordToken)
+          return callback(null, {
+            statusCode: 403,
+            headers: { 'Content-Type': 'text/plain' },
+          });
+
+        const { _user, used, createdAt } = passwordToken;
+        if (used || createdAt < Date.now() - 10 * 60 * 1000)
+          return callback(null, {
+            statusCode: 403,
+            headers: { 'Content-Type': 'text/plain' },
+          });
+
+        _user.password = submitedValues.password;
+        return _user.save(() => {
+          passwordToken.used = true;
+          passwordToken.usedAt = Date.now();
+          passwordToken.save(() => {
+            // @TODO: Send success password reset email
+            callback(null, {
+              statusCode: 200,
+              headers: { 'Content-Type': 'text/plain' },
+            });
+          });
+        });
+      })
+      .catch(err => {
+        callback(null, {
+          statusCode: err.status || 500,
+          headers: { 'Content-Type': 'text/plain' },
+          body: err.message,
+        });
+      });
+  });
 };
 
 module.exports.logout = (event, context, callback) => {
