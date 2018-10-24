@@ -130,7 +130,7 @@ module.exports.resetPassword = (event, context, callback) => {
 
   connectToDatabase().then(() => {
     ResetPasswordToken.findOne({ token: submitedValues.token })
-      .populate('_user', '_id password')
+      .populate('_user', '_id password passwordResetedAt')
       .then(passwordToken => {
         if (!passwordToken)
           return callback(null, {
@@ -146,6 +146,7 @@ module.exports.resetPassword = (event, context, callback) => {
           });
 
         _user.password = submitedValues.password;
+        _user.passwordResetedAt = Date.now();
         return _user.save(() => {
           passwordToken.used = true;
           passwordToken.usedAt = Date.now();
