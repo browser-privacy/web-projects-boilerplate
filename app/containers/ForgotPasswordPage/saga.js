@@ -20,7 +20,7 @@ export function* forgotPasswordRequest(action) {
   yield put(setForgotPasswordRequestStatusAction(null));
 
   try {
-    yield call(AuthApi.forgot, email, recaptchaResponse);
+    yield call(AuthApi.forgotPassword, email, recaptchaResponse);
 
     formik.setSubmitting(false);
     formik.resetForm();

@@ -23,6 +23,7 @@ import PricingPage from 'containers/PricingPage/Loadable';
 
 import LoginPage from 'containers/LoginPage/Loadable';
 import ForgotPasswordPage from 'containers/ForgotPasswordPage/Loadable';
+import ResetPasswordPage from 'containers/ResetPasswordPage/Loadable';
 
 import UserDashboardMainPage from 'containers/UserDashboard/MainPage/Loadable';
 import UserDashboardSettingsPage from 'containers/UserDashboard/SettingsPage/Loadable';
@@ -87,6 +88,11 @@ export default function App() {
             exact
             path="/auth/forgot_password"
             component={ForgotPasswordPage}
+          />
+          <Route
+            exact
+            path="/auth/reset_password"
+            component={ResetPasswordPage}
           />
 
           <Route
