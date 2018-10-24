@@ -29,6 +29,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  passwordResetedAt: {
+    type: Date,
+    default: null,
+  },
   emailChangeCandidate: {
     type: String,
     default: null,
@@ -80,7 +84,7 @@ const UserSchema = new mongoose.Schema({
  */
 UserSchema.plugin(uniqueValidator, {
   type: 'mongoose-unique-validator',
-  message: 'Already in use, please choose another one.',
+  message: 'Already in use',
 });
 
 /**
