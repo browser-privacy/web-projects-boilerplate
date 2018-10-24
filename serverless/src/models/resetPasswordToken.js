@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
+const uuidv4 = require('uuid/v4');
 
 /**
  * resetPasswordToken Schema
@@ -13,17 +14,21 @@ const ResetPasswordToken = new mongoose.Schema({
   },
   token: {
     type: String,
-    default: null,
     unique: true,
     index: true,
+    default: () => uuidv4(),
+  },
+  used: {
+    type: Boolean,
+    default: false,
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
-  used: {
-    type: Boolean,
-    default: false,
+  usedAt: {
+    type: Date,
+    default: null,
   },
 });
 
