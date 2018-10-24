@@ -38,6 +38,20 @@ export const AuthApi = {
       .catch(err => Promise.reject(err.response));
   },
   /**
+   * User password reset request
+   * @param  {string} token
+   * @param  {string} password
+   */
+  reset(token, password) {
+    return axios
+      .post('/auth/reset_password', {
+        token,
+        password,
+      })
+      .then(res => Promise.resolve(res))
+      .catch(err => Promise.reject(err.response));
+  },
+  /**
    * Logs out an user in
    */
   logout() {
