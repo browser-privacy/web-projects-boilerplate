@@ -8,11 +8,11 @@ const auth = require('../lib/auth');
 module.exports.create = (event, context, callback) => {
   context.callbackWaitsForEmptyEventLoop = false;
 
-  const receivedSubmitedValues = JSON.parse(event.body);
+  const submitedValues = JSON.parse(event.body);
   const newUser = {
-    email: receivedSubmitedValues.email,
-    username: receivedSubmitedValues.username,
-    password: receivedSubmitedValues.password,
+    email: submitedValues.email,
+    username: submitedValues.username,
+    password: submitedValues.password,
   };
 
   let createdUser;
@@ -24,7 +24,7 @@ module.exports.create = (event, context, callback) => {
             'https://google.com/recaptcha/api/siteverify',
             querystring.stringify({
               secret: process.env.GOOGLE_RECAPTCHA_PRIVATE_KEY,
-              response: receivedSubmitedValues.recaptcha,
+              response: submitedValues.recaptcha,
             }),
           )
           .then(response => {
