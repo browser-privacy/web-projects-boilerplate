@@ -102,7 +102,7 @@ export class ForgotPasswordPage extends React.PureComponent {
                       >
                         <strong>
                           {forgotPasswordRequestStatus === 'OK'
-                            ? `Account recovery email sent.\n\nIf you don't see this email in your inbox within 1-5 minutes, look for it in your junk mail folder. If you find it there, please mark it as "Not Junk".`
+                            ? `Account recovery email sent.\n\nIf you don't see any email in your inbox within 2 minutes, look for it in your spam mail folder. If you find it there, please mark it as "Not Spam".`
                             : 'Some error occurred, please try it again.'}
                         </strong>
                       </Alert>
