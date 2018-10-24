@@ -71,6 +71,19 @@ custom:
               format: email
             recaptcha:
               type: string
+      - name: ResetPasswordRequest
+        contentType: 'application/json'
+        schema:
+          required:
+            - token
+            - password
+          properties:
+            token:
+              type: string
+              format: email
+            password:
+              type: string
+              minLength: 3
       - name: ContactRequest
         contentType: 'application/json'
         schema:
@@ -121,14 +134,25 @@ functions:
           method: post
           cors: true
           reqValidatorName: onlyBody
-  forgot:
-    handler: src/functions/auth.forgot
+  forgotPassword:
+    handler: src/functions/auth.forgotPassword
     events:
       - http:
           documentation:
             requestModels:
               'application/json': ForgotPasswordRequest
           path: auth/forgot_password
+          method: post
+          cors: true
+          reqValidatorName: onlyBody
+  resetPassword:
+    handler: src/functions/auth.resetPassword
+    events:
+      - http:
+          documentation:
+            requestModels:
+              'application/json': ResetPasswordRequest
+          path: auth/reset_password
           method: post
           cors: true
           reqValidatorName: onlyBody
