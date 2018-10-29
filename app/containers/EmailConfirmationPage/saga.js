@@ -10,7 +10,7 @@ import {
   emailConfirmationRequestFailedAction,
   setEmailConfirmationRequestStatusAction,
 } from './actions';
-import { AuthApi } from '../../../api';
+import { AuthApi } from '../../api';
 
 export function* emailConfirmationRequest(action) {
   const { token } = action;

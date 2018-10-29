@@ -2,7 +2,10 @@ import axios from 'axios';
 import JWTDecode from 'jwt-decode';
 
 import { AuthApi } from './auth';
+import { LocalStorageApi } from './vendors';
+
 import config from '../config';
+
 const { API_ENDPOINT } = config[process.env.NODE_ENV];
 
 axios.defaults.baseURL = API_ENDPOINT;
@@ -10,10 +13,10 @@ axios.defaults.timeout = 7000;
 
 axios.interceptors.request.use(
   reqConfig => {
-    reqConfig.headers.authorization = localStorage.getItem('access_token');
+    reqConfig.headers.authorization = LocalStorageApi.getItem('access_token');
 
     if (reqConfig.url.includes('/auth/logout'))
-      reqConfig.headers['X-REFRESH-TOKEN'] = localStorage.getItem(
+      reqConfig.headers['X-REFRESH-TOKEN'] = LocalStorageApi.getItem(
         'refresh_token',
       );
 
@@ -33,14 +36,19 @@ function onTokenRefreshed(errRefreshing, token) {
 }
 function forceLogout() {
   isFetchingToken = false;
-  localStorage.clear();
+  LocalStorageApi.clear();
 
   window.location = '/auth/login';
 }
 
 axios.interceptors.response.use(undefined, err => {
   if (!err) return Promise.reject(err);
-  if (err.response.config.url.includes('/auth')) return Promise.reject(err);
+  if (
+    err.response.config.url.includes('/auth') ||
+    err.response.config.url.includes('/users/create') ||
+    err.response.config.url.includes('/misc/contact')
+  )
+    return Promise.reject(err);
 
   if (err.response.status === 403) return forceLogout();
   if (err.response.status !== 401) return Promise.reject(err);
@@ -48,7 +56,7 @@ axios.interceptors.response.use(undefined, err => {
   if (!isFetchingToken) {
     isFetchingToken = true;
 
-    const refreshToken = localStorage.getItem('refresh_token');
+    const refreshToken = LocalStorageApi.getItem('refresh_token');
     if (!refreshToken) return forceLogout();
 
     try {
@@ -67,7 +75,10 @@ axios.interceptors.response.use(undefined, err => {
         onTokenRefreshed(null, newAccessToken);
         tokenSubscribers = [];
 
-        localStorage.setItem('access_token', newAccessToken);
+        LocalStorageApi.setItem('access_token', newAccessToken);
+        const decodedAccessToken = JWTDecode(newAccessToken);
+        const { user } = decodedAccessToken;
+        LocalStorageApi.setItem('user', JSON.stringify(user));
       })
       .catch(() => {
         onTokenRefreshed(new Error('Unable to refresh access token'), null);

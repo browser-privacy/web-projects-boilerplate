@@ -26,7 +26,7 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { ReactstrapInput } from 'reactstrap-formik';
 import queryString from 'query-string';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -36,6 +36,7 @@ import makeSelectResetPasswordPage, {
 import reducer from './reducer';
 import saga from './saga';
 import { resetPasswordRequestAction, resetStateAction } from './actions';
+import { makeSelectIsLoggedIn } from '../Auth/selectors';
 
 /* eslint-disable react/prefer-stateless-function */
 export class ResetPasswordPage extends React.PureComponent {
@@ -60,7 +61,13 @@ export class ResetPasswordPage extends React.PureComponent {
 
   render() {
     const { gotTokenFromUrl } = this.state;
-    const { resetPasswordSubmit, resetPasswordRequestStatus } = this.props;
+    const {
+      isLoggedIn,
+      resetPasswordSubmit,
+      resetPasswordRequestStatus,
+    } = this.props;
+
+    if (isLoggedIn) return <Redirect to="/dashboard" />;
 
     return (
       <Container tag="main">
@@ -180,6 +187,7 @@ export class ResetPasswordPage extends React.PureComponent {
 }
 
 ResetPasswordPage.propTypes = {
+  isLoggedIn: PropTypes.bool,
   resetPasswordRequestStatus: PropTypes.string,
   location: PropTypes.object,
   resetPasswordSubmit: PropTypes.func,
@@ -188,6 +196,7 @@ ResetPasswordPage.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   ResetPasswordPage: makeSelectResetPasswordPage(),
+  isLoggedIn: makeSelectIsLoggedIn(),
   resetPasswordRequestStatus: makeSelectResetPasswordRequestStatus(),
 });
 

@@ -4,10 +4,10 @@
  *
  */
 
-import { DEFAULT_ACTION } from './constants';
+import { INIT_LOAD } from './constants';
 
-export function defaultAction() {
+export function initLoadAction() {
   return {
-    type: DEFAULT_ACTION,
+    type: INIT_LOAD,
   };
 }

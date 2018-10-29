@@ -7,14 +7,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { track } from '../../api/vendors/analytics';
+import { AnalyticsApi } from '../../api/vendors/analytics';
 
 /* eslint-disable react/prefer-stateless-function */
 class RouteAnalytics extends React.PureComponent {
   componentDidMount() {
     const { location } = this.props;
 
-    track(`Route ${location.pathname}`);
+    AnalyticsApi.track(`Route ${location.pathname}`);
   }
 
   render() {

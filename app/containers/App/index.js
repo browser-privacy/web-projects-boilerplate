@@ -22,6 +22,7 @@ import ContactPage from 'containers/ContactPage/Loadable';
 import PricingPage from 'containers/PricingPage/Loadable';
 
 import LoginPage from 'containers/LoginPage/Loadable';
+import EmailConfirmationPage from 'containers/EmailConfirmationPage/Loadable';
 import ForgotPasswordPage from 'containers/ForgotPasswordPage/Loadable';
 import ResetPasswordPage from 'containers/ResetPasswordPage/Loadable';
 
@@ -86,6 +87,11 @@ export default function App() {
           <Route exact path="/auth/login" component={LoginPage} />
           <Route
             exact
+            path="/auth/confirm_email"
+            component={EmailConfirmationPage}
+          />
+          <Route
+            exact
             path="/auth/forgot_password"
             component={ForgotPasswordPage}
           />
@@ -112,7 +118,7 @@ export default function App() {
           <Route
             protected
             exact
-            path="/dashboard/email/verification"
+            path="/dashboard/email_verification"
             layout={UserDashboardLayout}
             component={UserDashboardEmailVerificationPage}
           />

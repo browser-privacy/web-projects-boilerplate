@@ -7,7 +7,8 @@ import { fromJS } from 'immutable';
 import { routerMiddleware } from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
-// import AppSagas from './containers/App/saga';
+
+import AppSagas from './containers/App/saga';
 import AuthSagas from './containers/Auth/saga';
 
 const sagaMiddleware = createSagaMiddleware();
@@ -45,12 +46,15 @@ export default function configureStore(initialState = {}, history) {
   store.injectedSagas = {}; // Saga registry
 
   // Global Sagas
-  // AppSagas.map(store.runSaga);
+  AppSagas.map(store.runSaga);
   AuthSagas.map(store.runSaga);
 
   // Make reducers hot reloadable, see http://mxs.is/googmo
   /* istanbul ignore next */
   if (module.hot) {
+    module.hot.accept('./containers/App/saga');
+    module.hot.accept('./containers/Auth/saga');
+
     module.hot.accept('./reducers', () => {
       store.replaceReducer(createReducer(store.injectedReducers));
     });

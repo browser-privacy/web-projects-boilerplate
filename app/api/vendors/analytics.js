@@ -6,9 +6,11 @@
 //   }
 // };
 
-export const track = event => {
-  // if (MIXPANEL_ID) {
-  //   window.mixpanel.track(event);
-  // }
-  console.log('Event tracked', event);
+export const AnalyticsApi = {
+  track(event) {
+    // if (MIXPANEL_ID) {
+    //   window.mixpanel.track(event);
+    // }
+    console.log('Event tracked', event);
+  },
 };

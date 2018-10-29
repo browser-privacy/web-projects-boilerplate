@@ -1,26 +1,19 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
 import JWTDecode from 'jwt-decode';
 
-import * as localStorage from '../../api/vendors/localStorage';
+import { LocalStorageApi } from '../../api/vendors';
 import { AuthApi } from '../../api';
 import {
-  SAVE_USER_AUTH_TOKENS,
   LOAD_USER_FROM_TOKEN,
   LOGOUT,
+  SET_REFRESH_TOKEN,
+  SET_ACCESS_TOKEN,
 } from './constants';
-import {
-  setLoggedStatusAction,
-  loadUserFromTokenSuccessAction,
-} from './actions';
-import {
-  setUsernameAction,
-  setUserEmailAction,
-  setIsUserEmailConfirmedAction,
-} from '../App/actions';
+import { loadUserAction, persistUserAction } from '../App/actions';
 
 export function* loadUserFromToken() {
-  const isLogouting = localStorage.getItem('isLogouting');
-  if (isLogouting) localStorage.clear();
+  const isLogouting = LocalStorageApi.getItem('isLogouting');
+  if (isLogouting) LocalStorageApi.clear();
 
   let accessToken;
   let refreshToken;
@@ -32,13 +25,14 @@ export function* loadUserFromToken() {
 
       return 'OK';
     } catch (e) {
+      console.error(e);
       return 'INVALID_TOKEN';
     }
   }
 
   try {
-    accessToken = localStorage.getItem('access_token');
-    refreshToken = localStorage.getItem('refresh_token');
+    accessToken = LocalStorageApi.getItem('access_token');
+    refreshToken = LocalStorageApi.getItem('refresh_token');
 
     if (!accessToken || !refreshToken) return;
 
@@ -46,43 +40,45 @@ export function* loadUserFromToken() {
     const refreshTokenStatus = validateJSONWebToken(refreshToken);
 
     if (accessTokenStatus !== 'INVALID_TOKEN' && refreshTokenStatus === 'OK') {
-      const decodedAccessToken = JWTDecode(accessToken);
-      const { user } = decodedAccessToken;
-
-      yield put(setUsernameAction(user.username));
-      yield put(setUserEmailAction(user.email));
-      yield put(setIsUserEmailConfirmedAction(user.isEmailConfirmed));
-
-      yield put(setLoggedStatusAction(true));
-      yield put(loadUserFromTokenSuccessAction());
+      const user = LocalStorageApi.getItem('user');
+      if (user) yield put(loadUserAction(JSON.parse(user)));
     } else {
-      localStorage.clear();
+      LocalStorageApi.clear();
     }
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 }
 
-export function* saveUserAuthTokens(action) {
-  localStorage.setItem('access_token', action.tokens.access_token);
-  localStorage.setItem('refresh_token', action.tokens.refresh_token);
+export function* setAccessToken(action) {
+  LocalStorageApi.setItem('access_token', action.value);
+
+  const decodedToken = JWTDecode(action.value);
+  const { user } = decodedToken;
+
+  yield put(persistUserAction(user));
+}
+
+export function* setRefreshToken(action) {
+  LocalStorageApi.setItem('refresh_token', action.value);
 }
 
 export function* logoutUser() {
-  localStorage.setItem('isLogouting', true);
+  LocalStorageApi.setItem('isLogouting', true);
 
   try {
     yield call(AuthApi.logout);
   } catch (e) {
-    console.log(e);
+    console.error(e);
   }
 
-  localStorage.clear();
+  LocalStorageApi.clear();
 }
 
 export function* defaultSaga() {
   yield takeLatest(LOAD_USER_FROM_TOKEN, loadUserFromToken);
-  yield takeLatest(SAVE_USER_AUTH_TOKENS, saveUserAuthTokens);
+  yield takeLatest(SET_ACCESS_TOKEN, setAccessToken);
+  yield takeLatest(SET_REFRESH_TOKEN, setRefreshToken);
   yield takeLatest(LOGOUT, logoutUser);
 }
 

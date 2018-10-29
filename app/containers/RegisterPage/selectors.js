@@ -15,6 +15,11 @@ const selectRegisterPageDomain = state =>
 const makeSelectServerErrMsg = () =>
   createSelector(selectRegisterPageDomain, state => state.get('serverErrMsg'));
 
+const makeSelectSuccessfullyRegistered = () =>
+  createSelector(selectRegisterPageDomain, state =>
+    state.get('successfullyRegistered'),
+  );
+
 const makeSelectRecaptchaResponse = () =>
   createSelector(selectRegisterPageDomain, state =>
     state.get('recaptchaResponse'),
@@ -35,6 +40,7 @@ const makeSelectRegisterPage = () =>
 export {
   selectRegisterPageDomain,
   makeSelectRegisterPage,
+  makeSelectSuccessfullyRegistered,
   makeSelectServerErrMsg,
   makeSelectRecaptchaResponse,
   makeSelectResetRecaptcha,

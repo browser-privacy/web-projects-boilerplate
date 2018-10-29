@@ -39,12 +39,48 @@ module.exports.login = (event, context, callback) => {
       .catch(err => {
         let statusCode = 500;
         if (err.message === 'authentication_error') statusCode = 403;
-        if (err.message === 'account_banned') statusCode = 423;
+        if (
+          err.message === 'account_banned' ||
+          err.message === 'account_email_unverified'
+        )
+          statusCode = 423;
 
         callback(null, {
           statusCode,
           headers: { 'Content-Type': 'text/plain' },
           body: err.message,
+        });
+      });
+  });
+};
+
+module.exports.confirmEmail = (event, context, callback) => {
+  context.callbackWaitsForEmptyEventLoop = false;
+
+  const submitedValues = JSON.parse(event.body);
+
+  connectToDatabase().then(() => {
+    User.findOneAndUpdate(
+      { emailConfirmationToken: submitedValues.token, isEmailConfirmed: false },
+      { isEmailConfirmed: true, emailConfirmatedAt: Date.now() },
+    )
+      .then(user => {
+        if (!user)
+          return callback(null, {
+            statusCode: 403,
+            headers: { 'Content-Type': 'text/plain' },
+          });
+
+        return callback(null, {
+          statusCode: 200,
+          headers: { 'Content-Type': 'text/plain' },
+        });
+      })
+      .catch(err => {
+        callback(null, {
+          statusCode: err.status || 500,
+          headers: { 'Content-Type': 'text/plain' },
+          body: err.message || null,
         });
       });
   });

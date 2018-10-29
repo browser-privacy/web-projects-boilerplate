@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import {
   Container,
   Card,
@@ -36,12 +36,15 @@ import {
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import { makeSelectIsLogged } from '../Auth/selectors';
+import { makeSelectIsLoggedIn } from '../Auth/selectors';
 import {
   registerRequestAction,
   resetStateAction,
   setRecaptchaResponseAction,
 } from './actions';
+
+import config from '../../config';
+const APP_CONFIG = config[process.env.NODE_ENV];
 
 /* eslint-disable react/prefer-stateless-function */
 export class RegisterPage extends React.PureComponent {
@@ -51,24 +54,22 @@ export class RegisterPage extends React.PureComponent {
     this.recaptcha = null;
   }
 
-  componentDidMount() {
-    const { history, isLogged } = this.props;
-
-    if (isLogged) history.push('/dashboard');
-  }
-
   componentWillUnmount() {
     const { dispatch } = this.props;
+
     dispatch(resetStateAction());
   }
 
   render() {
     const {
+      isLoggedIn,
       serverErrMsg,
       recaptchaResponse,
       onLoginFormSubmit,
       dispatch,
     } = this.props;
+
+    if (isLoggedIn) return <Redirect to="/dashboard" />;
 
     return (
       <Container tag="main">
@@ -174,11 +175,10 @@ export class RegisterPage extends React.PureComponent {
                           .
                         </p>
                       </div>
-
                       <Reaptcha
                         // eslint-disable-next-line
                         ref={e => (this.recaptcha = e)}
-                        sitekey="6LeJVnEUAAAAAAetIUT8Rb7yQJx8LquVS2EFQNvF"
+                        sitekey={APP_CONFIG.RECAPTCHA_SITE_KEY}
                         onVerify={res => {
                           dispatch(setRecaptchaResponseAction(res));
                           submitForm();
@@ -187,7 +187,7 @@ export class RegisterPage extends React.PureComponent {
                           dispatch(setRecaptchaResponseAction(''));
                           this.recaptcha.reset();
                         }}
-                        onError={() => console.log(`Unable to load captcha.`)}
+                        onError={() => console.error(`Unable to load captcha.`)}
                         size="invisible"
                         theme="dark"
                       />
@@ -207,17 +207,16 @@ export class RegisterPage extends React.PureComponent {
 }
 
 RegisterPage.propTypes = {
-  isLogged: PropTypes.bool,
+  isLoggedIn: PropTypes.bool,
   serverErrMsg: PropTypes.string,
   recaptchaResponse: PropTypes.string,
   onLoginFormSubmit: PropTypes.func,
-  history: PropTypes.object,
   dispatch: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   registerpage: makeSelectRegisterPage(),
-  isLogged: makeSelectIsLogged(),
+  isLoggedIn: makeSelectIsLoggedIn(),
   serverErrMsg: makeSelectServerErrMsg(),
   recaptchaResponse: makeSelectRecaptchaResponse(),
 });

@@ -6,9 +6,9 @@
 
 import {
   LOAD_USER_FROM_TOKEN,
-  LOAD_USER_FROM_TOKEN_SUCCESS,
+  SET_ACCESS_TOKEN,
+  SET_REFRESH_TOKEN,
   SET_LOGGED_STATUS,
-  SAVE_USER_AUTH_TOKENS,
   LOGOUT,
 } from './constants';
 
@@ -18,9 +18,17 @@ export function loadUserFromTokenAction() {
   };
 }
 
-export function loadUserFromTokenSuccessAction() {
+export function setAccessTokenAction(value) {
   return {
-    type: LOAD_USER_FROM_TOKEN_SUCCESS,
+    type: SET_ACCESS_TOKEN,
+    value,
+  };
+}
+
+export function setRefreshTokenAction(value) {
+  return {
+    type: SET_REFRESH_TOKEN,
+    value,
   };
 }
 
@@ -28,13 +36,6 @@ export function setLoggedStatusAction(value) {
   return {
     type: SET_LOGGED_STATUS,
     value,
-  };
-}
-
-export function saveUserAuthTokensAction(tokens) {
-  return {
-    type: SAVE_USER_AUTH_TOKENS,
-    tokens,
   };
 }
 

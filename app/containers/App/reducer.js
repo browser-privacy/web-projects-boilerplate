@@ -7,12 +7,14 @@
 import { fromJS } from 'immutable';
 
 import {
+  SET_USER_ID,
   SET_USER_USERNAME,
   SET_USER_EMAIL,
   SET_IS_USER_EMAIL_CONFIRMED,
 } from './constants';
 
 const initialState = fromJS({
+  _id: null,
   username: null,
   email: null,
   isEmailConfirmed: null,
@@ -20,6 +22,8 @@ const initialState = fromJS({
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
+    case SET_USER_ID:
+      return state.set('_id', action.value);
     case SET_USER_USERNAME:
       return state.set('username', action.value);
     case SET_USER_EMAIL:

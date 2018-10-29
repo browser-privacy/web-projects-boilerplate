@@ -22,4 +22,16 @@ export const CoreApi = {
       .then(res => Promise.resolve(res))
       .catch(err => Promise.reject(err.response));
   },
+  /**
+   * Is user email confirmed
+   * @param  {string} _id User id
+   */
+  isUserEmailConfirmed(_id) {
+    return axios
+      .post('/user/email_confirmed', {
+        _id,
+      })
+      .then(res => Promise.resolve(res))
+      .catch(err => Promise.reject(err.response));
+  },
 };

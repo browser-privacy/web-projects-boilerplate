@@ -2,6 +2,7 @@ const Promise = require('bluebird');
 const mongoose = require('mongoose');
 const uniqueValidator = require('mongoose-unique-validator');
 const bcrypt = require('bcryptjs');
+const uuidv4 = require('uuid/v4');
 
 const SALT_WORK_FACTOR = 10;
 
@@ -33,17 +34,17 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: null,
   },
-  emailChangeCandidate: {
+  emailConfirmationToken: {
     type: String,
-    default: null,
-  },
-  emailVerificationToken: {
-    type: String,
-    default: null,
+    default: () => uuidv4(),
   },
   isEmailConfirmed: {
     type: Boolean,
     default: false,
+  },
+  emailConfirmatedAt: {
+    type: Date,
+    default: null,
   },
   accountStatus: {
     type: String,

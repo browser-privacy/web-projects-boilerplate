@@ -6,16 +6,16 @@ import {
   setRegisterFormMessageAction,
   setRecaptchaResponseAction,
 } from './actions';
-import { LOAD_USER_FROM_TOKEN_SUCCESS } from '../Auth/constants';
 import {
   loadUserFromTokenAction,
-  saveUserAuthTokensAction,
+  setAccessTokenAction,
+  setRefreshTokenAction,
 } from '../Auth/actions';
 import { AuthApi } from '../../api';
 import {
   REGISTER_REQUEST,
-  REGISTER_REQUEST_SUCCESS,
   REGISTER_REQUEST_FAILED,
+  REGISTER_REQUEST_SUCCESS,
 } from './constants';
 
 export function* registerRequest(action) {
@@ -47,7 +47,7 @@ export function* registerRequest(action) {
           errMsg = null;
           break;
         case 403:
-          errMsg = `Submitted captcha is not valid.`;
+          errMsg = `Captcha is not valid, please try it again.`;
           break;
         default:
           errMsg = err.message || errMsg;
@@ -63,22 +63,21 @@ export function* registerRequest(action) {
   }
 }
 
-export function* registerRequestSuccess(action) {
-  yield put(saveUserAuthTokensAction(action.tokens));
-  yield put(loadUserFromTokenAction());
-}
-
 export function* registerRequestFailed(action) {
   if (action.errMsg) yield put(setRegisterFormMessageAction(action.errMsg));
 }
 
-export function* loadUserFromTokenSuccess() {
+export function* registerRequestSuccess(action) {
+  yield put(setAccessTokenAction(action.tokens.access_token));
+  yield put(setRefreshTokenAction(action.tokens.refresh_token));
+
+  yield put(loadUserFromTokenAction());
+
   yield put(push('/dashboard'));
 }
 
 export default function* defaultSaga() {
   yield takeLatest(REGISTER_REQUEST, registerRequest);
-  yield takeLatest(REGISTER_REQUEST_SUCCESS, registerRequestSuccess);
   yield takeLatest(REGISTER_REQUEST_FAILED, registerRequestFailed);
-  yield takeLatest(LOAD_USER_FROM_TOKEN_SUCCESS, loadUserFromTokenSuccess);
+  yield takeLatest(REGISTER_REQUEST_SUCCESS, registerRequestSuccess);
 }

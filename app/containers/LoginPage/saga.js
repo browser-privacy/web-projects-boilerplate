@@ -1,15 +1,14 @@
-import { put, call, takeLatest, select } from 'redux-saga/effects';
+import { put, call, takeLatest } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
-import { push } from 'react-router-redux';
 import {
   loginRequestSuccessAction,
   loginRequestFailedAction,
   setLoginFormMessageAction,
 } from './actions';
-import { LOAD_USER_FROM_TOKEN_SUCCESS } from '../Auth/constants';
 import {
   loadUserFromTokenAction,
-  saveUserAuthTokensAction,
+  setRefreshTokenAction,
+  setAccessTokenAction,
 } from '../Auth/actions';
 import {} from '../App/actions';
 import { AuthApi } from '../../api';
@@ -18,7 +17,6 @@ import {
   LOGIN_REQUEST_SUCCESS,
   LOGIN_REQUEST_FAILED,
 } from './constants';
-import { makeSelectLocation } from '../App/selectors';
 
 export function* loginRequest(action) {
   const { userIdentifier, password } = action.values;
@@ -39,7 +37,7 @@ export function* loginRequest(action) {
           errMsg = 'Invalid credentials';
           break;
         case 423:
-          errMsg = 'Account desactivated';
+          errMsg = 'Account is desactivated';
           break;
         default:
           break;
@@ -52,7 +50,8 @@ export function* loginRequest(action) {
 }
 
 export function* loginRequestSuccess(action) {
-  yield put(saveUserAuthTokensAction(action.tokens));
+  yield put(setAccessTokenAction(action.tokens.access_token));
+  yield put(setRefreshTokenAction(action.tokens.refresh_token));
 
   yield put(
     setLoginFormMessageAction({
@@ -74,21 +73,9 @@ export function* loginRequestFailed(action) {
   );
 }
 
-export function* loadUserFromTokenSuccess() {
-  const location = yield select(makeSelectLocation());
-  let redirectTo = '/dashboard';
-  if (location.state && location.state.from) {
-    const { pathname, search, hash } = location.state.from;
-
-    redirectTo = `${pathname + search + hash}`;
-  }
-
-  yield put(push(redirectTo));
-}
-
 export default function* defaultSaga() {
   yield takeLatest(LOGIN_REQUEST, loginRequest);
   yield takeLatest(LOGIN_REQUEST_SUCCESS, loginRequestSuccess);
   yield takeLatest(LOGIN_REQUEST_FAILED, loginRequestFailed);
-  yield takeLatest(LOAD_USER_FROM_TOKEN_SUCCESS, loadUserFromTokenSuccess);
+  // yield takeLatest(LOGGED_USER, loadUserFromTokenSuccess);
 }

@@ -59,6 +59,22 @@ custom:
               type: string
             password:
               type: string
+      - name: ConfirmEmailRequest
+        contentType: 'application/json'
+        schema:
+          required:
+            - token
+          properties:
+            token:
+              type: string
+      - name: IsUserEmailConfirmedRequest
+        contentType: 'application/json'
+        schema:
+          required:
+            - _id
+          properties:
+            _id:
+              type: string
       - name: ForgotPasswordRequest
         contentType: 'application/json'
         schema:
@@ -131,6 +147,28 @@ functions:
             requestModels:
               'application/json': LoginUserRequest
           path: auth/login
+          method: post
+          cors: true
+          reqValidatorName: onlyBody
+  confirmEmail:
+    handler: src/functions/auth.confirmEmail
+    events:
+      - http:
+          documentation:
+            requestModels:
+              'application/json': ConfirmEmailRequest
+          path: auth/confirm_email
+          method: post
+          cors: true
+          reqValidatorName: onlyBody
+  isUserEmailConfirmed:
+    handler: src/functions/user.isEmailConfirmed
+    events:
+      - http:
+          documentation:
+            requestModels:
+              'application/json': IsUserEmailConfirmedRequest
+          path: user/email_confirmed
           method: post
           cors: true
           reqValidatorName: onlyBody

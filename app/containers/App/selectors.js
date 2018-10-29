@@ -1,8 +1,13 @@
 import { createSelector } from 'reselect';
 
 const selectAppDomain = state => state.get('app');
+
+const makeSelectId = () =>
+  createSelector(selectAppDomain, appState => appState.get('_id'));
 const makeSelectUsername = () =>
   createSelector(selectAppDomain, appState => appState.get('username'));
+const makeSelectEmail = () =>
+  createSelector(selectAppDomain, appState => appState.get('email'));
 const makeSelectIsEmailConfirmed = () =>
   createSelector(selectAppDomain, appState => appState.get('isEmailConfirmed'));
 
@@ -12,4 +17,10 @@ const makeSelectLocation = () =>
     routeState.get('location').toJS(),
   );
 
-export { makeSelectUsername, makeSelectLocation, makeSelectIsEmailConfirmed };
+export {
+  makeSelectId,
+  makeSelectUsername,
+  makeSelectEmail,
+  makeSelectIsEmailConfirmed,
+  makeSelectLocation,
+};

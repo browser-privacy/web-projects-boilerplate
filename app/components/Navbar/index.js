@@ -36,7 +36,7 @@ import {
 import { NavLink as RRNavLink } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { createStructuredSelector } from 'reselect';
-import { makeSelectIsLogged } from '../../containers/Auth/selectors';
+import { makeSelectIsLoggedIn } from '../../containers/Auth/selectors';
 import { logOutAction } from '../../containers/Auth/actions';
 import {
   makeSelectUsername,
@@ -66,7 +66,7 @@ export class NavbarComponent extends React.PureComponent {
   }
 
   navbarLinks() {
-    const { isLogged, username, signOut } = this.props;
+    const { isLoggedIn, username, signOut } = this.props;
     const { isOpen } = this.state;
 
     const links = {
@@ -127,7 +127,7 @@ export class NavbarComponent extends React.PureComponent {
       ],
     };
 
-    if (isLogged) return links.logged;
+    if (isLoggedIn) return links.logged;
 
     return links.notLogged;
   }
@@ -148,15 +148,19 @@ export class NavbarComponent extends React.PureComponent {
         </DropdownItem>,
       );
     } else {
+      if (isUserEmailConfirmed) {
+        links.push(
+          <DropdownItem
+            key="dropdownitem-settings"
+            onClick={() => history.push('/dashboard/user/settings')}
+          >
+            <FontAwesomeIcon icon={faCog} className="align-text-top mr-1" />
+            Settings
+          </DropdownItem>,
+        );
+      }
+
       links.push(
-        <DropdownItem
-          key="dropdownitem-settings"
-          onClick={() => history.push('/dashboard/user/settings')}
-          className={isUserEmailConfirmed ? '' : 'd-none'}
-        >
-          <FontAwesomeIcon icon={faCog} className="align-text-top mr-1" />
-          Settings
-        </DropdownItem>,
         <DropdownItem key="dropdownitem-support">
           <FontAwesomeIcon icon={faLifeRing} className="align-text-top mr-1" />
           Contact support
@@ -199,7 +203,7 @@ NavbarComponent.defaultProps = {
 };
 NavbarComponent.propTypes = {
   navbarBrandLink: PropTypes.string,
-  isLogged: PropTypes.bool,
+  isLoggedIn: PropTypes.bool,
   isUserEmailConfirmed: PropTypes.bool,
   username: PropTypes.string,
   signOut: PropTypes.func,
@@ -208,9 +212,9 @@ NavbarComponent.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
-  isLogged: makeSelectIsLogged(),
-  isUserEmailConfirmed: makeSelectIsEmailConfirmed(),
+  isLoggedIn: makeSelectIsLoggedIn(),
   username: makeSelectUsername(),
+  isUserEmailConfirmed: makeSelectIsEmailConfirmed(),
 });
 
 function mapDispatchToProps(dispatch) {

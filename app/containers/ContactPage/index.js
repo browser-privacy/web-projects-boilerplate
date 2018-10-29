@@ -41,6 +41,9 @@ import makeSelectContactPage, {
 import reducer from './reducer';
 import saga from './saga';
 
+import config from '../../config';
+const APP_CONFIG = config[process.env.NODE_ENV];
+
 /* eslint-disable react/prefer-stateless-function */
 export class ContactPage extends React.PureComponent {
   constructor(props) {
@@ -165,7 +168,7 @@ export class ContactPage extends React.PureComponent {
                           <Reaptcha
                             // eslint-disable-next-line
                             ref={e => (this.recaptcha = e)}
-                            sitekey="6LeJVnEUAAAAAAetIUT8Rb7yQJx8LquVS2EFQNvF"
+                            sitekey={APP_CONFIG.RECAPTCHA_SITE_KEY}
                             onVerify={res => {
                               dispatch(setRecaptchaResponseAction(res));
                               submitForm();

@@ -19,15 +19,15 @@ import { Container, Row, Col, Button } from 'reactstrap';
 import { Link } from 'react-router-dom';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faPlay } from '@fortawesome/free-solid-svg-icons';
-import { makeSelectIsLogged } from '../Auth/selectors';
+import { makeSelectIsLoggedIn } from '../Auth/selectors';
 
 /* eslint-disable react/prefer-stateless-function */
 class HomePage extends React.PureComponent {
   render() {
-    const { isLogged } = this.props;
+    const { isLoggedIn } = this.props;
 
     function IntroButtons() {
-      if (isLogged)
+      if (isLoggedIn)
         return [
           <Link key="register-button" to="/dashboard">
             <Button size="lg" color="primary">
@@ -124,11 +124,11 @@ class HomePage extends React.PureComponent {
 }
 
 HomePage.propTypes = {
-  isLogged: PropTypes.bool,
+  isLoggedIn: PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({
-  isLogged: makeSelectIsLogged(),
+  isLoggedIn: makeSelectIsLoggedIn(),
 });
 
 function mapDispatchToProps(dispatch) {

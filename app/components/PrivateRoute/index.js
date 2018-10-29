@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { makeSelectIsLogged } from '../../containers/Auth/selectors';
+import { makeSelectIsLoggedIn } from '../../containers/Auth/selectors';
 
 export class PrivateRoute extends React.PureComponent {
   render() {
-    const { redirect: pathname, isLogged, children, ...rest } = this.props;
+    const { redirect: pathname, isLoggedIn, children, ...rest } = this.props;
 
-    if (!isLogged) {
+    if (!isLoggedIn) {
       return (
         <Route
           {...rest}
@@ -38,12 +38,12 @@ PrivateRoute.propTypes = {
   layout: PropTypes.func,
   redirect: PropTypes.string,
   location: PropTypes.object,
-  isLogged: PropTypes.bool,
+  isLoggedIn: PropTypes.bool,
   children: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
-  isLogged: makeSelectIsLogged(),
+  isLoggedIn: makeSelectIsLoggedIn(),
 });
 
 export default connect(mapStateToProps)(PrivateRoute);

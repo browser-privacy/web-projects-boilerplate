@@ -22,7 +22,7 @@ import {
 } from 'reactstrap';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Formik, Form, Field } from 'formik';
@@ -33,7 +33,7 @@ import reducer from './reducer';
 import saga from './saga';
 import { loginRequestAction, resetStateAction } from './actions';
 import { makeSelectLoginPage, makeSelectFormMsg } from './selectors';
-import { makeSelectIsLogged } from '../Auth/selectors';
+import { makeSelectIsLoggedIn } from '../Auth/selectors';
 
 const ForgotPasswordContainer = styled.div`
   margin-top: -10px;
@@ -43,19 +43,15 @@ const ForgotPasswordContainer = styled.div`
 
 /* eslint-disable react/prefer-stateless-function */
 export class LoginPage extends React.PureComponent {
-  componentDidMount() {
-    const { history, isLogged } = this.props;
-
-    if (isLogged) history.push('/dashboard');
-  }
-
   componentWillUnmount() {
     const { dispatch } = this.props;
     dispatch(resetStateAction());
   }
 
   render() {
-    const { formMsg, onLoginFormSubmit } = this.props;
+    const { isLoggedIn, formMsg, onLoginFormSubmit } = this.props;
+
+    if (isLoggedIn) return <Redirect to="/dashboard" />;
 
     return (
       <Container tag="main">
@@ -152,16 +148,15 @@ export class LoginPage extends React.PureComponent {
 
 LoginPage.propTypes = {
   formMsg: PropTypes.object,
-  isLogged: PropTypes.bool,
+  isLoggedIn: PropTypes.bool,
   onLoginFormSubmit: PropTypes.func,
-  history: PropTypes.object,
   dispatch: PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
   loginpage: makeSelectLoginPage(),
   formMsg: makeSelectFormMsg(),
-  isLogged: makeSelectIsLogged(),
+  isLoggedIn: makeSelectIsLoggedIn(),
 });
 
 function mapDispatchToProps(dispatch) {

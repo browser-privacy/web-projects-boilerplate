@@ -4,4 +4,4 @@
  *
  */
 
-export const DEFAULT_ACTION = 'app/MainPage/DEFAULT_ACTION';
+export const INIT_LOAD = 'app/MainPage/INIT_LOAD';

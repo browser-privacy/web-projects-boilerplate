@@ -43,6 +43,9 @@ import {
   resetStateAction,
 } from './actions';
 
+import config from '../../config';
+const APP_CONFIG = config[process.env.NODE_ENV];
+
 const PasswordResetText = styled('div')`
   margin-top: -15px;
   margin-bottom: 20px;
@@ -57,9 +60,9 @@ export class ForgotPasswordPage extends React.PureComponent {
   }
 
   componentDidMount() {
-    const { history, isLogged } = this.props;
+    const { history, isLoggedIn } = this.props;
 
-    if (isLogged) history.push('/dashboard');
+    if (isLoggedIn) history.push('/dashboard');
   }
 
   componentWillUnmount() {
@@ -182,7 +185,7 @@ export class ForgotPasswordPage extends React.PureComponent {
                           <Reaptcha
                             // eslint-disable-next-line
                             ref={e => (this.recaptcha = e)}
-                            sitekey="6LeJVnEUAAAAAAetIUT8Rb7yQJx8LquVS2EFQNvF"
+                            sitekey={APP_CONFIG.RECAPTCHA_SITE_KEY}
                             onVerify={res => {
                               dispatch(setRecaptchaResponseAction(res));
                               submitForm();
@@ -213,7 +216,7 @@ export class ForgotPasswordPage extends React.PureComponent {
 ForgotPasswordPage.propTypes = {
   forgotPasswordRequestStatus: PropTypes.string,
   recaptchaResponse: PropTypes.string,
-  isLogged: PropTypes.bool,
+  isLoggedIn: PropTypes.bool,
   onForgotPasswordSubmit: PropTypes.func,
   history: PropTypes.object,
   dispatch: PropTypes.func,

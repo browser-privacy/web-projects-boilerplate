@@ -18,7 +18,6 @@ export function* contactRequest(action) {
   const { formik, recaptcha } = action;
 
   yield put(setContactRequestStatusAction(null));
-
   try {
     yield call(CoreApi.contact, name, email, message, recaptchaResponse);
 

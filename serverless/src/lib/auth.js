@@ -11,7 +11,7 @@ const loginUser = (userIdentifier, password) =>
       {
         $or: [{ email: userIdentifier }, { username: userIdentifier }],
       },
-      'email username accountStatus isEmailConfirmed roles password',
+      'email username accountStatus roles password isEmailConfirmed',
     )
       .then(user => {
         if (!user) return rej1(new Error('authentication_error'));

@@ -9,6 +9,9 @@
  * export const YOUR_ACTION_CONSTANT = 'yourproject/YourContainer/YOUR_ACTION_CONSTANT';
  */
 
+export const LOAD_USER = 'app/App/LOAD_USER';
+export const PERSIST_USER = 'app/App/PERSIST_USER';
+export const SET_USER_ID = 'app/App/SET_USER_ID';
 export const SET_USER_USERNAME = 'app/App/SET_USER_USERNAME';
 export const SET_USER_EMAIL = 'app/App/SET_USER_EMAIL';
 export const SET_IS_USER_EMAIL_CONFIRMED =
