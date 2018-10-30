@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 {{#if wantHeaders}}
 import { Helmet } from 'react-helmet';
@@ -43,10 +43,10 @@ export class {{ properCase name }} extends {{{ type }}} {
   }
 }
 
-/*
-{{ properCase name }}.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};*/
+
+// {{ properCase name }}.propTypes = {
+//  dispatch: PropTypes.func.isRequired
+// };
 
 {{#if wantActionsAndReducer}}
 const mapStateToProps = createStructuredSelector({

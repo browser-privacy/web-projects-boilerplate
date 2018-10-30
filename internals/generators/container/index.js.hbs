@@ -34,10 +34,10 @@ export class {{ properCase name }} extends React.{{{ component }}} {
   }
 }
 
-/*
-{{ properCase name }}.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};*/
+
+// {{ properCase name }}.propTypes = {
+//  dispatch: PropTypes.func.isRequired,
+// };
 
 {{#if wantActionsAndReducer}}
 const mapStateToProps = createStructuredSelector({
